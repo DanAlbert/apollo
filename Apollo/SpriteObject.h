@@ -16,10 +16,12 @@ namespace Apollo
 		SpriteObject(const char* szPath, RenderSystem* renderSystem);
 		virtual ~SpriteObject(void);
 
-		void Release(void);
+		virtual void Release(void);
 
-		void Update(long dTime);
-		void Draw(long dTime);
+		virtual void SaveState(TiXmlElement*& parentElement);
+
+		virtual void Update(long dTime);
+		virtual void Draw(long dTime);
 
 	protected:
 		Sprite* m_Sprite;

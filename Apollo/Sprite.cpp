@@ -2,26 +2,12 @@
 
 namespace Apollo
 {
-	/*Sprite::Sprite(const char* szPath, IDirect3DDevice9* lpDevice, ID3DXSprite* spriteHandler)
-	{
-		m_SpriteHandler = spriteHandler;
-
-		m_Textures = NULL;
-
-		m_nFrames = 1;
-
-		if (!LoadFromFile(szPath, lpDevice))
-		{
-			Free();
-			return;
-		}
-	}*/
-
 	Sprite::Sprite(const char* szPath, RenderSystem* renderSystem)
 	{
 		m_SpriteHandler = renderSystem->GetSpriteHandler();
 
 		m_Textures = NULL;
+		m_ResourcePath = NULL;
 
 		SpriteDef def(szPath);
 		m_nFrames = def.GetNFrames();
@@ -31,9 +17,18 @@ namespace Apollo
 
 		if (!Load(&def, renderSystem->GetDevice()))
 		{
-			Free();
+			Release();
 			return;
 		}
+
+		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(szPath) + 1));
+		if (!m_ResourcePath)
+		{
+			Log("[Sprite] Error allocating memory for resource path (%s). Object may not be able to reload.", szPath);
+		}
+
+		memset(m_ResourcePath, 0, sizeof(char) * (strlen(szPath) + 1));
+		memcpy(m_ResourcePath, szPath, sizeof(char) * strlen(szPath));
 	}
 
 	Sprite::Sprite(const Sprite& s)
@@ -43,12 +38,21 @@ namespace Apollo
 		m_nFrames = s.m_nFrames;
 		m_animTime = s.m_animTime;
 		m_cFrame = 0;
-		m_animCount = 0;		
+		m_animCount = 0;
+
+		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(s.m_ResourcePath) + 1));
+		if (!m_ResourcePath)
+		{
+			Log("Error allocating memory for resource path (%s). Object may not be able to reload.", s.m_ResourcePath);
+		}
+
+		memset(m_ResourcePath, 0, sizeof(char) * (strlen(s.m_ResourcePath) + 1));
+		memcpy(m_ResourcePath, s.m_ResourcePath, sizeof(char) * strlen(s.m_ResourcePath));
 	}
 
 	Sprite::~Sprite(void)
 	{
-		Free();
+		Release();
 	}
 
 
@@ -59,7 +63,7 @@ namespace Apollo
 			return *this;
 		}
 
-		Free();
+		Release();
 
 		m_SpriteHandler = rhs.m_SpriteHandler;
 		m_Textures = rhs.m_Textures;
@@ -67,6 +71,15 @@ namespace Apollo
 		m_animTime = rhs.m_animTime;
 		m_cFrame = rhs.m_cFrame;
 		m_animCount = rhs.m_animCount;
+
+		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(rhs.m_ResourcePath) + 1));
+		if (!m_ResourcePath)
+		{
+			Log("Error allocating memory for resource path (%s). Object may not be able to reload.", rhs.m_ResourcePath);
+		}
+
+		memset(m_ResourcePath, 0, sizeof(char) * (strlen(rhs.m_ResourcePath) + 1));
+		memcpy(m_ResourcePath, rhs.m_ResourcePath, sizeof(char) * strlen(rhs.m_ResourcePath));
 
 		return *this;
 	}
@@ -113,7 +126,7 @@ namespace Apollo
 
 	bool Sprite::Load(SpriteDef* animDef, IDirect3DDevice9* lpDevice)
 	{
-		Free();	// Free any existing resources
+		Release();	// Free any existing resources
 
 		m_Textures = new IDirect3DTexture9*[m_nFrames];
 		memset(m_Textures, 0, m_nFrames * sizeof(IDirect3DTexture9*));
@@ -126,7 +139,7 @@ namespace Apollo
 		return true;
 	}
 
-	void Sprite::Free(void)
+	void Sprite::Release(void)
 	{
 		if (m_Textures)
 		{
@@ -141,22 +154,13 @@ namespace Apollo
 			delete [] m_Textures;
 			m_Textures = NULL;
 		}
-	}
 
-	/*void Sprite::Draw(D3DXVECTOR3 position, int index)
-	{
-		m_SpriteHandler->Draw(m_Textures[index],
-			NULL,
-			NULL,
-			&position,
-			D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+		if (m_ResourcePath)
+		{
+			free(m_ResourcePath);
+			m_ResourcePath = NULL;
+		}
 	}
-
-	void Sprite::Draw(float x, float y, int index)
-	{
-		D3DXVECTOR3 position(x, y, 0.0f);
-		Draw(position, index);
-	}*/
 
 	void Sprite::Draw(D3DXVECTOR3 position, long dTime)
 	{

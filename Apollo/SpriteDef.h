@@ -3,6 +3,8 @@
 
 #include "Apollo.h"
 
+#include <tinyxml.h>
+
 namespace Apollo
 {
 	class APOLLO_API SpriteDef

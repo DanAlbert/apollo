@@ -1,7 +1,5 @@
 #include "SpriteDef.h"
 
-#include <tinyxml.h>
-
 namespace Apollo
 {
 	SpriteDef::SpriteDef(const char* szPath)

@@ -25,17 +25,22 @@ namespace Apollo
 
 		virtual bool LoadFromFile(const char* szPath, IDirect3DTexture9*& texture, IDirect3DDevice9* lpDevice);
 		virtual bool Load(SpriteDef* animDef, IDirect3DDevice9* lpDevice);
-		virtual void Free(void);
-
-		//virtual void Draw(D3DXVECTOR3 position, int index = 0);
-		//virtual void Draw(float x, float y, int index = 0);
+		virtual void Release(void);
 
 		virtual void Draw(D3DXVECTOR3 position, long dTime);
 		virtual void Draw(float x, float y, long dTime);
 
+		inline char*	GetResourcePath(void)		const	{	return m_ResourcePath;	}
+		inline int		GetCurrentFrame(void)		const	{	return m_cFrame;		}
+		inline int		GetCurrentFrameTime(void)	const	{	return m_animCount;		}
+
 	protected:
 		ID3DXSprite*		m_SpriteHandler;
 		IDirect3DTexture9**	m_Textures;
+
+		char*				m_ResourcePath;	// Will not update if a new image is loaded
+											// Should be resolved with changes due to the
+											// asset management system
 
 		int m_nFrames;		// Total number of frames in animation.
 		int m_cFrame;		// Current frame of animation.

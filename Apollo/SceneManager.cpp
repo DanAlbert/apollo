@@ -30,6 +30,37 @@ namespace Apollo
 		m_GameAssets.clear();
 	}
 
+	void SceneManager::SaveState(const char* szPath)
+	{
+		TiXmlDocument doc;
+		TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "ISO-8859-1", "");
+		doc.LinkEndChild(decl);
+
+		TiXmlElement* rootElem = new TiXmlElement("Scene"); // /Scene
+		doc.LinkEndChild(rootElem);
+
+		TiXmlElement* gameObjects = new TiXmlElement("GameObjects"); // /Scene/GameObjects
+		rootElem->LinkEndChild(gameObjects);
+
+		for (int i = 0; i < m_GameAssets.size(); ++i)
+		{
+			if (m_GameAssets[i]->GetParent() == NULL) // Must build in order of heirarchy
+			{
+				// Since the SceneManager is unaware of the type of each GameObject
+				// (Ex. GameObject, SpriteObject), the current Xml element must be
+				// passed to the GameObject itself so it can save its own data.
+				// This also removes the need for inheriting the SceneManager.
+				m_GameAssets[i]->SaveState(gameObjects);
+			}
+		}
+
+		doc.SaveFile(szPath);
+	}
+
+	void SceneManager::LoadState(const char* szPath)
+	{
+	}
+
 	SpriteObject* SceneManager::CreateSpriteObject(const char* szPath)
 	{
 		m_GameAssets.push_back(new SpriteObject(szPath, m_RenderSystem));

@@ -3,6 +3,7 @@
 
 #include "Apollo.h"
 
+#include <tinyxml.h>
 #include <vector>
 
 #include "GameObject.h"
@@ -21,6 +22,9 @@ namespace Apollo
 		virtual ~SceneManager(void);
 
 		void	Release(void);
+
+		virtual void SaveState(const char* szPath);
+		virtual void LoadState(const char* szPath);
 
 		SpriteObject*	CreateSpriteObject(const char* szPath);
 		void			FreeSpriteObject(SpriteObject* sprite);

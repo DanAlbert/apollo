@@ -3,6 +3,7 @@
 
 #include "Apollo.h"
 
+#include <tinyxml.h>
 #include <vector>
 
 #include "Debug.h"
@@ -18,6 +19,8 @@ namespace Apollo
 		GameObject& operator= (const GameObject& rhs);
 
 		virtual void	Release(bool releaseChildren = true);
+
+		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
 
 		virtual void	Update(long dTime)	= 0;
 		virtual void	Draw(long dTime)	= 0;

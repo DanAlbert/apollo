@@ -84,6 +84,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;
 	}
 
+	scene->SaveState("savedscene.xml");
+
 	delete scene;
 	delete apollo;
 
