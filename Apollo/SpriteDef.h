@@ -5,11 +5,15 @@
 
 namespace Apollo
 {
-	class APOLLO_API AnimDef
+	class APOLLO_API SpriteDef
 	{
 	public:
-		AnimDef(const char* szPath);
-		~AnimDef(void);
+		SpriteDef(const char* szPath);
+		~SpriteDef(void);
+
+		inline const char*	GetFrame(int i)		{	return m_Frames[i];	}
+		inline int			GetNFrames(void)	{	return m_nFrames;	}
+		inline int			GetFrameTime(void)	{	return m_frameTime;	}
 
 		bool LoadFromFile(const char* szPath);
 		void Free(void);

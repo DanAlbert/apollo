@@ -1,10 +1,10 @@
-#include "AnimDef.h"
+#include "SpriteDef.h"
 
 #include <tinyxml.h>
 
 namespace Apollo
 {
-	AnimDef::AnimDef(const char* szPath)
+	SpriteDef::SpriteDef(const char* szPath)
 	{
 		m_Frames = NULL;
 		m_nFrames = 0;
@@ -17,12 +17,12 @@ namespace Apollo
 		}
 	}
 
-	AnimDef::~AnimDef(void)
+	SpriteDef::~SpriteDef(void)
 	{
 		Free();
 	}
 
-	bool AnimDef::LoadFromFile(const char* szPath)
+	bool SpriteDef::LoadFromFile(const char* szPath)
 	{
 		Free();
 
@@ -60,7 +60,7 @@ namespace Apollo
 		return true;
 	}
 
-	void AnimDef::Free(void)
+	void SpriteDef::Free(void)
 	{
 		if (m_Frames)
 		{

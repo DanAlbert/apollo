@@ -1,2 +1,3 @@
 11/12/08| Logging and error handling	-COMPLETE-
-12/26/08| Animation XML data class		-INCOMPLETE-
+12/26/08| Animation XML data class		-COMPLETE-
+02/22/09| Method to handle timing		-INCOMPLETE-

@@ -1,4 +1,5 @@
 #include <RenderSystem.h>
+#include <Sprite.h>
 
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
@@ -12,9 +13,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MSG msg;
 
+	long cTime = GetTickCount();
+	long lastTime = cTime;
+	int index = 0;
+
+#ifdef _DEBUG
+	AllocConsole();
+	freopen("conin$", "r", stdin); 
+	freopen("conout$", "w", stdout); 
+	freopen("conout$", "w", stderr);
+#endif
+
 	MyRegisterClass(hInstance);
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem();
+	Apollo::Sprite* spr = new Apollo::Sprite("Resources/Sprites/Water.xml", apollo);
 
 	// Main message loop
 	bool done = false;
@@ -32,7 +45,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
+			cTime = GetTickCount();
+
+			long dTime = cTime - lastTime;
+			lastTime = cTime;
+
 			apollo->StartDrawing();
+			spr->Draw(0.0f, 0.0f, dTime);
 			apollo->EndDrawing();
 		}
 
@@ -42,6 +61,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);
+
+#ifdef _DEBUG
+	FreeConsole();
+#endif
+
 	return (int) msg.wParam;
 }
 
