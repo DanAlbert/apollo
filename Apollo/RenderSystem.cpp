@@ -15,6 +15,7 @@ namespace Apollo
 		m_Device = NULL;
 		m_SpriteHandler = NULL;
 		m_Backbuffer = NULL;
+		//m_SceneManager = NULL;
 
 		m_Window = new Window(windowTitle, width, height);
 
@@ -107,6 +108,8 @@ namespace Apollo
 
 	void RenderSystem::Release(void)
 	{
+		//ReleaseSceneManager();
+
 		if (m_Backbuffer)
 		{
 			m_Backbuffer->Release();
@@ -137,6 +140,25 @@ namespace Apollo
 			m_Window = NULL;
 		}
 	}
+
+	/*SceneManager* RenderSystem::GetSceneManager(void)
+	{
+		if (m_SceneManager == NULL)
+		{
+			m_SceneManager = new SceneManager(this);
+		}
+
+		return m_SceneManager;
+	}
+
+	void RenderSystem::ReleaseSceneManager(void)
+	{
+		if (m_SceneManager)
+		{
+			m_SceneManager->Release();
+			m_SceneManager = NULL;
+		}
+	}*/
 
 	void RenderSystem::StartDrawing(void)
 	{

@@ -7,6 +7,7 @@
 #include <d3dx9.h>
 
 #include "Debug.h"
+//#include "SceneManager.h"
 #include "Window.h"
 
 namespace Apollo
@@ -26,6 +27,9 @@ namespace Apollo
 		virtual ~RenderSystem(void);
 
 		void Release(void);
+
+		//SceneManager*	GetSceneManager(void);
+		//void			ReleaseSceneManager(void);
 
 		void StartDrawing(void);	// SceneManager should be linked into the render system
 		void EndDrawing(void);		// so that drawing can be a single method
@@ -50,6 +54,8 @@ namespace Apollo
 		IDirect3DDevice9*	m_Device;
 		ID3DXSprite*		m_SpriteHandler;
 		IDirect3DSurface9*	m_Backbuffer;
+
+		//SceneManager*		m_SceneManager;
 	};
 }
 

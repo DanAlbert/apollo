@@ -25,12 +25,15 @@ namespace Apollo
 		SpriteObject*	CreateSpriteObject(const char* szPath);
 		void			FreeSpriteObject(SpriteObject* sprite);
 
-		void	Update(long dTime);
-		void	Draw(long dTime);
+		void	Update(void);
+		void	Draw(void);
 
 	protected:
 		RenderSystem*				m_RenderSystem;
 		std::vector<GameObject*>	m_GameAssets;
+
+		long m_lastUpdateTime;
+		long m_lastDrawTime;
 	};
 }
 

@@ -10,6 +10,9 @@ namespace Apollo
 			Log("SceneManager recieved NULL reference to the render system.");
 			return;
 		}
+
+		m_lastUpdateTime = GetTickCount();
+		m_lastDrawTime = m_lastUpdateTime;
 	}
 
 	SceneManager::~SceneManager(void)
@@ -19,6 +22,11 @@ namespace Apollo
 
 	void SceneManager::Release(void)
 	{
+		for (int i = 0; i < m_GameAssets.size(); ++i)
+		{
+			delete m_GameAssets[i];
+		}
+
 		m_GameAssets.clear();
 	}
 
@@ -40,8 +48,13 @@ namespace Apollo
 		}
 	}
 
-	void SceneManager::Update(long dTime)
+	void SceneManager::Update(void)
 	{
+		long cTime = GetTickCount();
+
+		long dTime = cTime - m_lastUpdateTime;
+		m_lastUpdateTime = cTime;
+
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
 			// Update all objects
@@ -49,8 +62,13 @@ namespace Apollo
 		}
 	}
 
-	void SceneManager::Draw(long dTime)
+	void SceneManager::Draw(void)
 	{
+		long cTime = GetTickCount();
+
+		long dTime = cTime - m_lastDrawTime;
+		m_lastDrawTime = cTime;
+
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
 			// Draw all objects that are visible and on screen

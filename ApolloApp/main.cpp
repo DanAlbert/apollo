@@ -14,10 +14,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MSG msg;
 
-	long cTime = GetTickCount();
-	long lastTime = cTime;
-	int index = 0;
-
 #ifdef _DEBUG
 	AllocConsole();
 	freopen("conin$", "r", stdin); 
@@ -59,11 +55,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
-			cTime = GetTickCount();
-
-			long dTime = cTime - lastTime;
-			lastTime = cTime;
-
 			if ((spr->GetXPosition() > 736) || (spr->GetXPosition() < 0))
 			{
 				xMod *= -1;
@@ -84,8 +75,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 			apollo->StartDrawing();
 			
-			scene->Update(dTime);
-			scene->Draw(dTime);
+			scene->Update();
+			scene->Draw();
 			
 			apollo->EndDrawing();
 		}
@@ -93,7 +84,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;
 	}
 
-	delete spr;
+	delete scene;
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);

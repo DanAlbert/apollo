@@ -1,5 +1,6 @@
-11/12/08| Logging and error handling	-COMPLETE-
-12/26/08| Animation XML data class		-COMPLETE-
-02/22/09| Method to handle timing		-INCOMPLETE-
-06/30/09| SceneManager class			-COMPLETE-
-06/30/09| Viewport/Camera class			-INCOMPLETE-
+11/12/08| Logging and error handling			-COMPLETE-
+12/26/08| Animation XML data class				-COMPLETE-
+02/22/09| Method to handle timing				-COMPLETE-
+06/30/09| SceneManager class					-COMPLETE-
+06/30/09| Viewport/Camera class					-INCOMPLETE-
+07/17/09| Save/Load method for Scene Manager	-INCOMPLETE-
