@@ -21,10 +21,10 @@ namespace Apollo
 		virtual void SaveState(TiXmlElement*& parentElement);
 
 		virtual void Update(long dTime);
-		virtual void Draw(long dTime);
+		virtual void Draw(long dTime, GameObject* view);
 
 	protected:
-		Sprite* m_Sprite;
+		Sprite*		m_Sprite;
 	};
 }
 

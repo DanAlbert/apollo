@@ -37,14 +37,30 @@ namespace Apollo
 		// Accessors //
 		inline Window*	GetWindow(void)	{	return m_Window;	}
 
+		inline unsigned int	GetWidth(void) const
+		{
+			D3DSURFACE_DESC desc;
+
+			m_Backbuffer->GetDesc(&desc);
+
+			return desc.Width;
+		}
+
+		inline unsigned int	GetHeight(void) const
+		{
+			D3DSURFACE_DESC desc;
+
+			m_Backbuffer->GetDesc(&desc);
+
+			return desc.Height;
+		}
+
 		// These two are only temporarily accessable for testing purposes
 		inline IDirect3DDevice9*	GetDevice(void)			const	{	return m_Device;		}
 		inline ID3DXSprite*			GetSpriteHandler(void)	const	{	return m_SpriteHandler;	}
 
 		//inline HWND					GetWindowHandle(void)	const	{	return m_Window;		}
 		//inline IDirect3DSurface9*	GetBackbuffer(void)		const	{	return m_Backbuffer;	}
-		//inline unsigned short		GetWidth(void)			const	{	return m_usWidth;		}
-		//inline unsigned short		GetHeight(void)			const	{	return m_usHeight;		}
 		
 		// Modifiers //
 

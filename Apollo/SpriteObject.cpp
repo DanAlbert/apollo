@@ -5,6 +5,9 @@ namespace Apollo
 	SpriteObject::SpriteObject(const char* szPath, RenderSystem* renderSystem)
 	{
 		m_Sprite = new Sprite(szPath, renderSystem);
+
+		m_Width = m_Sprite->GetMaxWidth();
+		m_Height = m_Sprite->GetMaxHeight();
 	}
 
 	SpriteObject::~SpriteObject(void)
@@ -57,11 +60,15 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::Draw(long dTime)
+	void SpriteObject::Draw(long dTime, GameObject* view)
 	{
 		if (m_Visible)
 		{
-			m_Sprite->Draw(m_XPosition, m_YPosition, dTime);
+			// I don't rmember if I did this right... If it doesn't work, this is probabaly the issue.
+			m_Sprite->Draw(
+				m_XPosition - view->GetXPosition(),
+				m_YPosition - view->GetYPosition(),
+				dTime);
 		}
 	}
 }

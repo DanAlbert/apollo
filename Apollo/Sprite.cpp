@@ -101,6 +101,9 @@ namespace Apollo
 		width = info.Width;
 		height = info.Height;
 
+		m_maxWidth = (width > m_maxWidth) ? width : m_maxWidth;		// Set the objects width and height to the
+		m_maxHeight = (height > m_maxHeight) ? height: m_maxHeight;	// width and height of the largest sprite
+
 		hr = D3DXCreateTextureFromFileEx(lpDevice,
 			szPath,
 			width,

@@ -30,9 +30,11 @@ namespace Apollo
 		virtual void Draw(D3DXVECTOR3 position, long dTime);
 		virtual void Draw(float x, float y, long dTime);
 
-		inline char*	GetResourcePath(void)		const	{	return m_ResourcePath;	}
-		inline int		GetCurrentFrame(void)		const	{	return m_cFrame;		}
-		inline int		GetCurrentFrameTime(void)	const	{	return m_animCount;		}
+		inline char*		GetResourcePath(void)		const	{	return m_ResourcePath;	}
+		inline int			GetCurrentFrame(void)		const	{	return m_cFrame;		}
+		inline int			GetCurrentFrameTime(void)	const	{	return m_animCount;		}
+		inline unsigned int	GetMaxWidth(void)			const	{	return m_maxWidth;		}
+		inline unsigned int	GetMaxHeight(void)			const	{	return m_maxHeight;		}
 
 	protected:
 		ID3DXSprite*		m_SpriteHandler;
@@ -42,10 +44,12 @@ namespace Apollo
 											// Should be resolved with changes due to the
 											// asset management system
 
-		int m_nFrames;		// Total number of frames in animation.
-		int m_cFrame;		// Current frame of animation.
-		int m_animTime;		// How many ticks each frame will be active.
-		int m_animCount;	// How many ticks the current frame has been active.
+		int				m_nFrames;		// Total number of frames in animation.
+		int				m_cFrame;		// Current frame of animation.
+		int				m_animTime;		// How many ticks each frame will be active.
+		int				m_animCount;	// How many ticks the current frame has been active.
+		unsigned int	m_maxWidth;
+		unsigned int	m_maxHeight;
 	};
 }
 

@@ -22,14 +22,16 @@ namespace Apollo
 
 		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
 
-		virtual void	Update(long dTime)	= 0;
-		virtual void	Draw(long dTime)	= 0;
+		virtual void	Update(long dTime)					= 0;
+		virtual void	Draw(long dTime, GameObject* view)	= 0;
 
 		// Accessors //
 		inline bool			GetActive(void)		const	{	return m_Active;	}
 		inline bool			GetVivible(void)	const	{	return m_Visible;	}
 		inline float		GetXPosition(void)	const	{	return m_XPosition;	}
 		inline float		GetYPosition(void)	const	{	return m_YPosition;	}
+		inline unsigned int	GetWidth(void)		const	{	return m_Width;		}
+		inline unsigned int	GetHeight(void)		const	{	return m_Height;	}
 		inline GameObject*	GetParent(void)		const	{	return m_Parent;	}
 
 		float GetRelativeXPosition(void);
@@ -51,10 +53,12 @@ namespace Apollo
 		
 
 	protected:
-		bool	m_Active;
-		bool	m_Visible;
-		float	m_XPosition;
-		float	m_YPosition;
+		bool			m_Active;
+		bool			m_Visible;
+		float			m_XPosition;
+		float			m_YPosition;
+		unsigned int	m_Width;
+		unsigned int	m_Height;
 
 		GameObject*					m_Parent;
 		std::vector<GameObject*>	m_Children;

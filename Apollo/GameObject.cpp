@@ -8,6 +8,8 @@ namespace Apollo
 		m_Visible = true;
 		m_XPosition = 0.0f;
 		m_YPosition = 0.0f;
+		m_Width = 0;
+		m_Height = 0;
 		m_Parent = NULL;
 	}
 
@@ -37,6 +39,8 @@ namespace Apollo
 
 	void GameObject::Release(bool releaseChildren)
 	{
+		// Children may not be being released in derived classes
+		// See SpriteObject::Release()
 		RemoveParent();
 
 		for (int i = 0; i < m_Children.size(); ++i)

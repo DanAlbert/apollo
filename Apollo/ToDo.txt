@@ -2,6 +2,8 @@
 12/26/08| Animation XML data class				-COMPLETE-
 02/22/09| Method to handle timing				-COMPLETE-
 06/30/09| SceneManager class					-COMPLETE-
-06/30/09| Viewport/Camera class					-INCOMPLETE-
+06/30/09| Viewport/Camera class					-COMPLETE-
 07/17/09| Save/Load method for Scene Manager	-COMPLETE-
 07/24/09| Object behaviors						-INCOMPLETE-
+08/04/09| Developer console						-OPTIONAL-
+08/04/09| Viewport parent/child functionality	-INCOMPLETE-

@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Viewport.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Window.cpp"
 				>
 			</File>
@@ -247,6 +251,10 @@
 			</File>
 			<File
 				RelativePath=".\SpriteObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Viewport.h"
 				>
 			</File>
 			<File

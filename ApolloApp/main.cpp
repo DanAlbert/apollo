@@ -1,6 +1,7 @@
 #include <RenderSystem.h>
 #include <SceneManager.h>
 #include <SpriteObject.h>
+#include <Viewport.h>
 
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
@@ -26,8 +27,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem();
 	Apollo::SceneManager* scene = new Apollo::SceneManager(apollo);
 
+	// Loaded objects cannot be controlled or accessed,
+	// objects must have handles other than just pointers
 	if (!scene->LoadState("savedscene.xml"))
 	{
+		scene->GetViewport()->SetPosition(0.0f, 0.0f);
+
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 
