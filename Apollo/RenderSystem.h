@@ -22,7 +22,8 @@ namespace Apollo
 			unsigned int refreshRate = 60,
 			bool vsync = true,
 			bool windowed = true);
-		~RenderSystem(void);
+
+		virtual ~RenderSystem(void);
 
 		void Release(void);
 
@@ -30,15 +31,18 @@ namespace Apollo
 		void EndDrawing(void);
 
 		// Accessors //
-		//inline IDirect3DDevice9*	GetDevice(void)			const	{	return m_Device;		}
-		//inline ID3DXSprite*			GetSpriteHandler(void)	const	{	return m_SpriteHandler;	}
+		inline Window*	GetWindow(void)	{	return m_Window;	}
+
+		// These two are only temporarily accessable for testing purposes
+		inline IDirect3DDevice9*	GetDevice(void)			const	{	return m_Device;		}
+		inline ID3DXSprite*			GetSpriteHandler(void)	const	{	return m_SpriteHandler;	}
+
 		//inline HWND					GetWindowHandle(void)	const	{	return m_Window;		}
 		//inline IDirect3DSurface9*	GetBackbuffer(void)		const	{	return m_Backbuffer;	}
 		//inline unsigned short		GetWidth(void)			const	{	return m_usWidth;		}
 		//inline unsigned short		GetHeight(void)			const	{	return m_usHeight;		}
 		
 		// Modifiers //
-		inline void	SetWindowTitle(const char* title)	{	m_Window->SetTitle(title);	}
 
 	protected:
 		Window*				m_Window;
