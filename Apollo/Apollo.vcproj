@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RenderSystem.cpp"
 				>
 			</File>
@@ -197,6 +201,10 @@
 			</File>
 			<File
 				RelativePath=".\SpriteDef.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SpriteObject.cpp"
 				>
 			</File>
 			<File
@@ -218,6 +226,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RenderSystem.h"
 				>
 			</File>
@@ -231,6 +243,10 @@
 			</File>
 			<File
 				RelativePath=".\SpriteDef.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SpriteObject.h"
 				>
 			</File>
 			<File

@@ -17,7 +17,6 @@ namespace Apollo
 	class APOLLO_API Sprite
 	{
 	public:
-		//Sprite(const char* szPath, IDirect3DDevice9* lpDevice, ID3DXSprite* spriteHandler);
 		Sprite(const char* szPath, RenderSystem* renderSystem);
 		Sprite(const Sprite& s);	// Do not use until asset management is in place
 		virtual ~Sprite(void);

@@ -27,8 +27,8 @@ namespace Apollo
 
 		void Release(void);
 
-		void StartDrawing(void);
-		void EndDrawing(void);
+		void StartDrawing(void);	// SceneManager should be linked into the render system
+		void EndDrawing(void);		// so that drawing can be a single method
 
 		// Accessors //
 		inline Window*	GetWindow(void)	{	return m_Window;	}

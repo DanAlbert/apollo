@@ -1,5 +1,6 @@
 #include <RenderSystem.h>
-#include <Sprite.h>
+#include <SceneManager.h>
+#include <SpriteObject.h>
 
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
@@ -27,7 +28,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MyRegisterClass(hInstance);
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem();
-	Apollo::Sprite* spr = new Apollo::Sprite("Resources/Sprites/Water.xml", apollo);
+	Apollo::SceneManager* scene = new Apollo::SceneManager(apollo);
+
+	Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
+	Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
+
+	//Apollo::SpriteObject* spr = new Apollo::SpriteObject("Resources/Sprites/Water.xml", apollo);
+	//Apollo::SpriteObject* child = new Apollo::SpriteObject("Resources/Sprites/Water.xml", apollo);
+
+	child->SetParent(spr);
+	child->SetRelativePosition(64.0f, 0.0f);
+
+	float xMod = 2.0f;
+	float yMod = 1.0f;
+	float cMod = 1.0f;
 
 	// Main message loop
 	bool done = false;
@@ -50,14 +64,36 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			long dTime = cTime - lastTime;
 			lastTime = cTime;
 
+			if ((spr->GetXPosition() > 736) || (spr->GetXPosition() < 0))
+			{
+				xMod *= -1;
+			}
+
+			if ((spr->GetYPosition() > 536) || (spr->GetYPosition() < 0))
+			{
+				yMod *= -1;
+			}
+
+			if ((child->GetRelativeXPosition() < 64) || (child->GetRelativeXPosition() > 128))
+			{
+				cMod *= -1;
+			}
+
+			spr->Move(xMod, yMod);
+			child->Move(cMod, 0.0f);
+
 			apollo->StartDrawing();
-			spr->Draw(0.0f, 0.0f, dTime);
+			
+			scene->Update(dTime);
+			scene->Draw(dTime);
+			
 			apollo->EndDrawing();
 		}
 
 		done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;
 	}
 
+	delete spr;
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);
