@@ -137,9 +137,12 @@ namespace Apollo
 
 	void GameObject::SetParent(GameObject* parent)
 	{
-		RemoveParent();
-		parent->AddChild(this);
-		m_Parent = parent;
+		if (parent)
+		{
+			RemoveParent();
+			parent->AddChild(this);
+			m_Parent = parent;
+		}
 	}
 
 	void GameObject::RemoveParent(void)

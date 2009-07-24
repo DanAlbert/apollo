@@ -3,4 +3,5 @@
 02/22/09| Method to handle timing				-COMPLETE-
 06/30/09| SceneManager class					-COMPLETE-
 06/30/09| Viewport/Camera class					-INCOMPLETE-
-07/17/09| Save/Load method for Scene Manager	-INCOMPLETE-
+07/17/09| Save/Load method for Scene Manager	-COMPLETE-
+07/24/09| Object behaviors						-INCOMPLETE-

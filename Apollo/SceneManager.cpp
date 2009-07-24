@@ -30,8 +30,10 @@ namespace Apollo
 		m_GameAssets.clear();
 	}
 
-	void SceneManager::SaveState(const char* szPath)
+	bool SceneManager::SaveState(const char* szPath)
 	{
+		Log("[SceneManager] Saving scene state.");
+
 		TiXmlDocument doc;
 		TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "ISO-8859-1", "");
 		doc.LinkEndChild(decl);
@@ -54,11 +56,49 @@ namespace Apollo
 			}
 		}
 
-		doc.SaveFile(szPath);
+		if (!doc.SaveFile(szPath))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
-	void SceneManager::LoadState(const char* szPath)
+	bool SceneManager::LoadState(const char* szPath)
 	{
+		TiXmlDocument doc(szPath);
+		if (!doc.LoadFile(TIXML_ENCODING_UTF8))
+		{
+			return false;
+		}
+
+		TiXmlHandle hDoc(&doc);
+		TiXmlElement* elem;
+		TiXmlHandle hRoot(0);
+
+		elem = hDoc.FirstChildElement().Element(); // /Scene
+		hRoot = TiXmlHandle(elem);
+		
+		elem = hRoot.FirstChild("GameObjects").Element(); // /Scene/GameObjects
+		elem = elem->FirstChildElement(); // /Scene/GameObjects/GameObject
+
+		for (elem; elem; elem = elem->NextSiblingElement())
+		{
+			if (!strcmp(elem->Value(), "SpriteObject"))
+			{
+				if (!loadSpriteObjectState(elem))
+				{
+					Log("[SceneManager] SpriteObject failed to load correctly.");
+				}
+			}
+
+			else
+			{
+				Log("[SceneManager] Unknown object type (%s) encountered while loading.", elem->Value());
+			}
+		}
+
+		return true;
 	}
 
 	SpriteObject* SceneManager::CreateSpriteObject(const char* szPath)
@@ -105,5 +145,63 @@ namespace Apollo
 			// Draw all objects that are visible and on screen
 			m_GameAssets[i]->Draw(dTime);
 		}
+	}
+
+	bool SceneManager::loadSpriteObjectState(TiXmlElement* element, GameObject* parent)
+	{
+		TiXmlElement* spriteElem = element->FirstChildElement("Sprite");
+		TiXmlElement* childElem = NULL;
+		
+		if (!element->NoChildren())
+		{
+			childElem = element->FirstChildElement("Children");
+		}
+
+		SpriteObject* spriteObject;
+
+		const char* resourcePath;
+		int active;
+		int visible;
+		int cFrame;		// Not yet implemented
+		int animCount;	// Not yet implemented
+		float x;
+		float y;
+
+		element->QueryIntAttribute("active", &active);
+		element->QueryIntAttribute("visible", &visible);
+		element->QueryFloatAttribute("x", &x);
+		element->QueryFloatAttribute("y", &y);
+
+		resourcePath = spriteElem->Attribute("resource");
+		spriteElem->QueryIntAttribute("cFrame", &cFrame);
+		spriteElem->QueryIntAttribute("animCount", &animCount);
+
+		spriteObject = this->CreateSpriteObject(resourcePath);
+		spriteObject->SetParent(parent);
+		spriteObject->SetActive(active);
+		spriteObject->SetVisible(visible);
+		spriteObject->SetPosition(x, y);
+
+		if (childElem)
+		{
+			childElem = childElem->FirstChildElement();
+			for (childElem; childElem; childElem = childElem->NextSiblingElement())
+			{
+				if (!strcmp(childElem->Value(), "SpriteObject"))
+				{
+					if (!loadSpriteObjectState(childElem, spriteObject))
+					{
+						Log("[SceneManager] SpriteObject failed to load correctly.");
+					}
+				}
+
+				else
+				{
+					Log("[SceneManager] Unknown object type (%s) encountered while loading.", childElem->Value());
+				}
+			}
+		}
+
+		return true;
 	}
 }

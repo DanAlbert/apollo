@@ -23,8 +23,8 @@ namespace Apollo
 
 		void	Release(void);
 
-		virtual void SaveState(const char* szPath);
-		virtual void LoadState(const char* szPath);
+		virtual bool SaveState(const char* szPath);
+		virtual bool LoadState(const char* szPath);
 
 		SpriteObject*	CreateSpriteObject(const char* szPath);
 		void			FreeSpriteObject(SpriteObject* sprite);
@@ -38,6 +38,8 @@ namespace Apollo
 
 		long m_lastUpdateTime;
 		long m_lastDrawTime;
+
+		virtual bool loadSpriteObjectState(TiXmlElement* element, GameObject* parent = NULL);
 	};
 }
 

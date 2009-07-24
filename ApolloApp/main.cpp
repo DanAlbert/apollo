@@ -26,14 +26,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem();
 	Apollo::SceneManager* scene = new Apollo::SceneManager(apollo);
 
-	Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
-	Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
+	if (!scene->LoadState("savedscene.xml"))
+	{
+		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
+		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 
-	//Apollo::SpriteObject* spr = new Apollo::SpriteObject("Resources/Sprites/Water.xml", apollo);
-	//Apollo::SpriteObject* child = new Apollo::SpriteObject("Resources/Sprites/Water.xml", apollo);
-
-	child->SetParent(spr);
-	child->SetRelativePosition(64.0f, 0.0f);
+		child->SetParent(spr);
+		child->SetRelativePosition(64.0f, 0.0f);
+	}
 
 	float xMod = 2.0f;
 	float yMod = 1.0f;
@@ -55,7 +55,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
-			if ((spr->GetXPosition() > 736) || (spr->GetXPosition() < 0))
+			/*if ((spr->GetXPosition() > 736) || (spr->GetXPosition() < 0))
 			{
 				xMod *= -1;
 			}
@@ -71,7 +71,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			}
 
 			spr->Move(xMod, yMod);
-			child->Move(cMod, 0.0f);
+			child->Move(cMod, 0.0f);*/
 
 			apollo->StartDrawing();
 			
