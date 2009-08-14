@@ -7,3 +7,7 @@
 07/24/09| Object behaviors						-INCOMPLETE-
 08/04/09| Developer console						-OPTIONAL-
 08/04/09| Viewport parent/child functionality	-INCOMPLETE-
+08/12/09| GUI									-INCOMPLETE-
+08/14/09| Engine configuration file				-COMPLETE-
+08/14/09| Rewrite Ini to use C library, not STL	-OPTIONAL-
+08/14/09| Ini::Save()							-INCOMPLETE-

@@ -6,6 +6,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "Configuration.h"
 #include "Debug.h"
 //#include "SceneManager.h"
 #include "Window.h"
@@ -15,16 +16,26 @@ namespace Apollo
 	class APOLLO_API RenderSystem
 	{
 	public:
+		RenderSystem(const char* configPath, const char* windowTitle = "Apollo 2D Rendering Engine");
 		RenderSystem(
-			const char* windowTitle = "Apollo 2D Rendering Engine",
-			unsigned int width = 800,
-			unsigned int height = 600,
-			unsigned int bitDepth = 32,
-			unsigned int refreshRate = 60,
-			bool vsync = true,
-			bool windowed = true);
+			const char* windowTitle,
+			unsigned int width,
+			unsigned int height,
+			unsigned int bitDepth,
+			unsigned int refreshRate,
+			bool vsync,
+			bool windowed);
 
 		virtual ~RenderSystem(void);
+
+		bool Create(
+			const char* windowTitle,
+			unsigned int width,
+			unsigned int height,
+			unsigned int bitDepth,
+			unsigned int refreshRate,
+			bool vsync,
+			bool windowed);
 
 		void Release(void);
 

@@ -180,11 +180,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Configuration.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Debug.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\GameObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Ini.cpp"
 				>
 			</File>
 			<File
@@ -208,6 +216,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\StringUtil.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Viewport.cpp"
 				>
 			</File>
@@ -226,11 +238,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Configuration.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Debug.h"
 				>
 			</File>
 			<File
 				RelativePath=".\GameObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Ini.h"
 				>
 			</File>
 			<File
@@ -251,6 +271,10 @@
 			</File>
 			<File
 				RelativePath=".\SpriteObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StringUtil.h"
 				>
 			</File>
 			<File

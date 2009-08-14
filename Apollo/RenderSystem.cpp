@@ -2,7 +2,37 @@
 
 namespace Apollo
 {
+	RenderSystem::RenderSystem(const char* configPath, const char* windowTitle)
+	{
+		Configuration cfg(configPath);
+
+		Create(windowTitle,
+			cfg.GetXResolution(),
+			cfg.GetYResolution(),
+			cfg.GetBitDepth(),
+			cfg.GetVRefreshRate(),
+			cfg.GetVSync(),
+			cfg.GetWindowed());
+	}
+
 	RenderSystem::RenderSystem(
+		const char* windowTitle,
+		unsigned int width,
+		unsigned int height,
+		unsigned int bitDepth,
+		unsigned int refreshRate,
+		bool vsync,
+		bool windowed)
+	{
+		Create(windowTitle, width, height, bitDepth, refreshRate, vsync, windowed);
+	}
+
+	RenderSystem::~RenderSystem(void)
+	{
+		Release();
+	}
+
+	bool RenderSystem::Create(
 		const char* windowTitle,
 		unsigned int width,
 		unsigned int height,
@@ -15,7 +45,6 @@ namespace Apollo
 		m_Device = NULL;
 		m_SpriteHandler = NULL;
 		m_Backbuffer = NULL;
-		//m_SceneManager = NULL;
 
 		m_Window = new Window(windowTitle, width, height);
 
@@ -23,7 +52,7 @@ namespace Apollo
 		if (m_Direct3D == NULL)
 		{
 			ErrorQuit("Could not initialize Direct3D.", ERR_APOLLO_RENDERSYSTEM_NOD3D);
-			return;
+			return false;
 		}
 
 		D3DPRESENT_PARAMETERS pp;
@@ -81,7 +110,7 @@ namespace Apollo
 		if (m_Device == NULL)
 		{
 			ErrorQuit("Could not create the Direct3D device.", ERR_APOLLO_RENDERSYSTEM_NODEV);
-			return;
+			return false;
 		}
 
 		Log("[RenderSystem] Creating Direct3D sprite handler.");
@@ -89,7 +118,7 @@ namespace Apollo
 		if (m_SpriteHandler == NULL)
 		{
 			ErrorQuit("Could not create the Direct3D sprite handler.", ERR_APOLLO_RENDERSYSTEM_NOSPRITE);
-			return;
+			return false;
 		}
 		
 		Log("[RenderSystem] Retrieving Direct3D backbuffer.");
@@ -97,19 +126,14 @@ namespace Apollo
 		if (m_Backbuffer == NULL)
 		{
 			ErrorQuit("Could not retrieve the Direct3D backbuffer.", ERR_APOLLO_RENDERSYSTEM_BACKBUFFER);
-			return;
+			return false;
 		}
-	}
 
-	RenderSystem::~RenderSystem(void)
-	{
-		Release();
+		return true;
 	}
 
 	void RenderSystem::Release(void)
 	{
-		//ReleaseSceneManager();
-
 		if (m_Backbuffer)
 		{
 			m_Backbuffer->Release();

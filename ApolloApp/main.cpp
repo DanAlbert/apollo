@@ -24,7 +24,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MyRegisterClass(hInstance);
 
-	Apollo::RenderSystem* apollo = new Apollo::RenderSystem();
+	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
 	Apollo::SceneManager* scene = new Apollo::SceneManager(apollo);
 
 	// Loaded objects cannot be controlled or accessed,
