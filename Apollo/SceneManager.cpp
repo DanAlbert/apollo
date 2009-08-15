@@ -49,10 +49,14 @@ namespace Apollo
 		TiXmlElement* rootElem = new TiXmlElement("Scene"); // /Scene
 		doc.LinkEndChild(rootElem);
 
-		m_Viewport->SaveState(rootElem);
-
 		TiXmlElement* gameObjects = new TiXmlElement("GameObjects"); // /Scene/GameObjects
 		rootElem->LinkEndChild(gameObjects);
+
+		if (m_Viewport->GetParent() == NULL)
+		{
+			// If the Viewport is a child of another object then it will have it's SaveState method called anyways.
+			m_Viewport->SaveState(gameObjects);
+		}
 
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
@@ -92,13 +96,6 @@ namespace Apollo
 
 		elem = hDoc.FirstChildElement().Element(); // /Scene
 		hRoot = TiXmlHandle(elem);
-
-		elem = hRoot.FirstChild("Viewport").Element(); // /Scene/Viewport
-		if (!loadViewportState(elem))
-		{
-			Log("[SceneManager] SpriteObject failed to load correctly.");
-			result = false;
-		}
 
 		elem = hRoot.FirstChild("GameObjects").Element(); // /Scene/GameObjects
 
@@ -175,6 +172,15 @@ namespace Apollo
 				}
 			}
 
+			else if (!strcmp(childElem->Value(), "Viewport"))
+			{
+				if (!loadViewportState(childElem, parent))
+				{
+					Log("[SceneManager] SpriteObject failed to load correctly.");
+					result = false;
+				}
+			}
+
 			else
 			{
 				Log("[SceneManager] Unknown object type (%s) encountered while loading.", childElem->Value());
@@ -228,7 +234,7 @@ namespace Apollo
 		return true;
 	}
 
-	bool SceneManager::loadViewportState(TiXmlElement* element)
+	bool SceneManager::loadViewportState(TiXmlElement* element, GameObject* parent)
 	{
 		TiXmlElement* childElem = NULL;
 
@@ -242,6 +248,7 @@ namespace Apollo
 		element->QueryIntAttribute("width", &width);
 		element->QueryIntAttribute("height", &height);
 
+		m_Viewport->SetParent(parent);
 		m_Viewport->Resize(width, height);
 		m_Viewport->SetPosition(x, y);
 

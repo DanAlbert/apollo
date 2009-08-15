@@ -45,7 +45,7 @@ namespace Apollo
 
 		virtual bool loadChildObjects(TiXmlElement* element, GameObject* parent = NULL);
 		virtual bool loadSpriteObjectState(TiXmlElement* element, GameObject* parent = NULL);
-		virtual bool loadViewportState(TiXmlElement* element);	// Needs to be able to be a child of an object
+		virtual bool loadViewportState(TiXmlElement* element, GameObject* parent = NULL);	// Needs to be able to be a child of an object
 	};
 }
 
