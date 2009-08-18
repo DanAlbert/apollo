@@ -8,10 +8,6 @@
 
 namespace Apollo
 {
-	// Viewport should be a derived class of game object so that objects
-	// may be children of the Viewport so they appear to remain stationary
-	// as the screen moves. Are there any parts of the Game Object that
-	// the Viewport should not inherit? Draw? Update?
 	class APOLLO_API Viewport : public GameObject
 	{
 	public:

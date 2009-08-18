@@ -68,6 +68,7 @@ namespace Apollo
 			m_Sprite->Draw(
 				m_XPosition - view->GetXPosition(),
 				m_YPosition - view->GetYPosition(),
+				m_Rotation,
 				dTime);
 		}
 	}

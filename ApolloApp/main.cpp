@@ -3,6 +3,8 @@
 #include <SpriteObject.h>
 #include <Viewport.h>
 
+#define PI 3.1415926353
+
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -29,15 +31,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// Loaded objects cannot be controlled or accessed,
 	// objects must have handles other than just pointers
-	if (!scene->LoadState("savedscene.xml"))
+	//if (!scene->LoadState("savedscene.xml"))
 	{
 		scene->GetViewport()->SetPosition(0.0f, 0.0f);
 
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
+		Apollo::SpriteObject* ship = scene->CreateSpriteObject("Resources/Sprites/Ship.xml");
 
 		child->SetParent(spr);
 		child->SetRelativePosition(64.0f, 0.0f);
+
+		ship->SetPosition((apollo->GetWidth() / 2) - (ship->GetWidth() / 2),
+			(apollo->GetHeight() / 2) - (ship->GetHeight() / 2));
+		ship->Rotate(PI);
 	}
 
 	float xMod = 2.0f;

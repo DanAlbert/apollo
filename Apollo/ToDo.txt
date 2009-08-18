@@ -12,3 +12,4 @@
 08/14/09| Rewrite Ini to use C library, not STL	-OPTIONAL-
 08/14/09| Ini::Save()							-INCOMPLETE-
 08/15/09| Allow Sprites to be rotated			-COMPLETE-
+08/18/09| Asset management (Sprite and Texture)	-INCOMPLETE-

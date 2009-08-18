@@ -14,6 +14,8 @@ namespace Apollo
 		m_animTime = def.GetFrameTime();
 		m_cFrame = 0;
 		m_animCount = 0;
+		m_maxWidth = 0;
+		m_maxHeight = 0;
 
 		if (!Load(&def, renderSystem->GetDevice()))
 		{

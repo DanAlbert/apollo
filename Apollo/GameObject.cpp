@@ -8,6 +8,7 @@ namespace Apollo
 		m_Visible = true;
 		m_XPosition = 0.0f;
 		m_YPosition = 0.0f;
+		m_Rotation = 0.0f;
 		m_Width = 0;
 		m_Height = 0;
 		m_Parent = NULL;
@@ -137,6 +138,16 @@ namespace Apollo
 		{
 			m_Children[i]->Move(x, y);
 		}
+	}
+
+	void GameObject::SetRotation(float rotation)
+	{
+		m_Rotation = rotation;
+	}
+
+	void GameObject::Rotate(float rotation)
+	{
+		m_Rotation += rotation;
 	}
 
 	void GameObject::SetParent(GameObject* parent)

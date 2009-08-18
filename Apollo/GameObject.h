@@ -30,6 +30,7 @@ namespace Apollo
 		inline bool			GetVivible(void)	const	{	return m_Visible;	}
 		inline float		GetXPosition(void)	const	{	return m_XPosition;	}
 		inline float		GetYPosition(void)	const	{	return m_YPosition;	}
+		inline float		GetRotation(void)	const	{	return m_Rotation;	}
 		inline unsigned int	GetWidth(void)		const	{	return m_Width;		}
 		inline unsigned int	GetHeight(void)		const	{	return m_Height;	}
 		inline GameObject*	GetParent(void)		const	{	return m_Parent;	}
@@ -45,6 +46,9 @@ namespace Apollo
 		void SetRelativePosition(float x, float y);
 		void Move(float x, float y);
 
+		void SetRotation(float rotation);
+		void Rotate(float rotation);
+
 		void SetParent(GameObject* parent);
 		void RemoveParent(void);
 
@@ -57,6 +61,7 @@ namespace Apollo
 		bool			m_Visible;
 		float			m_XPosition;
 		float			m_YPosition;
+		float			m_Rotation;
 		unsigned int	m_Width;
 		unsigned int	m_Height;
 
