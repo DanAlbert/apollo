@@ -165,9 +165,57 @@ namespace Apollo
 		}
 	}
 
-	void Sprite::Draw(D3DXVECTOR3 position, long dTime)
+	void Sprite::Draw(D3DXVECTOR3 position, long deltaTime)
 	{
-		m_animCount += dTime;
+		D3DXMATRIX transform;
+
+		updateAnimation(deltaTime);
+
+		D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, NULL, 0.0f, &D3DXVECTOR2(position));
+		
+		m_SpriteHandler->SetTransform(&transform);
+		m_SpriteHandler->Draw(m_Textures[m_cFrame],
+			NULL,
+			NULL,
+			NULL,
+			D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+	}
+
+	void Sprite::Draw(float x, float y, long deltaTime)
+	{
+		D3DXVECTOR3 position(x, y, 0.0f);
+		Draw(position, deltaTime);
+	}
+
+	void Sprite::Draw(D3DXVECTOR3 position, float rotation, long deltaTime)
+	{
+		D3DXMATRIX transform;
+		D3DSURFACE_DESC desc;
+
+		updateAnimation(deltaTime);		
+		
+		m_Textures[m_cFrame]->GetLevelDesc(0, &desc);
+		
+		D3DXVECTOR2 center(desc.Width / 2, desc.Height / 2);
+		D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, &center, rotation, &D3DXVECTOR2(position));
+		
+		m_SpriteHandler->SetTransform(&transform);
+		m_SpriteHandler->Draw(m_Textures[m_cFrame],
+			NULL,
+			NULL,
+			NULL,
+			D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+	}
+
+	void Sprite::Draw(float x, float y, float rotation, long deltaTime)
+	{
+		D3DXVECTOR3 position(x, y, 0.0f);
+		Draw(position, rotation, deltaTime);
+	}
+
+	void Sprite::updateAnimation(long deltaTime)
+	{
+		m_animCount += deltaTime;
 
 		if (m_animCount > m_animTime)
 		{
@@ -180,17 +228,5 @@ namespace Apollo
 
 			m_animCount = 0;
 		}
-
-		m_SpriteHandler->Draw(m_Textures[m_cFrame],
-			NULL,
-			NULL,
-			&position,
-			D3DCOLOR_XRGB(0xff, 0xff, 0xff));
-	}
-
-	void Sprite::Draw(float x, float y, long dTime)
-	{
-		D3DXVECTOR3 position(x, y, 0.0f);
-		Draw(position, dTime);
 	}
 }

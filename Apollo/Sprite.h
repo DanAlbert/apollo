@@ -27,8 +27,11 @@ namespace Apollo
 		virtual bool Load(SpriteDef* animDef, IDirect3DDevice9* lpDevice);
 		virtual void Release(void);
 
-		virtual void Draw(D3DXVECTOR3 position, long dTime);
-		virtual void Draw(float x, float y, long dTime);
+		virtual void Draw(D3DXVECTOR3 position, long deltaTime);
+		virtual void Draw(float x, float y, long deltaTime);
+
+		virtual void Draw(D3DXVECTOR3 position, float rotation, long deltaTime);
+		virtual void Draw(float x, float y, float rotation, long deltaTime);
 
 		inline char*		GetResourcePath(void)		const	{	return m_ResourcePath;	}
 		inline int			GetCurrentFrame(void)		const	{	return m_cFrame;		}
@@ -50,6 +53,8 @@ namespace Apollo
 		int				m_animCount;	// How many ticks the current frame has been active.
 		unsigned int	m_maxWidth;
 		unsigned int	m_maxHeight;
+
+		virtual void updateAnimation(long deltaTime);
 	};
 }
 
