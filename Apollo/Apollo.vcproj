@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Texture.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Viewport.cpp"
 				>
 			</File>
@@ -275,6 +279,10 @@
 			</File>
 			<File
 				RelativePath=".\StringUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Texture.h"
 				>
 			</File>
 			<File

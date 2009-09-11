@@ -143,7 +143,7 @@ namespace Apollo
 	{
 		long cTime = GetTickCount();
 
-		long dTime = cTime - m_lastDrawTime;
+		long deltaTime = cTime - m_lastDrawTime;
 		m_lastDrawTime = cTime;
 
 		for (int i = 0; i < m_GameAssets.size(); ++i)
@@ -151,7 +151,7 @@ namespace Apollo
 			// Draw all objects that are visible and on screen
 			if (m_Viewport->IsOnScreen(m_GameAssets[i]))
 			{
-				m_GameAssets[i]->Draw(dTime, m_Viewport);
+				m_GameAssets[i]->Draw(deltaTime, m_Viewport);
 			}
 		}
 	}
