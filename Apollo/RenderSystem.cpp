@@ -1,9 +1,13 @@
 #include "RenderSystem.h"
 
+#include "SceneManager.h"
+
 namespace Apollo
 {
 	RenderSystem::RenderSystem(const char* configPath, const char* windowTitle)
 	{
+		m_SceneManager = NULL;
+
 		Configuration cfg(configPath);
 
 		Create(windowTitle,
@@ -134,6 +138,8 @@ namespace Apollo
 
 	void RenderSystem::Release(void)
 	{
+		ReleaseSceneManager();
+
 		if (m_Backbuffer)
 		{
 			m_Backbuffer->Release();
@@ -165,7 +171,7 @@ namespace Apollo
 		}
 	}
 
-	/*SceneManager* RenderSystem::GetSceneManager(void)
+	SceneManager* RenderSystem::GetSceneManager(void)
 	{
 		if (m_SceneManager == NULL)
 		{
@@ -179,10 +185,10 @@ namespace Apollo
 	{
 		if (m_SceneManager)
 		{
-			m_SceneManager->Release();
+			delete m_SceneManager;
 			m_SceneManager = NULL;
 		}
-	}*/
+	}
 
 	void RenderSystem::StartDrawing(void)
 	{

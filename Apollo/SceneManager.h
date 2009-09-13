@@ -8,6 +8,7 @@
 
 #include "GameObject.h"
 #include "SpriteObject.h"
+#include "TextureAllocator.h"
 #include "Viewport.h"
 
 // should be created by the render system
@@ -33,10 +34,12 @@ namespace Apollo
 		void	Update(void);
 		void	Draw(void);
 
-		inline Viewport*	GetViewport(void)	const	{	return m_Viewport;	}
+		inline TextureAllocator*	GetTextureAllocator(void)	{	return m_TextureAllocator;	}
+		inline Viewport*			GetViewport(void)	const	{	return m_Viewport;			}
 
 	protected:
 		RenderSystem*				m_RenderSystem;
+		TextureAllocator*			m_TextureAllocator;
 		Viewport*					m_Viewport;
 		std::vector<GameObject*>	m_GameAssets;
 

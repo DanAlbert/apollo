@@ -27,7 +27,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MyRegisterClass(hInstance);
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
-	Apollo::SceneManager* scene = new Apollo::SceneManager(apollo);
+	Apollo::SceneManager* scene = apollo->GetSceneManager();
 
 	// Loaded objects cannot be controlled or accessed,
 	// objects must have handles other than just pointers
@@ -98,7 +98,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	scene->SaveState("savedscene.xml");
 
-	delete scene;
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);

@@ -12,9 +12,12 @@
 #include "Debug.h"
 #include "RenderSystem.h"
 #include "Texture.h"
+#include "TextureAllocator.h"
 
 namespace Apollo
 {
+	extern class SceneManager;
+
 	class APOLLO_API Sprite
 	{
 	public:

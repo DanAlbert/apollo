@@ -13,6 +13,8 @@
 
 namespace Apollo
 {
+	extern class SceneManager;
+
 	class APOLLO_API RenderSystem
 	{
 	public:
@@ -39,8 +41,8 @@ namespace Apollo
 
 		void Release(void);
 
-		//SceneManager*	GetSceneManager(void);
-		//void			ReleaseSceneManager(void);
+		SceneManager*	GetSceneManager(void);
+		void			ReleaseSceneManager(void);
 
 		void StartDrawing(void);	// SceneManager should be linked into the render system
 		void EndDrawing(void);		// so that drawing can be a single method
@@ -82,7 +84,7 @@ namespace Apollo
 		ID3DXSprite*		m_SpriteHandler;
 		IDirect3DSurface9*	m_Backbuffer;
 
-		//SceneManager*		m_SceneManager;
+		SceneManager*		m_SceneManager;
 	};
 }
 

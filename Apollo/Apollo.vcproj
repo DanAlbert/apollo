@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TextureAllocator.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Viewport.cpp"
 				>
 			</File>
@@ -283,6 +287,10 @@
 			</File>
 			<File
 				RelativePath=".\Texture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TextureAllocator.h"
 				>
 			</File>
 			<File
