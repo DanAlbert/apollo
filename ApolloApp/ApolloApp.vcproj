@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)Apollo/&quot;;&quot;$(TINYXML_ROOT)&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Apollo/&quot;;&quot;$(TINYXML_ROOT)&quot;;&quot;$(OIS_ROOT)\includes&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)Apollo/&quot;;&quot;$(TINYXML_ROOT)&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Apollo/&quot;;&quot;$(TINYXML_ROOT)&quot;;&quot;$(OIS_ROOT)\includes&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -177,12 +177,20 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\PlayerListener.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\PlayerListener.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

@@ -33,6 +33,7 @@ namespace Apollo
 		elem->SetAttribute("visible", m_Visible);	// May not cast correctly
 		elem->SetDoubleAttribute("x", m_XPosition);
 		elem->SetDoubleAttribute("y", m_YPosition);
+		elem->SetDoubleAttribute("rotation", m_Rotation);
 
 		TiXmlElement* spriteElem = new TiXmlElement("Sprite");
 		elem->LinkEndChild(spriteElem);

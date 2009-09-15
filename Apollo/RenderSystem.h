@@ -13,7 +13,7 @@
 
 namespace Apollo
 {
-	extern class SceneManager;
+	class SceneManager;
 
 	class APOLLO_API RenderSystem
 	{

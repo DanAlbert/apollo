@@ -3,6 +3,8 @@
 #include <SpriteObject.h>
 #include <Viewport.h>
 
+#include "PlayerListener.h"
+
 #define PI 3.1415926353
 
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
@@ -28,11 +30,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
 	Apollo::SceneManager* scene = apollo->GetSceneManager();
+	PlayerListener* listener = new PlayerListener(apollo->GetWindow());
 
 	// Loaded objects cannot be controlled or accessed,
 	// objects must have handles other than just pointers
 	//if (!scene->LoadState("savedscene.xml"))
-	{
+	//{
 		scene->GetViewport()->SetPosition(0.0f, 0.0f);
 
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
@@ -45,11 +48,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		ship->SetPosition((apollo->GetWidth() / 2) - (ship->GetWidth() / 2),
 			(apollo->GetHeight() / 2) - (ship->GetHeight() / 2));
 		ship->Rotate(PI);
-	}
-
-	float xMod = 2.0f;
-	float yMod = 1.0f;
-	float cMod = 1.0f;
+	//}
 
 	// Main message loop
 	bool done = false;
@@ -67,29 +66,44 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
-			/*if ((spr->GetXPosition() > 736) || (spr->GetXPosition() < 0))
+			listener->Update();
+
+			if (listener->GetPlayerMoveForward() && !listener->GetPlayerMoveBackward())
 			{
-				xMod *= -1;
+				float x = 0.0f;
+				float y = 0.0f;
+				float angle = ship->GetRotation();
+				
+				x = sin(angle);
+				y = -cos(angle);
+				ship->Move(x, y);
 			}
 
-			if ((spr->GetYPosition() > 536) || (spr->GetYPosition() < 0))
+			else if (listener->GetPlayerMoveBackward() && !listener->GetPlayerMoveForward())
 			{
-				yMod *= -1;
+				float x = 0.0f;
+				float y = 0.0f;
+				float angle = ship->GetRotation();
+				
+				x = -sin(angle);
+				y = cos(angle);
+				ship->Move(x, y);
 			}
 
-			if ((child->GetRelativeXPosition() < 64) || (child->GetRelativeXPosition() > 128))
+			if (listener->GetPlayerRotateLeft() && !listener->GetPlayerRotateRight())
 			{
-				cMod *= -1;
+				ship->Rotate(-PI / 90);
 			}
 
-			spr->Move(xMod, yMod);
-			child->Move(cMod, 0.0f);*/
+			else if (listener->GetPlayerRotateRight() && !listener->GetPlayerRotateLeft())
+			{
+				ship->Rotate(PI / 90);
+			}
+
+			scene->Update();
 
 			apollo->StartDrawing();
-			
-			scene->Update();
 			scene->Draw();
-			
 			apollo->EndDrawing();
 		}
 
@@ -98,6 +112,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	scene->SaveState("savedscene.xml");
 
+	delete listener;
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);
