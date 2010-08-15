@@ -25,6 +25,7 @@ namespace Apollo
 			unsigned int height,
 			unsigned int bitDepth,
 			unsigned int refreshRate,
+			unsigned int multiSamplingLevel,
 			bool vsync,
 			bool windowed);
 
@@ -36,6 +37,7 @@ namespace Apollo
 			unsigned int height,
 			unsigned int bitDepth,
 			unsigned int refreshRate,
+			unsigned int multiSamplingLevel,
 			bool vsync,
 			bool windowed);
 

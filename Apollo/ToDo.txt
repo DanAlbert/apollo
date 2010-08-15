@@ -13,9 +13,15 @@
 08/14/09| Ini::Save()							-INCOMPLETE-
 08/15/09| Allow Sprites to be rotated			-COMPLETE-
 08/18/09| Asset management (Texture)			-COMPLETE-
-08/18/09| Asset management (SpriteDef)			-OPTIONAL-
+08/18/09| Asset management (SpriteDef)			-INCOMPLETE-
 09/13/09| Add rotation as a scene save value	-COMPLETE-
 09/14/09| InputListener and sample				-COMPLETE-
 09/15/09| Sprite transparency					-COMPLETE-
 09/15/09| Moving sprite shearing bug			-INCOMPLETE-
 09/15/09| Improve debug logging					-INCOMPLETE-
+08/15/10| Implement full scene antialiasing		-COMPLETE-
+08/15/10| Implement better texture filtering	-INCOMPLETE-
+08/15/10| Text rendering						-INCOMPLETE-
+08/15/10| Elapsed time support for ApolloApp	-INCOMPLETE-
+08/15/10| Recapture object pointers after load	-INCOMPLETE-
+08/15/10| Bug tracker for project (Trac)		-INCOMPLETE-

@@ -50,6 +50,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		ship->Rotate(PI);
 	//}
 
+	long lastTime = 0;
+
 	// Main message loop
 	bool done = false;
 	while (!done)
@@ -68,36 +70,45 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		{
 			listener->Update();
 
-			if (listener->GetPlayerMoveForward() && !listener->GetPlayerMoveBackward())
+			long cTime = GetTickCount();
+
+			long dTime = cTime - lastTime;
+
+			if (dTime > 5)
 			{
-				float x = 0.0f;
-				float y = 0.0f;
-				float angle = ship->GetRotation();
+				if (listener->GetPlayerMoveForward() && !listener->GetPlayerMoveBackward())
+				{
+					float x = 0.0f;
+					float y = 0.0f;
+					float angle = ship->GetRotation();
 				
-				x = sin(angle);
-				y = -cos(angle);
-				ship->Move(x, y);
-			}
+					x = sin(angle);
+					y = -cos(angle);
+					ship->Move(x, y);
+				}
 
-			else if (listener->GetPlayerMoveBackward() && !listener->GetPlayerMoveForward())
-			{
-				float x = 0.0f;
-				float y = 0.0f;
-				float angle = ship->GetRotation();
+				else if (listener->GetPlayerMoveBackward() && !listener->GetPlayerMoveForward())
+				{
+					float x = 0.0f;
+					float y = 0.0f;
+					float angle = ship->GetRotation();
 				
-				x = -sin(angle);
-				y = cos(angle);
-				ship->Move(x, y);
-			}
+					x = -sin(angle);
+					y = cos(angle);
+					ship->Move(x, y);
+				}
 
-			if (listener->GetPlayerRotateLeft() && !listener->GetPlayerRotateRight())
-			{
-				ship->Rotate(-PI / 90);
-			}
+				if (listener->GetPlayerRotateLeft() && !listener->GetPlayerRotateRight())
+				{
+					ship->Rotate(-PI / 90);
+				}
 
-			else if (listener->GetPlayerRotateRight() && !listener->GetPlayerRotateLeft())
-			{
-				ship->Rotate(PI / 90);
+				else if (listener->GetPlayerRotateRight() && !listener->GetPlayerRotateLeft())
+				{
+					ship->Rotate(PI / 90);
+				}
+
+				lastTime = cTime;
 			}
 
 			scene->Update();

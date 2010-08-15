@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Apollo", "Apollo\Apollo.vcproj", "{5BD442AE-EBB8-49E7-BFD6-0D3C53AFFDA1}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Apollo", "Apollo\Apollo.vcxproj", "{5BD442AE-EBB8-49E7-BFD6-0D3C53AFFDA1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApolloApp", "ApolloApp\ApolloApp.vcproj", "{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5BD442AE-EBB8-49E7-BFD6-0D3C53AFFDA1} = {5BD442AE-EBB8-49E7-BFD6-0D3C53AFFDA1}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApolloApp", "ApolloApp\ApolloApp.vcxproj", "{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

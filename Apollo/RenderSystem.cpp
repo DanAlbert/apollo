@@ -15,6 +15,7 @@ namespace Apollo
 			cfg.GetYResolution(),
 			cfg.GetBitDepth(),
 			cfg.GetVRefreshRate(),
+			cfg.GetMultiSamplingLevel(),
 			cfg.GetVSync(),
 			cfg.GetWindowed());
 	}
@@ -25,10 +26,11 @@ namespace Apollo
 		unsigned int height,
 		unsigned int bitDepth,
 		unsigned int refreshRate,
+		unsigned int multiSamplingLevel,
 		bool vsync,
 		bool windowed)
 	{
-		Create(windowTitle, width, height, bitDepth, refreshRate, vsync, windowed);
+		Create(windowTitle, width, height, bitDepth, refreshRate, multiSamplingLevel, vsync, windowed);
 	}
 
 	RenderSystem::~RenderSystem(void)
@@ -42,6 +44,7 @@ namespace Apollo
 		unsigned int height,
 		unsigned int bitDepth,
 		unsigned int refreshRate,
+		unsigned int multiSamplingLevel,
 		bool vsync,
 		bool windowed)
 	{
@@ -68,6 +71,7 @@ namespace Apollo
 		pp.BackBufferHeight = height;
 		pp.hDeviceWindow = m_Window->GetWindowHandle();
 
+		// Set display format
 		if (windowed)
 		{
 			D3DDISPLAYMODE d3ddm;
@@ -95,6 +99,21 @@ namespace Apollo
 			pp.FullScreen_RefreshRateInHz = refreshRate;
 		}
 
+		// Setup anti aliasing
+		DWORD quality;
+		if (SUCCEEDED(m_Direct3D->CheckDeviceMultiSampleType(
+			D3DADAPTER_DEFAULT, 
+			D3DDEVTYPE_HAL,
+			pp.BackBufferFormat,
+			windowed, 
+			(D3DMULTISAMPLE_TYPE)multiSamplingLevel,
+			&quality)))
+		{
+			pp.MultiSampleType = (D3DMULTISAMPLE_TYPE)multiSamplingLevel;
+			pp.MultiSampleQuality = 0;
+		}
+
+		// Setup VSync
 		pp.PresentationInterval = vsync ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;	
 
 		Log("[RenderSystem] Creating Direct3D device %dx%dx%u in %s mode.",
@@ -116,6 +135,15 @@ namespace Apollo
 			ErrorQuit("Could not create the Direct3D device.", ERR_APOLLO_RENDERSYSTEM_NODEV);
 			return false;
 		}
+
+		// Texture filtering stuff that doesn't seem to be working.
+		// Go go dadget documentation!
+		/*for (int i = 0; i < 8; i++)
+		{
+			m_Device->SetSamplerState(i, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+			m_Device->SetSamplerState(i, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+			m_Device->SetSamplerState(i, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+		}*/
 
 		Log("[RenderSystem] Creating Direct3D sprite handler.");
 		D3DXCreateSprite(m_Device, &m_SpriteHandler);
