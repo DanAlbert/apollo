@@ -13,7 +13,7 @@
 
 namespace Apollo
 {
-	class SceneManager;
+	class SceneManager; // TODO: Should this be extern?
 
 	class APOLLO_API RenderSystem
 	{
@@ -46,7 +46,7 @@ namespace Apollo
 		SceneManager*	GetSceneManager(void);
 		void			ReleaseSceneManager(void);
 
-		void StartDrawing(void);	// SceneManager should be linked into the render system
+		void StartDrawing(void);	// TODO: SceneManager should be linked into the render system
 		void EndDrawing(void);		// so that drawing can be a single method
 
 		// Accessors //
@@ -70,7 +70,7 @@ namespace Apollo
 			return desc.Height;
 		}
 
-		// These two are only temporarily accessable for testing purposes
+		// TODO: These two are only temporarily accessable for testing purposes
 		inline IDirect3DDevice9*	GetDevice(void)			const	{	return m_Device;		}
 		inline ID3DXSprite*			GetSpriteHandler(void)	const	{	return m_SpriteHandler;	}
 

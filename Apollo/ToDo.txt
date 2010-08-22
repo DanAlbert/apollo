@@ -25,3 +25,7 @@
 08/15/10| Elapsed time support for ApolloApp	-INCOMPLETE-
 08/15/10| Recapture object pointers after load	-INCOMPLETE-
 08/15/10| Bug tracker for project (Trac)		-INCOMPLETE-
+08/22/10| Rendering API indpendent RenderSystem	-INCOMPLETE-
+08/22/10| Multiple viewports					-INCOMPLETE-
+08/22/10| OpenGL support						-INCOMPLETE-
+08/22/10| Linux support							-INCOMPLETE-
