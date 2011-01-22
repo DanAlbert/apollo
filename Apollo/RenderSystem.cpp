@@ -10,14 +10,18 @@ namespace Apollo
 
 		Configuration cfg(configPath);
 
-		Create(windowTitle,
+		if (!Create(
+			windowTitle,
 			cfg.GetXResolution(),
 			cfg.GetYResolution(),
 			cfg.GetBitDepth(),
 			cfg.GetVRefreshRate(),
 			cfg.GetMultiSamplingLevel(),
 			cfg.GetVSync(),
-			cfg.GetWindowed());
+			cfg.GetWindowed()))
+		{
+			
+		}
 	}
 
 	RenderSystem::RenderSystem(
@@ -30,7 +34,17 @@ namespace Apollo
 		bool vsync,
 		bool windowed)
 	{
-		Create(windowTitle, width, height, bitDepth, refreshRate, multiSamplingLevel, vsync, windowed);
+		if (!Create(
+			windowTitle,
+			width,
+			height,
+			bitDepth,
+			refreshRate,
+			multiSamplingLevel,
+			vsync,
+			windowed))
+		{
+		}
 	}
 
 	RenderSystem::~RenderSystem(void)
@@ -75,12 +89,18 @@ namespace Apollo
 		if (windowed)
 		{
 			D3DDISPLAYMODE d3ddm;
-			m_Direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm);
-
-			pp.BackBufferFormat = d3ddm.Format;
+			if (FAILED(m_Direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
+			{
+				pp.BackBufferFormat = D3DFMT_UNKNOWN;
+			}
+			else
+			{
+				pp.BackBufferFormat = d3ddm.Format;
+			}
 		}
 		else
 		{
+			// Should query the available modes before setting
 			switch (bitDepth)
 			{
 			case 16:
@@ -88,15 +108,52 @@ namespace Apollo
 				break;
 
 			case 32:
-				pp.BackBufferFormat = D3DFMT_A8R8G8B8;
+				pp.BackBufferFormat = D3DFMT_X8R8G8B8;
 				break;
 
 			default:
-				pp.BackBufferFormat = D3DFMT_A8R8G8B8;
+				pp.BackBufferFormat = D3DFMT_X8R8G8B8;
 				break;
 			}
 
-			pp.FullScreen_RefreshRateInHz = refreshRate;
+			unsigned int nAdapterModes = m_Direct3D->GetAdapterModeCount(
+				D3DADAPTER_DEFAULT,
+				pp.BackBufferFormat);
+
+			if (!nAdapterModes)
+			{
+				ErrorQuit("The selected pixel format is not supported by the graphics adapter.",
+					ERR_APOLLO_RENDERSYSTEM_PIXELFORMAT);
+				return false;
+			}
+
+			D3DDISPLAYMODE* modes = new D3DDISPLAYMODE[nAdapterModes];
+
+			bool foundMode = false;
+			for (int i = 0; i < nAdapterModes; i++)
+			{
+				m_Direct3D->EnumAdapterModes(
+					D3DADAPTER_DEFAULT,
+					pp.BackBufferFormat,
+					i,
+					&modes[i]);
+
+				if ((modes[i].Width == pp.BackBufferWidth) &&
+					(modes[i].Height == pp.BackBufferHeight) &&
+					(modes[i].RefreshRate == refreshRate))
+				{
+					pp.FullScreen_RefreshRateInHz = refreshRate;
+					foundMode = true;
+				}
+			}
+
+			if (!foundMode)
+			{
+				Log("[RenderSystem] Requested refresh rate not supported. Defaulting to %uHz.",
+					modes[0].RefreshRate);
+			}
+
+			delete [] modes;
 		}
 
 		// Setup anti aliasing
@@ -110,7 +167,7 @@ namespace Apollo
 			&quality)))
 		{
 			pp.MultiSampleType = (D3DMULTISAMPLE_TYPE)multiSamplingLevel;
-			pp.MultiSampleQuality = 0;
+			pp.MultiSampleQuality = 0; // This should be documented, because I don't remember what it means.
 		}
 
 		// Setup VSync

@@ -20,6 +20,7 @@ namespace Apollo
 
 		virtual void	Release(bool releaseChildren = true);
 
+		// This should be made private, calling classes made friend
 		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
 
 		virtual void	Update(long dTime)					= 0;
@@ -52,6 +53,7 @@ namespace Apollo
 		void SetParent(GameObject* parent);
 		void RemoveParent(void);
 
+		// This should be made private, calling classes made friend
 		void AddChild(GameObject* child);		// DO NOT CALL DIRECTLY
 		void RemoveChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
 		
