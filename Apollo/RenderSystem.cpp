@@ -85,98 +85,26 @@ namespace Apollo
 		pp.BackBufferHeight = height;
 		pp.hDeviceWindow = m_Window->GetWindowHandle();
 
-		// Set display format
-		if (windowed)
+		if (!setupDisplayFormat(pp, bitDepth))
 		{
-			D3DDISPLAYMODE d3ddm;
-			if (FAILED(m_Direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
-			{
-				pp.BackBufferFormat = D3DFMT_UNKNOWN;
-			}
-			else
-			{
-				pp.BackBufferFormat = d3ddm.Format;
-			}
+			return false;
 		}
-		else
+		
+		if (!windowed)
 		{
-			// Should query the available modes before setting
-			switch (bitDepth)
-			{
-			case 16:
-				pp.BackBufferFormat = D3DFMT_R5G6B5;
-				break;
-
-			case 32:
-				pp.BackBufferFormat = D3DFMT_X8R8G8B8;
-				break;
-
-			default:
-				pp.BackBufferFormat = D3DFMT_X8R8G8B8;
-				break;
-			}
-
-			unsigned int nAdapterModes = m_Direct3D->GetAdapterModeCount(
-				D3DADAPTER_DEFAULT,
-				pp.BackBufferFormat);
-
-			if (!nAdapterModes)
-			{
-				ErrorQuit("The selected pixel format is not supported by the graphics adapter.",
-					ERR_APOLLO_RENDERSYSTEM_PIXELFORMAT);
-				return false;
-			}
-
-			D3DDISPLAYMODE* modes = new D3DDISPLAYMODE[nAdapterModes];
-
-			bool foundMode = false;
-			for (int i = 0; i < nAdapterModes; i++)
-			{
-				m_Direct3D->EnumAdapterModes(
-					D3DADAPTER_DEFAULT,
-					pp.BackBufferFormat,
-					i,
-					&modes[i]);
-
-				if ((modes[i].Width == pp.BackBufferWidth) &&
-					(modes[i].Height == pp.BackBufferHeight) &&
-					(modes[i].RefreshRate == refreshRate))
-				{
-					pp.FullScreen_RefreshRateInHz = refreshRate;
-					foundMode = true;
-				}
-			}
-
-			if (!foundMode)
-			{
-				Log("[RenderSystem] Requested refresh rate not supported. Defaulting to %uHz.",
-					modes[0].RefreshRate);
-			}
-
-			delete [] modes;
+			setupRefreshRate(pp, refreshRate);
 		}
 
-		// Setup anti aliasing
-		DWORD quality;
-		if (SUCCEEDED(m_Direct3D->CheckDeviceMultiSampleType(
-			D3DADAPTER_DEFAULT, 
-			D3DDEVTYPE_HAL,
-			pp.BackBufferFormat,
-			windowed, 
-			(D3DMULTISAMPLE_TYPE)multiSamplingLevel,
-			&quality)))
-		{
-			pp.MultiSampleType = (D3DMULTISAMPLE_TYPE)multiSamplingLevel;
-			pp.MultiSampleQuality = 0; // This should be documented, because I don't remember what it means.
-		}
+		setupAntiAliasing(pp, multiSamplingLevel);
 
 		// Setup VSync
 		pp.PresentationInterval = vsync ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;	
 
-		Log("[RenderSystem] Creating Direct3D device %dx%dx%u in %s mode.",
+		Log("[RenderSystem] Creating Direct3D device %dx%dx%u@%u in %s mode.",
 			width,
 			height,
-			bitDepth,
+			((pp.BackBufferFormat == D3DFMT_X8R8G8B8) || (pp.BackBufferFormat == D3DFMT_X8R8G8B8)) ? 32 : 16,
+			pp.FullScreen_RefreshRateInHz,
 			(windowed ? "windowed" : "fullscreen"));
 
 		m_Direct3D->CreateDevice(
@@ -297,5 +225,166 @@ namespace Apollo
 
 		// flip
 		m_Device->Present(NULL, NULL, NULL, NULL);
+	}
+
+	bool RenderSystem::setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsigned int bitDepth)
+	{
+		D3DFORMAT formats32[] = {
+			D3DFMT_X8R8G8B8,
+			D3DFMT_A8B8G8R8,
+			D3DFMT_A2R10G10B10
+		};
+
+		D3DFORMAT formats16[] = {
+			D3DFMT_R5G6B5,
+			D3DFMT_X1R5G5B5,
+			D3DFMT_A1R5G5B5
+		};
+		
+		if (pp.Windowed)
+		{
+			D3DDISPLAYMODE d3ddm;
+			if (FAILED(m_Direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
+			{
+				pp.BackBufferFormat = D3DFMT_UNKNOWN;
+			}
+			else
+			{
+				pp.BackBufferFormat = d3ddm.Format;
+			}
+		}
+		else
+		{
+			switch (bitDepth)
+			{
+			case 32:
+				for (int i = 0; i < (sizeof(formats32) / sizeof(D3DFORMAT)); i++)
+				{
+					unsigned int nModes = m_Direct3D->GetAdapterModeCount(
+						D3DADAPTER_DEFAULT,
+						formats32[i]);
+
+					for (int j = 0; j < nModes; j++)
+					{
+						D3DDISPLAYMODE mode;
+						HRESULT result = m_Direct3D->EnumAdapterModes(
+							D3DADAPTER_DEFAULT,
+							formats32[i],
+							j,
+							&mode);
+
+						if (FAILED(result))
+						{
+							// Invalid format, move on to next format
+							break;
+						}
+
+						if ((mode.Width == pp.BackBufferWidth) && (mode.Height == pp.BackBufferHeight))
+						{
+							pp.BackBufferFormat = formats32[i];
+							return true;
+						}
+					}
+				}
+
+				// If we reached this point, there were no valid 32 bit formats for the
+				// requested screen resolution. Keep going to try to find a 16 bit solution.
+
+			case 16:
+				for (int i = 0; i < (sizeof(formats16) / sizeof(D3DFORMAT)); i++)
+				{
+					unsigned int nModes = m_Direct3D->GetAdapterModeCount(
+						D3DADAPTER_DEFAULT,
+						formats16[i]);
+
+					for (int j = 0; j < nModes; j++)
+					{
+						D3DDISPLAYMODE mode;
+						HRESULT result = m_Direct3D->EnumAdapterModes(
+							D3DADAPTER_DEFAULT,
+							formats16[i],
+							j,
+							&mode);
+
+						if (FAILED(result))
+						{
+							// Invalid format, move on to next format
+							break;
+						}
+
+						if ((mode.Width == pp.BackBufferWidth) && (mode.Height == pp.BackBufferHeight))
+						{
+							pp.BackBufferFormat = formats16[i];
+							return true;
+						}
+					}
+				}
+
+				ErrorQuit("Could not find any supported pixel formats for the requested screen resolution.",
+					ERR_APOLLO_RENDERSYSTEM_PIXELFORMAT);
+				return false;
+			}
+		}
+	}
+
+	bool RenderSystem::setupRefreshRate(D3DPRESENT_PARAMETERS& pp, unsigned int refreshRate)
+	{
+		unsigned int nModes = m_Direct3D->GetAdapterModeCount(
+			D3DADAPTER_DEFAULT,
+			pp.BackBufferFormat);
+
+		D3DDISPLAYMODE fallback;
+
+		for (int i = 0; i < nModes; i++)
+		{
+			D3DDISPLAYMODE mode;
+			m_Direct3D->EnumAdapterModes(
+				D3DADAPTER_DEFAULT,
+				pp.BackBufferFormat,
+				i,
+				&mode);
+
+			if ((mode.Width == pp.BackBufferWidth) &&
+				(mode.Height == pp.BackBufferHeight) &&
+				(mode.RefreshRate == refreshRate))
+			{
+				pp.FullScreen_RefreshRateInHz = refreshRate;
+				return true;
+			}
+			
+			if ((mode.Width == pp.BackBufferWidth) &&
+				(mode.Height == pp.BackBufferHeight))
+			{
+				fallback = mode;
+			}
+		}
+		
+		Log("[RenderSystem] Requested refresh rate not supported. Defaulting to %uHz.",
+			refreshRate,
+			fallback.RefreshRate);
+		pp.FullScreen_RefreshRateInHz = fallback.RefreshRate;
+		
+		return false;
+	}
+
+	bool RenderSystem::setupAntiAliasing(D3DPRESENT_PARAMETERS& pp, unsigned int level)
+	{
+		// Setup anti aliasing
+		DWORD quality;
+		if (SUCCEEDED(m_Direct3D->CheckDeviceMultiSampleType(
+			D3DADAPTER_DEFAULT, 
+			D3DDEVTYPE_HAL,
+			pp.BackBufferFormat,
+			pp.Windowed, 
+			(D3DMULTISAMPLE_TYPE)level,
+			&quality)))
+		{
+			pp.MultiSampleType = (D3DMULTISAMPLE_TYPE)level;
+			pp.MultiSampleQuality = 0; // This should be documented, because I don't remember what it means.
+			return true;
+		}
+
+		Log("[RenderSystem] Unable to set multisampling level to %u.", level);
+		return false;
 	}
 }

@@ -87,6 +87,10 @@ namespace Apollo
 		IDirect3DSurface9*	m_Backbuffer;
 
 		SceneManager*		m_SceneManager;
+
+		bool setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsigned int bitDepth);
+		bool setupRefreshRate(D3DPRESENT_PARAMETERS& pp, unsigned int refreshRate);
+		bool setupAntiAliasing(D3DPRESENT_PARAMETERS& pp, unsigned int level);
 	};
 }
 
