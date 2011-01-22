@@ -39,8 +39,8 @@ inline void Log(const char* szFormat, ...)
 	fprintf(
 		fp,
 		"|%02d-%02d-%04d  %02d:%02d:%02d| ",
-		(c->tm_mon + 1),
 		c->tm_mday,
+		(c->tm_mon + 1),
 		(c->tm_year + 1900),
 		c->tm_hour,
 		c->tm_min,
