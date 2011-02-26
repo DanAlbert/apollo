@@ -72,8 +72,7 @@ bool GameManager::loadPlayerState(
 	Player* player;
 	const char* resourcePath;
 
-	spriteElem = element->FirstChildElement("Sprite");
-	resourcePath = spriteElem->Attribute("resource");
+	resourcePath = element->Attribute("resource");
 
 	player = this->CreatePlayer(resourcePath);
 	player->LoadState(element, parent);
@@ -81,7 +80,7 @@ bool GameManager::loadPlayerState(
 	childElem = element->FirstChildElement("Children");
 	if (childElem)
 	{
-		return loadChildObjects(childElem, m_Viewport);
+		return loadChildObjects(childElem, player);
 	}
 
 	return true;

@@ -33,14 +33,12 @@
 #define PLAYER_H
 
 #include <SpriteObject.h>
+#include "PlayerDef.h"
 #include "PlayerListener.h"
 
 #ifndef PI
 #define PI 3.1415926353
 #endif // PI
-
-#define PLAYER_MOVE_SPEED		0.175f
-#define PLAYER_ROTATION_SPEED	(PI / 90.0f) / 8.0f
 
 class Player : public Apollo::SpriteObject
 {
@@ -59,8 +57,12 @@ public:
 private:
 	PlayerListener* playerListener;
 
+	std::string resourcePath;
+
 	double moveSpeed;
 	double rotationSpeed;
+
+	void loadFromFile(const char* path, Apollo::RenderSystem* renderSystem);
 };
 
 #endif // PLAYER_H

@@ -13,7 +13,7 @@ namespace Apollo
 	class APOLLO_API SpriteObject : public GameObject
 	{
 	public:
-		SpriteObject(const char* szPath, RenderSystem* renderSystem);
+		SpriteObject(const char* path, RenderSystem* renderSystem);
 		virtual ~SpriteObject(void);
 
 		virtual void Release(void);
@@ -26,6 +26,10 @@ namespace Apollo
 
 	protected:
 		Sprite*		m_Sprite;
+
+		SpriteObject(void);
+
+		virtual void loadFromFile(const char* path, RenderSystem* renderSystem);
 
 		virtual void setSpriteState(int cFrame, int cFrameTime = 0);
 	};

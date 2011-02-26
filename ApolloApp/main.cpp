@@ -36,7 +36,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		
-		Player* ship = scene->CreatePlayer("Resources/Sprites/Ship.xml");
+		Player* ship = scene->CreatePlayer("Resources/Players/Player.xml");
 
 		child->SetParent(spr);
 		child->SetRelativePosition(64.0f, 0.0f);
@@ -45,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			(apollo->GetHeight() / 2) - (ship->GetHeight() / 2));
 		ship->Rotate(PI);
 	}
-
+	
 	long lastTime = 0;
 
 	// Main message loop

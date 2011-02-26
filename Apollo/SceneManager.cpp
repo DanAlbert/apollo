@@ -141,7 +141,6 @@ namespace Apollo
 
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
-			// Update all objects
 			m_GameAssets[i]->Update(dTime);
 		}
 	}
@@ -155,7 +154,6 @@ namespace Apollo
 
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
-			// Draw all objects that are visible and on screen
 			if (m_Viewport->IsOnScreen(m_GameAssets[i]))
 			{
 				m_GameAssets[i]->Draw(deltaTime, m_Viewport);
@@ -222,7 +220,7 @@ namespace Apollo
 		childElem = element->FirstChildElement("Children");
 		if (childElem)
 		{
-			return loadChildObjects(childElem, m_Viewport);
+			return loadChildObjects(childElem, spriteObject);
 		}
 
 		return true;

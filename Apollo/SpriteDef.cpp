@@ -2,29 +2,43 @@
 
 namespace Apollo
 {
-	SpriteDef::SpriteDef(const char* szPath)
+	SpriteDef::SpriteDef(const char* szPath) :
+		m_Frames(NULL),
+		m_nFrames(0),
+		m_frameTime(0)
 	{
-		m_Frames = NULL;
-		m_nFrames = 0;
-		m_frameTime = 0;
-
 		if (!LoadFromFile(szPath))
 		{
-			Free();
+			Release();
 			return;
 		}
 	}
 
 	SpriteDef::~SpriteDef(void)
 	{
-		Free();
+		Release();
+	}
+
+	inline const char* SpriteDef::GetFrame(int i) const
+	{
+		return m_Frames[i];
+	}
+
+	inline const int SpriteDef::GetNFrames(void) const
+	{
+		return m_nFrames;
+	}
+
+	inline const int SpriteDef::GetFrameTime(void) const
+	{
+		return m_frameTime;
 	}
 
 	// TODO: Overload this method. The other method should accept a
 	// TiXmlElement* to <Sprite>
 	bool SpriteDef::LoadFromFile(const char* szPath)
 	{
-		Free();
+		Release();
 
 		TiXmlDocument doc(szPath);
 		if (!doc.LoadFile(TIXML_ENCODING_UTF8))
@@ -60,7 +74,7 @@ namespace Apollo
 		return true;
 	}
 
-	void SpriteDef::Free(void)
+	void SpriteDef::Release(void)
 	{
 		if (m_Frames)
 		{

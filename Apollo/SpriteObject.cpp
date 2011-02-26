@@ -2,12 +2,14 @@
 
 namespace Apollo
 {
-	SpriteObject::SpriteObject(const char* szPath, RenderSystem* renderSystem)
+	// Private constructor for derived classes
+	SpriteObject::SpriteObject(void)
 	{
-		m_Sprite = new Sprite(szPath, renderSystem);
+	}
 
-		m_Width = m_Sprite->GetMaxWidth();
-		m_Height = m_Sprite->GetMaxHeight();
+	SpriteObject::SpriteObject(const char* path, RenderSystem* renderSystem)
+	{
+		loadFromFile(path, renderSystem);
 	}
 
 	SpriteObject::~SpriteObject(void)
@@ -29,8 +31,8 @@ namespace Apollo
 		TiXmlElement* elem = new TiXmlElement("SpriteObject");
 		parentElement->LinkEndChild(elem);
 
-		elem->SetAttribute("active", m_Active);		// May not cast correctly
-		elem->SetAttribute("visible", m_Visible);	// May not cast correctly
+		elem->SetAttribute("active", m_Active);
+		elem->SetAttribute("visible", m_Visible);
 		elem->SetDoubleAttribute("x", m_XPosition);
 		elem->SetDoubleAttribute("y", m_YPosition);
 		elem->SetDoubleAttribute("rotation", m_Rotation);
@@ -83,18 +85,29 @@ namespace Apollo
 	{
 		if (m_Visible)
 		{
-			// I don't rmember if I did this right... If it doesn't work, this is probabaly the issue.
-			m_Sprite->Draw(
-				m_XPosition - view->GetXPosition(),
-				m_YPosition - view->GetYPosition(),
-				m_Rotation,
-				dTime);
+			if (m_Sprite)
+			{
+				// I don't rmember if I did this right... If it doesn't work, this is probabaly the issue.
+				m_Sprite->Draw(
+					m_XPosition - view->GetXPosition(),
+					m_YPosition - view->GetYPosition(),
+					m_Rotation,
+					dTime);
+			}
 		}
+	}
+
+	void SpriteObject::loadFromFile(const char* path, RenderSystem* renderSystem)
+	{
+		this->m_Sprite = new Sprite(path, renderSystem);
+
+		this->m_Width = m_Sprite->GetMaxWidth();
+		this->m_Height = m_Sprite->GetMaxHeight();
 	}
 
 	void SpriteObject::setSpriteState(int cFrame, int cFrameTime)
 	{
-		m_Sprite->SetCurrentFrame(cFrame);
-		m_Sprite->SetCurrentFrameTime(cFrameTime);
+		this->m_Sprite->SetCurrentFrame(cFrame);
+		this->m_Sprite->SetCurrentFrameTime(cFrameTime);
 	}
 }

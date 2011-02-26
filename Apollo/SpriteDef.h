@@ -13,12 +13,12 @@ namespace Apollo
 		SpriteDef(const char* szPath);
 		~SpriteDef(void);
 
-		inline const char*	GetFrame(int i)		{	return m_Frames[i];	}
-		inline int			GetNFrames(void)	{	return m_nFrames;	}
-		inline int			GetFrameTime(void)	{	return m_frameTime;	}
+		inline const char*	GetFrame(int i) const;
+		inline const int	GetNFrames(void) const;
+		inline const int	GetFrameTime(void) const;
 
 		bool LoadFromFile(const char* szPath);
-		void Free(void);
+		void Release(void);
 
 	protected:
 		char**	m_Frames;
