@@ -5,8 +5,6 @@
 #include "GameManager.h"
 #include "PlayerListener.h"
 
-#define PI 3.1415926353
-
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
