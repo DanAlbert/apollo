@@ -40,16 +40,13 @@ namespace Apollo
 
 	void GameObject::Release(bool releaseChildren)
 	{
-		// Children may not be being released in derived classes
-		// See SpriteObject::Release()
 		RemoveParent();
 
 		for (int i = 0; i < m_Children.size(); ++i)
 		{
 			if (releaseChildren)
 			{
-				m_Children[i]->Release(releaseChildren);	// Can be assumed to be true, parameter is
-															// passed in interest of being thorough
+				m_Children[i]->Release(releaseChildren);
 			}
 			else
 			{

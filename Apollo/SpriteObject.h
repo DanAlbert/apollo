@@ -18,6 +18,8 @@ namespace Apollo
 
 		virtual void Release(void);
 
+		virtual void SetSpriteState(int cFrame, int cFrameTime = 0);
+
 		virtual void SaveState(TiXmlElement*& parentElement);
 
 		virtual void Update(long dTime);

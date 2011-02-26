@@ -29,7 +29,7 @@ namespace Apollo
 		virtual bool LoadState(const char* szPath);
 
 		SpriteObject*	CreateSpriteObject(const char* szPath);
-		void			FreeSpriteObject(SpriteObject* sprite);
+		void			FreeGameObject(GameObject* sprite);
 
 		void	Update(void);
 		void	Draw(void);
@@ -47,6 +47,7 @@ namespace Apollo
 		long m_lastDrawTime;
 
 		virtual bool loadChildObjects(TiXmlElement* element, GameObject* parent = NULL);
+		virtual bool loadObject(TiXmlElement* element, GameObject* parent = NULL);
 		virtual bool loadSpriteObjectState(TiXmlElement* element, GameObject* parent = NULL);
 		virtual bool loadViewportState(TiXmlElement* element, GameObject* parent = NULL);	// Needs to be able to be a child of an object
 	};

@@ -27,23 +27,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MyRegisterClass(hInstance);
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
-	//Apollo::SceneManager* scene = apollo->GetSceneManager();
 	GameManager* scene = new GameManager(apollo);
-	PlayerListener* listener = new PlayerListener(apollo->GetWindow());
 
-	// Loaded objects cannot be controlled or accessed,
-	// objects must have handles other than just pointers
-	//if (!scene->LoadState("savedscene.xml"))
-	//{
+	if (!scene->LoadState("savedscene.xml"))
+	{
 		scene->GetViewport()->SetPosition(0.0f, 0.0f);
 
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		
-		// TODO: Replace with a Player
-		// How to handle creating user objects from the engine?
-		//Apollo::SpriteObject* ship = scene->CreateSpriteObject("Resources/Sprites/Ship.xml");
-		Player* ship = scene->CreatePlayer("Resources/Sprites/Ship.xml", listener);
+		Player* ship = scene->CreatePlayer("Resources/Sprites/Ship.xml");
 
 		child->SetParent(spr);
 		child->SetRelativePosition(64.0f, 0.0f);
@@ -51,7 +44,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		ship->SetPosition((apollo->GetWidth() / 2) - (ship->GetWidth() / 2),
 			(apollo->GetHeight() / 2) - (ship->GetHeight() / 2));
 		ship->Rotate(PI);
-	//}
+	}
 
 	long lastTime = 0;
 
@@ -71,8 +64,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
-			listener->Update();
-
 			scene->Update();
 
 			apollo->StartDrawing();
@@ -85,7 +76,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	scene->SaveState("savedscene.xml");
 
-	delete listener;
 	delete scene;
 	delete apollo;
 

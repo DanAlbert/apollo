@@ -9,16 +9,19 @@ class GameManager : public Apollo::SceneManager
 {
 public:
 	GameManager(Apollo::RenderSystem* renderSystem);
-	GameManager(const GameManager& gm);
 	~GameManager(void);
 		
 	bool SaveState(const char* path);
 	bool LoadState(const char* path);
 
-	Player* CreatePlayer(const char* path, PlayerListener* listener);
+	Player*	CreatePlayer(const char* path);
+
+	void Update(void);
 
 private:
-	bool loadChildObjects(TiXmlElement* element, Apollo::GameObject* parent = NULL);
+	PlayerListener* listener;
+
+	bool loadChildObjects(TiXmlElement* element, Apollo::GameObject* parent = NULL) override;
 	bool loadPlayerState(TiXmlElement* element, Apollo::GameObject* parent = NULL);
 };
 

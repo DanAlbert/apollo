@@ -120,7 +120,7 @@ namespace Apollo
 		return (SpriteObject*)m_GameAssets[m_GameAssets.size() - 1];
 	}
 
-	void SceneManager::FreeSpriteObject(SpriteObject* object)
+	void SceneManager::FreeGameObject(GameObject* object)
 	{
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
@@ -170,32 +170,40 @@ namespace Apollo
 		TiXmlElement* childElem = element->FirstChildElement();
 		for (childElem; childElem; childElem = childElem->NextSiblingElement())
 		{
-			if (!strcmp(childElem->Value(), "SpriteObject"))
+			if (!loadObject(childElem, parent))
 			{
-				if (!loadSpriteObjectState(childElem, parent))
-				{
-					Log("[SceneManager] SpriteObject failed to load correctly.");
-					result = false;
-				}
-			}
-
-			else if (!strcmp(childElem->Value(), "Viewport"))
-			{
-				if (!loadViewportState(childElem, parent))
-				{
-					Log("[SceneManager] SpriteObject failed to load correctly.");
-					result = false;
-				}
-			}
-
-			else
-			{
-				Log("[SceneManager] Unknown object type (%s) encountered while loading.", childElem->Value());
 				result = false;
 			}
 		}
 
 		return result;
+	}
+	
+	bool SceneManager::loadObject(TiXmlElement* element, GameObject* parent)
+	{
+		if (!strcmp(element->Value(), "SpriteObject"))
+		{
+			if (!loadSpriteObjectState(element, parent))
+			{
+				Log("[SceneManager] SpriteObject failed to load correctly.");
+				return false;
+			}
+		}
+
+		else if (!strcmp(element->Value(), "Viewport"))
+		{
+			if (!loadViewportState(element, parent))
+			{
+				Log("[SceneManager] SpriteObject failed to load correctly.");
+				return false;
+			}
+		}
+
+		else
+		{
+			Log("[SceneManager] Unknown object type (%s) encountered while loading.", element->Value());
+			return false;
+		}
 	}
 
 	bool SceneManager::loadSpriteObjectState(TiXmlElement* element, GameObject* parent)
@@ -213,11 +221,13 @@ namespace Apollo
 		int animCount;	// Not yet implemented
 		float x;		// Width and height do not need to be saved
 		float y;		// because they are set when the resource loads
+		float rotation;
 
 		element->QueryIntAttribute("active", &active);
 		element->QueryIntAttribute("visible", &visible);
 		element->QueryFloatAttribute("x", &x);
 		element->QueryFloatAttribute("y", &y);
+		element->QueryFloatAttribute("rotation", &rotation);
 
 		spriteElem = element->FirstChildElement("Sprite");
 
@@ -230,6 +240,9 @@ namespace Apollo
 		spriteObject->SetActive(active);
 		spriteObject->SetVisible(visible);
 		spriteObject->SetPosition(x, y);
+		spriteObject->SetRotation(rotation);
+
+		spriteObject->SetSpriteState(cFrame, animCount);
 
 		childElem = element->FirstChildElement("Children");
 

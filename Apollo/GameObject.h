@@ -53,11 +53,6 @@ namespace Apollo
 		void SetParent(GameObject* parent);
 		void RemoveParent(void);
 
-		// This should be made private, calling classes made friend
-		void AddChild(GameObject* child);		// DO NOT CALL DIRECTLY
-		void RemoveChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
-		
-
 	protected:
 		bool			m_Active;
 		bool			m_Visible;
@@ -69,6 +64,9 @@ namespace Apollo
 
 		GameObject*					m_Parent;
 		std::vector<GameObject*>	m_Children;
+
+		void AddChild(GameObject* child);		// DO NOT CALL DIRECTLY
+		void RemoveChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
 	};
 }
 

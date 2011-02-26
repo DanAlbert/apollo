@@ -39,6 +39,9 @@ namespace Apollo
 		inline unsigned int	GetMaxWidth(void)			const	{	return m_maxWidth;		}
 		inline unsigned int	GetMaxHeight(void)			const	{	return m_maxHeight;		}
 
+		inline void SetCurrentFrame(int cFrame)			{	m_cFrame = cFrame;	}
+		inline void SetCurrentFrameTime(int cFrameTime)	{	m_animCount = cFrameTime;	}
+
 	protected:
 		Texture**		m_Textures;
 

@@ -24,6 +24,12 @@ namespace Apollo
 		}
 	}
 
+	void SpriteObject::SetSpriteState(int cFrame, int cFrameTime)
+	{
+		m_Sprite->SetCurrentFrame(cFrame);
+		m_Sprite->SetCurrentFrameTime(cFrameTime);
+	}
+
 	void SpriteObject::SaveState(TiXmlElement*& parentElement)
 	{
 		TiXmlElement* elem = new TiXmlElement("SpriteObject");
