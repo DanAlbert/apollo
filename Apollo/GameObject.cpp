@@ -55,6 +55,27 @@ namespace Apollo
 		}
 	}
 
+	void GameObject::LoadState(TiXmlElement* element, GameObject* parent)
+	{
+		int active;
+		int visible;
+		float x;
+		float y;
+		float rotation;
+
+		element->QueryIntAttribute("active", &active);
+		element->QueryIntAttribute("visible", &visible);
+		element->QueryFloatAttribute("x", &x);
+		element->QueryFloatAttribute("y", &y);
+		element->QueryFloatAttribute("rotation", &rotation);
+		
+		this->SetParent(parent);
+		this->SetActive(active);
+		this->SetVisible(visible);
+		this->SetPosition(x, y);
+		this->SetRotation(rotation);
+	}
+
 	float GameObject::GetRelativeXPosition(void)
 	{
 		if (m_Parent == NULL)

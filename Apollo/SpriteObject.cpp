@@ -24,12 +24,6 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::SetSpriteState(int cFrame, int cFrameTime)
-	{
-		m_Sprite->SetCurrentFrame(cFrame);
-		m_Sprite->SetCurrentFrameTime(cFrameTime);
-	}
-
 	void SpriteObject::SaveState(TiXmlElement*& parentElement)
 	{
 		TiXmlElement* elem = new TiXmlElement("SpriteObject");
@@ -60,6 +54,24 @@ namespace Apollo
 		}
 	}
 
+	void SpriteObject::LoadState(TiXmlElement* element, GameObject* parent)
+	{
+		TiXmlElement* spriteElem = NULL;
+		
+		int cFrame;
+		int animCount;
+		
+		spriteElem = element->FirstChildElement("Sprite");
+
+		spriteElem->QueryIntAttribute("cFrame", &cFrame);
+		spriteElem->QueryIntAttribute("animCount", &animCount);
+
+		spriteElem = element->FirstChildElement("Sprite");
+
+		this->setSpriteState(cFrame, animCount);
+		GameObject::LoadState(element, parent);
+	}
+
 	void SpriteObject::Update(long dTime)
 	{
 		if (m_Active)
@@ -78,5 +90,11 @@ namespace Apollo
 				m_Rotation,
 				dTime);
 		}
+	}
+
+	void SpriteObject::setSpriteState(int cFrame, int cFrameTime)
+	{
+		m_Sprite->SetCurrentFrame(cFrame);
+		m_Sprite->SetCurrentFrameTime(cFrameTime);
 	}
 }

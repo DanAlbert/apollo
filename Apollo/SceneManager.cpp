@@ -208,47 +208,21 @@ namespace Apollo
 
 	bool SceneManager::loadSpriteObjectState(TiXmlElement* element, GameObject* parent)
 	{
-		TiXmlElement* spriteElem = NULL;
 		TiXmlElement* childElem = NULL;
-
+		TiXmlElement* spriteElem = NULL;
 		SpriteObject* spriteObject;
-
-#pragma message("TODO: Load SpriteObject animation states.")
 		const char* resourcePath;
-		int active;
-		int visible;
-		int cFrame;		// Not yet implemented
-		int animCount;	// Not yet implemented
-		float x;		// Width and height do not need to be saved
-		float y;		// because they are set when the resource loads
-		float rotation;
-
-		element->QueryIntAttribute("active", &active);
-		element->QueryIntAttribute("visible", &visible);
-		element->QueryFloatAttribute("x", &x);
-		element->QueryFloatAttribute("y", &y);
-		element->QueryFloatAttribute("rotation", &rotation);
 
 		spriteElem = element->FirstChildElement("Sprite");
-
 		resourcePath = spriteElem->Attribute("resource");
-		spriteElem->QueryIntAttribute("cFrame", &cFrame);
-		spriteElem->QueryIntAttribute("animCount", &animCount);
 
 		spriteObject = this->CreateSpriteObject(resourcePath);
-		spriteObject->SetParent(parent);
-		spriteObject->SetActive(active);
-		spriteObject->SetVisible(visible);
-		spriteObject->SetPosition(x, y);
-		spriteObject->SetRotation(rotation);
-
-		spriteObject->SetSpriteState(cFrame, animCount);
-
+		spriteObject->LoadState(element, parent);
+		
 		childElem = element->FirstChildElement("Children");
-
 		if (childElem)
 		{
-			loadChildObjects(childElem, spriteObject);
+			return loadChildObjects(childElem, m_Viewport);
 		}
 
 		return true;
@@ -256,26 +230,12 @@ namespace Apollo
 
 	bool SceneManager::loadViewportState(TiXmlElement* element, GameObject* parent)
 	{
-		TiXmlElement* childElem = NULL;
-
-		float x;
-		float y;
-		int width;
-		int height;
-
-		element->QueryFloatAttribute("x", &x);
-		element->QueryFloatAttribute("y", &y);
-		element->QueryIntAttribute("width", &width);
-		element->QueryIntAttribute("height", &height);
-
-		m_Viewport->SetParent(parent);
-		m_Viewport->Resize(width, height);
-		m_Viewport->SetPosition(x, y);
+		m_Viewport->LoadState(element, parent);
 
 		if (!element->NoChildren())
 		{
-			childElem = element->FirstChildElement("Children");
-			loadChildObjects(childElem, m_Viewport);
+			TiXmlElement* childElem = element->FirstChildElement("Children");
+			return loadChildObjects(childElem, m_Viewport);
 		}
 
 		return true;

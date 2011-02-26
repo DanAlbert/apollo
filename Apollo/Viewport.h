@@ -15,6 +15,7 @@ namespace Apollo
 		virtual ~Viewport(void);
 
 		virtual void SaveState(TiXmlElement*& parentElement);
+		virtual void LoadState(TiXmlElement* element, GameObject* parent = NULL);
 
 		inline virtual void Update(long dTime)					{	return;	}	// Nothing to update
 		inline virtual void Draw(long dTime, GameObject* view)	{	return;	}	// Nothing to draw

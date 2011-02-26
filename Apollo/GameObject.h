@@ -22,6 +22,7 @@ namespace Apollo
 
 		// This should be made private, calling classes made friend
 		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
+		virtual void	LoadState(TiXmlElement* element, GameObject* parent = NULL);
 
 		virtual void	Update(long dTime)					= 0;
 		virtual void	Draw(long dTime, GameObject* view)	= 0;

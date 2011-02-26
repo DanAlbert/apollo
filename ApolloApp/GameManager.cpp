@@ -67,47 +67,21 @@ bool GameManager::loadPlayerState(
 	TiXmlElement* element,
 	Apollo::GameObject* parent)
 {
-	TiXmlElement* spriteElem = NULL;
 	TiXmlElement* childElem = NULL;
-
+	TiXmlElement* spriteElem = NULL;
 	Player* player;
-
-#pragma message("TODO: Load SpriteObject animation states.")
 	const char* resourcePath;
-	int active;
-	int visible;
-	int cFrame;		// Not yet implemented
-	int animCount;	// Not yet implemented
-	float x;		// Width and height do not need to be saved
-	float y;		// because they are set when the resource loads
-	float rotation;
-
-	element->QueryIntAttribute("active", &active);
-	element->QueryIntAttribute("visible", &visible);
-	element->QueryFloatAttribute("x", &x);
-	element->QueryFloatAttribute("y", &y);
-	element->QueryFloatAttribute("rotation", &rotation);
 
 	spriteElem = element->FirstChildElement("Sprite");
-
 	resourcePath = spriteElem->Attribute("resource");
-	spriteElem->QueryIntAttribute("cFrame", &cFrame);
-	spriteElem->QueryIntAttribute("animCount", &animCount);
 
 	player = this->CreatePlayer(resourcePath);
-	player->SetParent(parent);
-	player->SetActive(active);
-	player->SetVisible(visible);
-	player->SetPosition(x, y);
-	player->SetRotation(rotation);
-
-	player->SetSpriteState(cFrame, animCount);
-
+	player->LoadState(element, parent);
+	
 	childElem = element->FirstChildElement("Children");
-
 	if (childElem)
 	{
-		loadChildObjects(childElem, player);
+		return loadChildObjects(childElem, m_Viewport);
 	}
 
 	return true;

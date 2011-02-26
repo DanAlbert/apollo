@@ -35,6 +35,19 @@ namespace Apollo
 		}
 	}
 
+	void Viewport::LoadState(TiXmlElement* element, GameObject* parent)
+	{
+		int width;
+		int height;
+
+		element->QueryIntAttribute("width", &width);
+		element->QueryIntAttribute("height", &height);
+		
+		this->Resize(width, height);
+
+		GameObject::LoadState(element, parent);
+	}
+
 	bool Viewport::IsOnScreen(GameObject* object)
 	{
 		if (((object->GetXPosition() + object->GetWidth()) > this->GetXPosition()) &&	// Within left bound
