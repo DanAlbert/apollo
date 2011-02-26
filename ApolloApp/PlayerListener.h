@@ -1,5 +1,5 @@
-#ifndef __PLAYERLISTENER_H__
-#define __PLAYERLISTENER_H__
+#ifndef PLAYERLISTENER_H
+#define PLAYERLISTENER_H
 
 #include <InputListener.h>
 
@@ -12,16 +12,16 @@ public:
 	bool keyPressed(const OIS::KeyEvent& e);
 	bool keyReleased(const OIS::KeyEvent& e);
 
-	bool GetPlayerMoveForward(void)		const	{	return m_PlayerMoveForward;		}
-	bool GetPlayerMoveBackward(void)	const	{	return m_PlayerMoveBackward;	}
-	bool GetPlayerRotateLeft(void)		const	{	return m_PlayerRotateLeft;		}
-	bool GetPlayerRotateRight(void)		const	{	return m_PlayerRotateRight;		}
+	bool GetPlayerMoveForward(void)		const	{	return playerMoveForward;	}
+	bool GetPlayerMoveBackward(void)	const	{	return playerMoveBackward;	}
+	bool GetPlayerRotateLeft(void)		const	{	return playerRotateLeft;	}
+	bool GetPlayerRotateRight(void)		const	{	return playerRotateRight;	}
 
 protected:
-	bool m_PlayerMoveForward;
-	bool m_PlayerMoveBackward;
-	bool m_PlayerRotateLeft;
-	bool m_PlayerRotateRight;
+	bool playerMoveForward;
+	bool playerMoveBackward;
+	bool playerRotateLeft;
+	bool playerRotateRight;
 };
 
-#endif // __PLAYERLISTENER_H__
+#endif // PLAYERLISTENER_H

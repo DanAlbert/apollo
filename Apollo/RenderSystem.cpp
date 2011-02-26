@@ -4,10 +4,13 @@
 
 namespace Apollo
 {
-	RenderSystem::RenderSystem(const char* configPath, const char* windowTitle)
+	RenderSystem::RenderSystem(const char* configPath, const char* windowTitle) :
+			m_Direct3D(NULL),
+			m_Device(NULL),
+			m_SpriteHandler(NULL),
+			m_Backbuffer(NULL),
+			m_SceneManager(NULL)
 	{
-		m_SceneManager = NULL;
-
 		Configuration cfg(configPath);
 
 		if (!Create(
@@ -32,7 +35,12 @@ namespace Apollo
 		unsigned int refreshRate,
 		unsigned int multiSamplingLevel,
 		bool vsync,
-		bool windowed)
+		bool windowed) :
+			m_Direct3D(NULL),
+			m_Device(NULL),
+			m_SpriteHandler(NULL),
+			m_Backbuffer(NULL),
+			m_SceneManager(NULL)
 	{
 		if (!Create(
 			windowTitle,
@@ -62,10 +70,7 @@ namespace Apollo
 		bool vsync,
 		bool windowed)
 	{
-		m_Direct3D = NULL;
-		m_Device = NULL;
-		m_SpriteHandler = NULL;
-		m_Backbuffer = NULL;
+		HRESULT result;
 
 		m_Window = new Window(windowTitle, width, height);
 
@@ -95,27 +100,26 @@ namespace Apollo
 			setupRefreshRate(pp, refreshRate);
 		}
 
-		setupAntiAliasing(pp, multiSamplingLevel);
-
 		// Setup VSync
 		pp.PresentationInterval = vsync ? D3DPRESENT_INTERVAL_ONE : D3DPRESENT_INTERVAL_IMMEDIATE;	
+		
+		setupAntiAliasing(pp, multiSamplingLevel);
 
-		Log("[RenderSystem] Creating Direct3D device %dx%dx%u@%u in %s mode.",
+		Log("[RenderSystem] Creating Direct3D device %dx%dx%u@%uHz in %s mode.",
 			width,
 			height,
 			((pp.BackBufferFormat == D3DFMT_X8R8G8B8) || (pp.BackBufferFormat == D3DFMT_X8R8G8B8)) ? 32 : 16,
 			pp.FullScreen_RefreshRateInHz,
 			(windowed ? "windowed" : "fullscreen"));
 
-		m_Direct3D->CreateDevice(
+		result = m_Direct3D->CreateDevice(
 			D3DADAPTER_DEFAULT,
 			D3DDEVTYPE_HAL,
 			m_Window->GetWindowHandle(),
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 			&pp,
 			&m_Device);
-
-		if (m_Device == NULL)
+		if (result != D3D_OK)
 		{
 			ErrorQuit("Could not create the Direct3D device.", ERR_APOLLO_RENDERSYSTEM_NODEV);
 			return false;
@@ -380,7 +384,8 @@ namespace Apollo
 			&quality)))
 		{
 			pp.MultiSampleType = (D3DMULTISAMPLE_TYPE)level;
-			pp.MultiSampleQuality = 0; // This should be documented, because I don't remember what it means.
+			pp.MultiSampleQuality = 0;
+			Log("[RenderSystem] Set multisampling level to %u.", level);
 			return true;
 		}
 

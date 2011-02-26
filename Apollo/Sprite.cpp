@@ -138,7 +138,6 @@ namespace Apollo
 
 	void Sprite::Draw(float x, float y, long deltaTime)
 	{
-		updateAnimation(deltaTime); // This line wasn't here before... 15/08/2010
 		Draw(x, y, 0.0f, deltaTime);
 	}
 

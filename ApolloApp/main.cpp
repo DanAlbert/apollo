@@ -1,8 +1,8 @@
 #include <RenderSystem.h>
-#include <SceneManager.h>
 #include <SpriteObject.h>
 #include <Viewport.h>
 
+#include "GameManager.h"
 #include "PlayerListener.h"
 
 #define PI 3.1415926353
@@ -29,7 +29,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MyRegisterClass(hInstance);
 
 	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
-	Apollo::SceneManager* scene = apollo->GetSceneManager();
+	//Apollo::SceneManager* scene = apollo->GetSceneManager();
+	GameManager* scene = new GameManager(apollo);
 	PlayerListener* listener = new PlayerListener(apollo->GetWindow());
 
 	// Loaded objects cannot be controlled or accessed,
@@ -40,7 +41,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
-		Apollo::SpriteObject* ship = scene->CreateSpriteObject("Resources/Sprites/Ship.xml");
+		
+		// TODO: Replace with a Player
+		// How to handle creating user objects from the engine?
+		//Apollo::SpriteObject* ship = scene->CreateSpriteObject("Resources/Sprites/Ship.xml");
+		Player* ship = scene->CreatePlayer("Resources/Sprites/Ship.xml", listener);
 
 		child->SetParent(spr);
 		child->SetRelativePosition(64.0f, 0.0f);
@@ -70,47 +75,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		{
 			listener->Update();
 
-			long cTime = GetTickCount();
-
-			long dTime = cTime - lastTime;
-
-			if (dTime > 5)
-			{
-				if (listener->GetPlayerMoveForward() && !listener->GetPlayerMoveBackward())
-				{
-					float x = 0.0f;
-					float y = 0.0f;
-					float angle = ship->GetRotation();
-				
-					x = sin(angle);
-					y = -cos(angle);
-					ship->Move(x, y);
-				}
-
-				else if (listener->GetPlayerMoveBackward() && !listener->GetPlayerMoveForward())
-				{
-					float x = 0.0f;
-					float y = 0.0f;
-					float angle = ship->GetRotation();
-				
-					x = -sin(angle);
-					y = cos(angle);
-					ship->Move(x, y);
-				}
-
-				if (listener->GetPlayerRotateLeft() && !listener->GetPlayerRotateRight())
-				{
-					ship->Rotate(-PI / 90);
-				}
-
-				else if (listener->GetPlayerRotateRight() && !listener->GetPlayerRotateLeft())
-				{
-					ship->Rotate(PI / 90);
-				}
-
-				lastTime = cTime;
-			}
-
 			scene->Update();
 
 			apollo->StartDrawing();
@@ -124,6 +88,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	scene->SaveState("savedscene.xml");
 
 	delete listener;
+	delete scene;
 	delete apollo;
 
 	UnregisterClass(szAppTitle, hInstance);

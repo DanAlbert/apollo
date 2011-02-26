@@ -20,6 +20,8 @@ namespace Apollo
 		Free();
 	}
 
+	// TODO: Overload this method. The other method should accept a
+	// TiXmlElement* to <Sprite>
 	bool SpriteDef::LoadFromFile(const char* szPath)
 	{
 		Free();

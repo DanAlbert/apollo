@@ -1,5 +1,5 @@
-#ifndef __RENDERSYSTEM_H__
-#define __RENDERSYSTEM_H__
+#ifndef RENDERSYSTEM_H
+#define RENDERSYSTEM_H
 
 #include "Apollo.h"
 
@@ -8,7 +8,6 @@
 
 #include "Configuration.h"
 #include "Debug.h"
-//#include "SceneManager.h"
 #include "Window.h"
 
 namespace Apollo
@@ -86,6 +85,8 @@ namespace Apollo
 		ID3DXSprite*		m_SpriteHandler;
 		IDirect3DSurface9*	m_Backbuffer;
 
+		// TODO: Why are this a part of the RenderSystem?
+		// Consider killing this.
 		SceneManager*		m_SceneManager;
 
 		bool setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsigned int bitDepth);
@@ -94,4 +95,4 @@ namespace Apollo
 	};
 }
 
-#endif // __RENDERSYSTEM_H__
+#endif // RENDERSYSTEM_H

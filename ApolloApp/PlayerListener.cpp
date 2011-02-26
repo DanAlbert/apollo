@@ -2,10 +2,10 @@
 
 PlayerListener::PlayerListener(Apollo::Window* window) : InputListener(window)
 {
-	m_PlayerMoveForward = false;
-	m_PlayerMoveBackward = false;
-	m_PlayerRotateLeft = false;
-	m_PlayerRotateRight = false;
+	playerMoveForward = false;
+	playerMoveBackward = false;
+	playerRotateLeft = false;
+	playerRotateRight = false;
 }
 
 PlayerListener::~PlayerListener(void)
@@ -17,16 +17,16 @@ bool PlayerListener::keyPressed(const OIS::KeyEvent& e)
 	switch (e.key)
 	{
 	case OIS::KeyCode::KC_UP:
-		m_PlayerMoveForward = true;
+		playerMoveForward = true;
 		break;
-	case::OIS::KeyCode::KC_DOWN:
-		m_PlayerMoveBackward = true;
+	case OIS::KeyCode::KC_DOWN:
+		playerMoveBackward = true;
 		break;
 	case OIS::KeyCode::KC_LEFT:
-		m_PlayerRotateLeft = true;
+		playerRotateLeft = true;
 		break;
 	case OIS::KeyCode::KC_RIGHT:
-		m_PlayerRotateRight = true;
+		playerRotateRight = true;
 		break;
 	default:
 		break;
@@ -40,16 +40,16 @@ bool PlayerListener::keyReleased(const OIS::KeyEvent& e)
 	switch (e.key)
 	{
 	case OIS::KeyCode::KC_UP:
-		m_PlayerMoveForward = false;
+		playerMoveForward = false;
 		break;
 	case::OIS::KeyCode::KC_DOWN:
-		m_PlayerMoveBackward = false;
+		playerMoveBackward = false;
 		break;
 	case OIS::KeyCode::KC_LEFT:
-		m_PlayerRotateLeft = false;
+		playerRotateLeft = false;
 		break;
 	case OIS::KeyCode::KC_RIGHT:
-		m_PlayerRotateRight = false;
+		playerRotateRight = false;
 		break;
 	default:
 		break;
