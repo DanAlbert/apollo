@@ -31,10 +31,10 @@ namespace Apollo
 		bool keyPressed(const OIS::KeyEvent& e)			{	return true;	}
 		bool keyReleased(const OIS::KeyEvent& e)		{	return true;	}
 
-		protected:
-			OIS::InputManager*	m_InputManager;
-			OIS::Keyboard*		m_Keyboard;
-			OIS::Mouse*			m_Mouse;
+	protected:
+		OIS::InputManager*	m_InputManager;
+		OIS::Keyboard*		m_Keyboard;
+		OIS::Mouse*			m_Mouse;
 	};
 }
 

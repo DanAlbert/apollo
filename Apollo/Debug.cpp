@@ -5,18 +5,22 @@
 
 #include "debug.h"
 
+#include <stdlib.h>
+
 const char LOG_FILE[] = "apollo.log";
 
 // MessageBox() wrappers
 inline void ErrorMessage(const char* szText)
 {
+	Log("%s", szText);
 	MessageBox(NULL, szText, "Error!", MB_OK);
 }
 
 inline void ErrorQuit(const char* szText, int iErrNo)
 {
+	Log("%s (0x%02X)", szText, iErrNo);
 	MessageBox(NULL, szText, "Error!", MB_OK);
-	Log("%s %02X", szText, iErrNo);
+	exit(iErrNo);
 }
 
 inline void Log(const char* szFormat, ...)

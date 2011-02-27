@@ -10,7 +10,7 @@ namespace Apollo
 		m_ResourcePath = NULL;
 
 		SpriteDef def(szPath);
-		m_nFrames = def.GetNFrames();		// Reloading a Sprite with a separate definition will fail
+		m_nFrames = def.GetNFrames();		// Warning: Reloading a Sprite with a separate definition will fail
 		m_animTime = def.GetFrameTime();
 		m_cFrame = 0;
 		m_animCount = 0;

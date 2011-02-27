@@ -108,7 +108,9 @@ namespace Apollo
 		Log("[RenderSystem] Creating Direct3D device %dx%dx%u@%uHz in %s mode.",
 			width,
 			height,
-			((pp.BackBufferFormat == D3DFMT_X8R8G8B8) || (pp.BackBufferFormat == D3DFMT_X8R8G8B8)) ? 32 : 16,
+			((pp.BackBufferFormat == D3DFMT_X8R8G8B8) ||
+			(pp.BackBufferFormat == D3DFMT_A8R8G8B8) ||
+			(pp.BackBufferFormat == D3DFMT_A2R10G10B10)) ? 32 : 16,
 			pp.FullScreen_RefreshRateInHz,
 			(windowed ? "windowed" : "fullscreen"));
 
