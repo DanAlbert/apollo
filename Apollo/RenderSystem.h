@@ -12,7 +12,8 @@
 
 namespace Apollo
 {
-	extern class SceneManager;
+	extern class Texture;
+	extern class TextureAllocator;
 
 	class APOLLO_API RenderSystem
 	{
@@ -42,8 +43,7 @@ namespace Apollo
 
 		void Release(void);
 
-		SceneManager*	GetSceneManager(void);
-		void			ReleaseSceneManager(void);
+		Texture* LoadTexture(const char* path) const;
 
 		void StartDrawing(void);	// TODO: SceneManager should be linked into the render system
 		void EndDrawing(void);		// so that drawing can be a single method
@@ -72,9 +72,6 @@ namespace Apollo
 		// TODO: These two are only temporarily accessable for testing purposes
 		inline IDirect3DDevice9*	GetDevice(void)			const	{	return m_Device;		}
 		inline ID3DXSprite*			GetSpriteHandler(void)	const	{	return m_SpriteHandler;	}
-
-		//inline HWND					GetWindowHandle(void)	const	{	return m_Window;		}
-		//inline IDirect3DSurface9*	GetBackbuffer(void)		const	{	return m_Backbuffer;	}
 		
 		// Modifiers //
 
@@ -85,9 +82,7 @@ namespace Apollo
 		ID3DXSprite*		m_SpriteHandler;
 		IDirect3DSurface9*	m_Backbuffer;
 
-		// TODO: Why are this a part of the RenderSystem?
-		// Consider killing this.
-		SceneManager*		m_SceneManager;
+		TextureAllocator*	m_TextureAllocator;
 
 		bool setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsigned int bitDepth);
 		bool setupRefreshRate(D3DPRESENT_PARAMETERS& pp, unsigned int refreshRate);

@@ -11,7 +11,6 @@ namespace Apollo
 			return;
 		}
 
-		m_TextureAllocator = new TextureAllocator(m_RenderSystem);
 		m_Viewport = new Viewport(m_RenderSystem->GetWidth(), m_RenderSystem->GetHeight());
 
 		m_lastUpdateTime = GetTickCount();
@@ -31,12 +30,6 @@ namespace Apollo
 		}
 
 		m_GameAssets.clear();
-
-		if (m_TextureAllocator)
-		{
-			delete m_TextureAllocator;
-			m_TextureAllocator = NULL;
-		}
 
 		if (m_Viewport)
 		{

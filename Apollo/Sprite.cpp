@@ -100,8 +100,7 @@ namespace Apollo
 			unsigned int width;
 			unsigned int height;
 
-			m_Textures[i] = renderSystem->GetSceneManager()->GetTextureAllocator()->GetResource(animDef->GetFrame(i));
-			//m_Textures[i] = new Texture(animDef->GetFrame(i), renderSystem);
+			m_Textures[i] = renderSystem->LoadTexture(animDef->GetFrame(i));
 
 			width = m_Textures[i]->GetWidth();
 			height = m_Textures[i]->GetHeight();

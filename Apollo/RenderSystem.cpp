@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 
-#include "SceneManager.h"
+#include "Texture.h"
+#include "TextureAllocator.h"
 
 namespace Apollo
 {
@@ -8,8 +9,7 @@ namespace Apollo
 			m_Direct3D(NULL),
 			m_Device(NULL),
 			m_SpriteHandler(NULL),
-			m_Backbuffer(NULL),
-			m_SceneManager(NULL)
+			m_Backbuffer(NULL)
 	{
 		Configuration cfg(configPath);
 
@@ -39,8 +39,7 @@ namespace Apollo
 			m_Direct3D(NULL),
 			m_Device(NULL),
 			m_SpriteHandler(NULL),
-			m_Backbuffer(NULL),
-			m_SceneManager(NULL)
+			m_Backbuffer(NULL)
 	{
 		if (!Create(
 			windowTitle,
@@ -152,12 +151,14 @@ namespace Apollo
 			return false;
 		}
 
+		this->m_TextureAllocator = new TextureAllocator(this);
+
 		return true;
 	}
 
 	void RenderSystem::Release(void)
 	{
-		ReleaseSceneManager();
+		//ReleaseSceneManager();
 
 		if (m_Backbuffer)
 		{
@@ -190,23 +191,9 @@ namespace Apollo
 		}
 	}
 
-	SceneManager* RenderSystem::GetSceneManager(void)
+	Texture* RenderSystem::LoadTexture(const char* path) const
 	{
-		if (m_SceneManager == NULL)
-		{
-			m_SceneManager = new SceneManager(this);
-		}
-
-		return m_SceneManager;
-	}
-
-	void RenderSystem::ReleaseSceneManager(void)
-	{
-		if (m_SceneManager)
-		{
-			delete m_SceneManager;
-			m_SceneManager = NULL;
-		}
+		return this->m_TextureAllocator->GetResource(path);
 	}
 
 	void RenderSystem::StartDrawing(void)

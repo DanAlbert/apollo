@@ -34,12 +34,10 @@ namespace Apollo
 		void	Update(void);
 		void	Draw(void);
 
-		inline TextureAllocator*	GetTextureAllocator(void)	{	return m_TextureAllocator;	}
 		inline Viewport*			GetViewport(void)	const	{	return m_Viewport;			}
 
 	protected:
 		RenderSystem*				m_RenderSystem;
-		TextureAllocator*			m_TextureAllocator;
 		Viewport*					m_Viewport;
 		std::vector<GameObject*>	m_GameAssets;
 
