@@ -6,7 +6,7 @@
 namespace Apollo
 {
 	// Reimplement struct with Save() and Load()
-	class Configuration
+	class APOLLO_API Configuration
 	{
 	public:
 		Configuration(void);

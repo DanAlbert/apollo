@@ -23,14 +23,4 @@ namespace Apollo
 
 		m_Resources.clear();
 	}
-
-	Texture* TextureAllocator::GetResource(const char* szPath)
-	{
-		if (m_Resources.find(szPath) == m_Resources.end())
-		{
-			m_Resources[szPath] = new Texture(szPath, m_RenderSystem);
-		}
-		
-		return m_Resources[szPath];
-	}
 }

@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Apollo", "Apollo\Apollo.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApolloApp", "ApolloApp\ApolloApp.vcxproj", "{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderDirect3D9", "RenderDirect3D9\RenderDirect3D9.vcxproj", "{1776F728-48DC-44F9-8DB9-048E2CED0A86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}.Debug|Win32.Build.0 = Debug|Win32
 		{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}.Release|Win32.ActiveCfg = Release|Win32
 		{7D0AC3A7-B66E-40B5-AE88-971BEEE557A4}.Release|Win32.Build.0 = Release|Win32
+		{1776F728-48DC-44F9-8DB9-048E2CED0A86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1776F728-48DC-44F9-8DB9-048E2CED0A86}.Debug|Win32.Build.0 = Debug|Win32
+		{1776F728-48DC-44F9-8DB9-048E2CED0A86}.Release|Win32.ActiveCfg = Release|Win32
+		{1776F728-48DC-44F9-8DB9-048E2CED0A86}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

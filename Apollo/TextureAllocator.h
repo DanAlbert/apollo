@@ -22,7 +22,7 @@ namespace Apollo
 
 		void Release(void);
 
-		Texture* GetResource(const char* szPath);
+		virtual Texture* GetResource(const char* szPath) = 0;
 
 	protected:
 		stdext::hash_map<std::string, Texture*> m_Resources;

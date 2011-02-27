@@ -10,6 +10,10 @@ const char szAppTitle[] = "Apollo 2D Rendering Engine";
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
+typedef Apollo::RenderSystem *(*CreateRenderSystem)(
+	const char* configPath,
+	const char* windowTitle);
+
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	UNREFERENCED_PARAMETER(lpCmdLine);
@@ -26,7 +30,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MyRegisterClass(hInstance);
 
-	Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
+	//Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
+	Apollo::RenderSystem* apollo;
+
+	HINSTANCE RenderDirect3D9 = LoadLibrary("RenderDirect3D9.dll");
+	if (RenderDirect3D9)
+	{
+		Log("Loaded RenderDirect3D9.dll.");
+		CreateRenderSystem ctor= (CreateRenderSystem)GetProcAddress(RenderDirect3D9, "CreateRenderSystem");
+		if (!ctor)
+		{
+			FreeLibrary(RenderDirect3D9);
+			ErrorQuit("Failed to load CreateRenderSystem() from RenderDirect3D9.dll.");
+		}
+		
+		apollo = ctor("apollo.ini", "Apollo 2D Rendering Engine");
+	}
+
 	GameManager* scene = new GameManager(apollo);
 
 	if (!scene->LoadState("savedscene.xml"))
@@ -35,7 +55,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
 		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
-		
+
 		Player* ship = scene->CreatePlayer("Resources/Players/Player.xml");
 
 		child->SetParent(spr);
@@ -78,7 +98,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	delete scene;
 	delete apollo;
-
+	
+	FreeLibrary(RenderDirect3D9);
+	
 	UnregisterClass(szAppTitle, hInstance);
 
 #ifdef _DEBUG
