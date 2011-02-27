@@ -4,46 +4,30 @@
 
 namespace Apollo
 {
-	Sprite::Sprite(const char* szPath, RenderSystem* renderSystem)
+	Sprite::Sprite(const char* path, RenderSystem* renderSystem) :
+		m_Textures(NULL),
+		m_ResourcePath(NULL)
 	{
-		m_Textures = NULL;
-		m_ResourcePath = NULL;
-
-		SpriteDef def(szPath);
-		m_nFrames = def.GetNFrames();		// Warning: Reloading a Sprite with a separate definition will fail
-		m_animTime = def.GetFrameTime();
-		m_cFrame = 0;
-		m_animCount = 0;
-		m_maxWidth = 0;
-		m_maxHeight = 0;
-
-		if (!Load(&def, renderSystem))
+		if (!Load(path, renderSystem))
 		{
 			Release();
-			return;
 		}
-
-		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(szPath) + 1));
-		if (!m_ResourcePath)
-		{
-			Log("[Sprite] Error allocating memory for resource path (%s). Object may not be able to reload.", szPath);
-		}
-
-		memset(m_ResourcePath, 0, sizeof(char) * (strlen(szPath) + 1));
-		memcpy(m_ResourcePath, szPath, sizeof(char) * strlen(szPath));
 	}
 
 	Sprite::Sprite(const Sprite& s)
 	{
-		m_Textures = s.m_Textures;
 		m_nFrames = s.m_nFrames;
+
+		m_Textures = new Texture*[m_nFrames];
+		memcpy(m_Textures, s.m_Textures, m_nFrames * sizeof(Texture*));
+
 		m_animTime = s.m_animTime;
 		m_maxWidth = s.m_maxWidth;
 		m_maxHeight = s.m_maxHeight;
-		m_cFrame = 0;
-		m_animCount = 0;
-
-		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(s.m_ResourcePath) + 1));
+		m_cFrame = s.m_cFrame;
+		m_animCount = s.m_animCount;
+		
+		m_ResourcePath = new char[strlen(s.m_ResourcePath) + 1];
 		if (!m_ResourcePath)
 		{
 			Log("[Sprite] Error allocating memory for resource path (%s). Object may not be able to reload.", s.m_ResourcePath);
@@ -68,15 +52,18 @@ namespace Apollo
 
 		Release();
 
-		m_Textures = rhs.m_Textures;
 		m_nFrames = rhs.m_nFrames;
+
+		m_Textures = new Texture*[m_nFrames];
+		memcpy(m_Textures, rhs.m_Textures, m_nFrames * sizeof(Texture*));
+
 		m_animTime = rhs.m_animTime;
 		m_cFrame = rhs.m_cFrame;
 		m_animCount = rhs.m_animCount;
 		m_maxWidth = rhs.m_maxWidth;
 		m_maxHeight = rhs.m_maxHeight;
 
-		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(rhs.m_ResourcePath) + 1));
+		m_ResourcePath = new char[strlen(rhs.m_ResourcePath) + 1];
 		if (!m_ResourcePath)
 		{
 			Log("[Sprite] Error allocating memory for resource path (%s). Object may not be able to reload.", rhs.m_ResourcePath);
@@ -88,9 +75,17 @@ namespace Apollo
 		return *this;
 	}
 
-	bool Sprite::Load(SpriteDef* animDef, RenderSystem* renderSystem)
+	bool Sprite::Load(const char* path, RenderSystem* renderSystem)
 	{
 		Release();	// Free any existing resources
+
+		SpriteDef def(path);
+		m_nFrames = def.GetNFrames();
+		m_animTime = def.GetFrameTime();
+		m_cFrame = 0;
+		m_animCount = 0;
+		m_maxWidth = 0;
+		m_maxHeight = 0;
 
 		m_Textures = new Texture*[m_nFrames];
 		memset(m_Textures, 0, m_nFrames * sizeof(Texture*));
@@ -100,7 +95,7 @@ namespace Apollo
 			unsigned int width;
 			unsigned int height;
 
-			m_Textures[i] = renderSystem->LoadTexture(animDef->GetFrame(i));
+			m_Textures[i] = renderSystem->LoadTexture(def.GetFrame(i));
 
 			width = m_Textures[i]->GetWidth();
 			height = m_Textures[i]->GetHeight();
@@ -108,6 +103,16 @@ namespace Apollo
 			m_maxWidth = (width > m_maxWidth) ? width : m_maxWidth;		// Set the objects width and height to the
 			m_maxHeight = (height > m_maxHeight) ? height: m_maxHeight;	// width and height of the largest sprite
 		}
+
+		m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(path) + 1));
+		if (!m_ResourcePath)
+		{
+			Log("[Sprite] Error allocating memory for resource path (%s). Object may not be able to reload.",
+				path);
+		}
+
+		memset(m_ResourcePath, 0, sizeof(char) * (strlen(path) + 1));
+		memcpy(m_ResourcePath, path, sizeof(char) * strlen(path));
 
 		return true;
 	}
@@ -130,7 +135,7 @@ namespace Apollo
 
 		if (m_ResourcePath)
 		{
-			free(m_ResourcePath);
+			delete [] m_ResourcePath;
 			m_ResourcePath = NULL;
 		}
 	}

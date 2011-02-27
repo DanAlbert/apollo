@@ -21,13 +21,13 @@ namespace Apollo
 	class APOLLO_API Sprite
 	{
 	public:
-		Sprite(const char* szPath, RenderSystem* renderSystem);
+		Sprite(const char* path, RenderSystem* renderSystem);
 		Sprite(const Sprite& s);	// Do not use until asset management is in place
 		virtual ~Sprite(void);
 
 		Sprite& operator= (const Sprite& rhs);	// Do not use until asset management is in place
 
-		virtual bool Load(SpriteDef* animDef, RenderSystem* renderSystem);
+		virtual bool Load(const char* path, RenderSystem* renderSystem);
 		virtual void Release(void);
 
 		virtual void Draw(float x, float y, long deltaTime);
