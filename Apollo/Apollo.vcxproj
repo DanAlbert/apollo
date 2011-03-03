@@ -65,9 +65,9 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)_d.dll</OutputFile>
-      <Version>0.1.0.0</Version>
+      <Version>0.2.0.0</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -88,8 +88,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Version>0.1.0.0</Version>
+      <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Version>0.2.0.0</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
