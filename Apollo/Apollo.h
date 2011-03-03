@@ -33,6 +33,17 @@
 #define __APOLLO_H__
 
 #ifdef WIN32
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#pragma warning(disable:4018)
+#pragma warning(disable:4244)
+#pragma warning(disable:4251)
+#pragma warning(disable:4275)
+#pragma warning(disable:4482)
+#pragma warning(disable:4503)
+#pragma warning(disable:4800)
+
 #define WIN32_LEAN_AND_MEAN
 
 #ifndef WINVER

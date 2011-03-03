@@ -7,8 +7,9 @@
 #include <RenderSystem.h>
 #include <Window.h>
 
-extern class Texture;
-extern class TextureAllocator;
+// Class prototypes
+//class Texture;
+//class TextureAllocator;
 
 class RenderSystem_Direct3D9 : public Apollo::RenderSystem
 {
@@ -29,7 +30,7 @@ public:
 
 	~RenderSystem_Direct3D9(void);
 
-	bool Create(
+	bool Initialize(
 		const char* windowTitle,
 		unsigned int width,
 		unsigned int height,

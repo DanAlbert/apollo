@@ -13,7 +13,7 @@ RenderSystem_Direct3D9::RenderSystem_Direct3D9(const char* configPath, const cha
 {
 	Apollo::Configuration cfg(configPath);
 
-	Create(
+	Initialize(
 		windowTitle,
 		cfg.GetXResolution(),
 		cfg.GetYResolution(),
@@ -38,7 +38,7 @@ RenderSystem_Direct3D9::RenderSystem_Direct3D9(
 		m_SpriteHandler(NULL),
 		m_Backbuffer(NULL)
 {
-	Create(
+	Initialize(
 		windowTitle,
 		width,
 		height,
@@ -54,7 +54,7 @@ RenderSystem_Direct3D9::~RenderSystem_Direct3D9(void)
 	Release();
 }
 
-bool RenderSystem_Direct3D9::Create(
+bool RenderSystem_Direct3D9::Initialize(
 	const char* windowTitle,
 	unsigned int width,
 	unsigned int height,
@@ -306,6 +306,8 @@ bool RenderSystem_Direct3D9::setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsig
 			return false;
 		}
 	}
+
+	return false;
 }
 
 bool RenderSystem_Direct3D9::setupRefreshRate(D3DPRESENT_PARAMETERS& pp, unsigned int refreshRate)

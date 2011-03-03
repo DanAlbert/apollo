@@ -10,9 +10,8 @@ const char szAppTitle[] = "Apollo 2D Rendering Engine";
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
-typedef Apollo::RenderSystem *(*CreateRenderSystem)(
-	const char* configPath,
-	const char* windowTitle);
+// Testing functions
+void createScene(Apollo::RenderSystem* renderSystem, GameManager* gameManager);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -31,39 +30,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MyRegisterClass(hInstance);
 
 	//Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
-	Apollo::RenderSystem* apollo;
-
-	HINSTANCE RenderDirect3D9 = LoadLibrary("RenderDirect3D9.dll");
-	if (RenderDirect3D9)
-	{
-		Log("Loaded RenderDirect3D9.dll.");
-		CreateRenderSystem ctor= (CreateRenderSystem)GetProcAddress(RenderDirect3D9, "CreateRenderSystem");
-		if (!ctor)
-		{
-			FreeLibrary(RenderDirect3D9);
-			ErrorQuit("Failed to load CreateRenderSystem() from RenderDirect3D9.dll.");
-		}
-		
-		apollo = ctor("apollo.ini", "Apollo 2D Rendering Engine");
-	}
+	Apollo::RenderSystem* apollo = Apollo::RenderSystem::Create("RenderDirect3D9.dll");
 
 	GameManager* scene = new GameManager(apollo);
 
 	if (!scene->LoadState("savedscene.xml"))
 	{
-		scene->GetViewport()->SetPosition(0.0f, 0.0f);
-
-		Apollo::SpriteObject* spr = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
-		Apollo::SpriteObject* child = scene->CreateSpriteObject("Resources/Sprites/Water.xml");
-
-		Player* ship = scene->CreatePlayer("Resources/Players/Player.xml");
-
-		child->SetParent(spr);
-		child->SetRelativePosition(64.0f, 0.0f);
-
-		ship->SetPosition((apollo->GetWidth() / 2) - (ship->GetWidth() / 2),
-			(apollo->GetHeight() / 2) - (ship->GetHeight() / 2));
-		ship->Rotate(PI);
+		createScene(apollo, scene);
 	}
 	
 	long lastTime = 0;
@@ -98,8 +71,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	delete scene;
 	delete apollo;
-	
-	FreeLibrary(RenderDirect3D9);
 	
 	UnregisterClass(szAppTitle, hInstance);
 
@@ -142,4 +113,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 	return 0;
+}
+
+void createScene(Apollo::RenderSystem* renderSystem, GameManager* gameManager)
+{
+	gameManager->GetViewport()->SetPosition(0.0f, 0.0f);
+
+	Apollo::SpriteObject* spr = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
+	Apollo::SpriteObject* child = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
+
+	Player* ship = gameManager->CreatePlayer("Resources/Players/Player.xml");
+
+	child->SetParent(spr);
+	child->SetRelativePosition(64.0f, 0.0f);
+
+	ship->SetPosition((renderSystem->GetWidth() / 2.0f) - (ship->GetWidth() / 2.0f),
+		(renderSystem->GetHeight() / 2.0f) - (ship->GetHeight() / 2.0f));
+	ship->Rotate((float)PI);
 }

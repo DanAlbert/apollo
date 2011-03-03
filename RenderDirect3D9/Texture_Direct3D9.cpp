@@ -50,7 +50,7 @@ void Texture_Direct3D9::Draw(float x, float y, float rotation)
 	D3DXMATRIX transform;
 	D3DXVECTOR3 position(x, y, 0.0f);
 		
-	D3DXVECTOR2 center(m_Width / 2, m_Height / 2);
+	D3DXVECTOR2 center(m_Width / 2.0f, m_Height / 2.0f);
 	D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, &center, rotation, &D3DXVECTOR2(position));
 		
 	m_SpriteHandler->SetTransform(&transform);

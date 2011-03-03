@@ -119,6 +119,7 @@ namespace Apollo
 		{
 			if (m_GameAssets[i] == object)
 			{
+				delete m_GameAssets.at(i);
 				m_GameAssets.erase(m_GameAssets.begin() + i);
 				return;
 			}
@@ -179,6 +180,10 @@ namespace Apollo
 				Log("[SceneManager] SpriteObject failed to load correctly.");
 				return false;
 			}
+			else
+			{
+				return true;
+			}
 		}
 
 		else if (!strcmp(element->Value(), "Viewport"))
@@ -187,6 +192,10 @@ namespace Apollo
 			{
 				Log("[SceneManager] SpriteObject failed to load correctly.");
 				return false;
+			}
+			else
+			{
+				return true;
 			}
 		}
 
