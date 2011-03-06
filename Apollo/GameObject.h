@@ -66,8 +66,8 @@ namespace Apollo
 		GameObject*					m_Parent;
 		std::vector<GameObject*>	m_Children;
 
-		void AddChild(GameObject* child);		// DO NOT CALL DIRECTLY
-		void RemoveChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
+		void addChild(GameObject* child);		// DO NOT CALL DIRECTLY
+		void removeChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
 	};
 }
 

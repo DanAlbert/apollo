@@ -9,8 +9,9 @@
 
 namespace Apollo
 {
-	extern class Texture;
-	extern class TextureAllocator;
+	// Class prototypes
+	class Texture;
+	class TextureAllocator;
 
 	class APOLLO_API RenderSystem
 	{
@@ -18,7 +19,9 @@ namespace Apollo
 		RenderSystem(void);
 		virtual ~RenderSystem(void);
 
-		virtual bool Create(
+		static RenderSystem* Create(const char* path);
+
+		virtual bool Initialize(
 			const char* windowTitle,
 			unsigned int width,
 			unsigned int height,

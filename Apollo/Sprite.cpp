@@ -121,14 +121,6 @@ namespace Apollo
 	{
 		if (m_Textures)
 		{
-			for (int i = 0; i < m_nFrames; ++i)
-			{
-				if (m_Textures[i])
-				{
-					m_Textures[i]->Release();
-				}
-			}
-			
 			delete [] m_Textures;
 			m_Textures = NULL;
 		}

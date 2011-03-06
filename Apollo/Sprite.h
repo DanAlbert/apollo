@@ -45,10 +45,7 @@ namespace Apollo
 	protected:
 		Texture**		m_Textures;
 
-		char*			m_ResourcePath;	// Will not update if a new image is loaded
-										// Should be resolved with changes due to the
-										// asset management system
-
+		char*			m_ResourcePath;
 		int				m_nFrames;		// Total number of frames in animation.
 		int				m_cFrame;		// Current frame of animation.
 		int				m_animTime;		// How many ticks each frame will be active.

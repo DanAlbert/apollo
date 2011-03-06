@@ -173,7 +173,7 @@ namespace Apollo
 		if (parent)
 		{
 			RemoveParent();
-			parent->AddChild(this);
+			parent->addChild(this);
 			m_Parent = parent;
 		}
 	}
@@ -182,17 +182,17 @@ namespace Apollo
 	{
 		if (m_Parent != NULL)
 		{
-			m_Parent->RemoveChild(this);
+			m_Parent->removeChild(this);
 			m_Parent = NULL;
 		}
 	}
 
-	void GameObject::AddChild(GameObject* child)
+	void GameObject::addChild(GameObject* child)
 	{
 		m_Children.push_back(child);
 	}
 
-	void GameObject::RemoveChild(GameObject* child)
+	void GameObject::removeChild(GameObject* child)
 	{
 		for (int i = 0; i < m_Children.size(); ++i)
 		{

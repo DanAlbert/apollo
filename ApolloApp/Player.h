@@ -53,9 +53,10 @@ public:
 
 	virtual ~Player(void);
 
-	virtual void SaveState(TiXmlElement*& parentElement);
-
-	virtual void Update(long dTime);
+	void SaveState(TiXmlElement*& parentElement);
+	void LoadState(TiXmlElement* element, Apollo::GameObject* parent = NULL);
+	
+	void Update(long dTime);
 
 private:
 	Apollo::Viewport* viewport;
@@ -63,7 +64,8 @@ private:
 
 	std::string resourcePath;
 
-	double moveSpeed; // Linear acceleration for the time being. Will be renamed
+	double maxSpeed;
+	double baseAcceleration;
 	double rotationSpeed;
 	Apollo::Vector2 velocity;
 

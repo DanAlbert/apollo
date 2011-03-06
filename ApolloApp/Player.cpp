@@ -26,6 +26,9 @@ void Player::SaveState(TiXmlElement*& parentElement)
 	elem->SetAttribute("visible", m_Visible);
 	elem->SetDoubleAttribute("x", m_XPosition);
 	elem->SetDoubleAttribute("y", m_YPosition);
+	elem->SetDoubleAttribute("velocity.x", this->velocity.x);
+	elem->SetDoubleAttribute("velocity.y", this->velocity.y);
+	elem->SetDoubleAttribute("y", m_YPosition);
 	elem->SetDoubleAttribute("rotation", m_Rotation);
 
 	TiXmlElement* spriteElem = new TiXmlElement("Sprite");
@@ -47,6 +50,14 @@ void Player::SaveState(TiXmlElement*& parentElement)
 	}
 }
 
+
+void Player::LoadState(TiXmlElement* element, Apollo::GameObject* parent)
+{
+	element->QueryDoubleAttribute("velocity.x", &this->velocity.x);
+	element->QueryDoubleAttribute("velocity.y", &this->velocity.y);
+	Apollo::SpriteObject::LoadState(element, parent);
+}
+
 void Player::Update(long dTime)
 {
 	if (this->m_Active)
@@ -64,7 +75,8 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 
 	this->resourcePath = path;
 
-	this->moveSpeed = def.GetMoveSpeed();
+	this->maxSpeed = def.GetMaxSpeed();
+	this->baseAcceleration = def.GetBaseAcceleration();
 	this->rotationSpeed = def.GetRotationSpeed();
 	SpriteObject::loadFromFile(def.GetSpritePath(), renderSystem);
 }
@@ -72,59 +84,33 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 void Player::updatePosition(long dTime)
 {
 	this->Move(this->velocity.x * dTime, this->velocity.y * dTime);
-
-	/*if (this->playerListener->GetPlayerMoveForward() && !this->playerListener->GetPlayerMoveBackward())
-	{
-		float x = 0.0f;
-		float y = 0.0f;
-		float angle = this->GetRotation();
-				
-		x = sin(angle);
-		y = -cos(angle);
-		this->Move(x * this->moveSpeed * dTime, y * this->moveSpeed * dTime);
-	}
-
-	else if (this->playerListener->GetPlayerMoveBackward() && !this->playerListener->GetPlayerMoveForward())
-	{
-		float x = 0.0f;
-		float y = 0.0f;
-		float angle = this->GetRotation();
-				
-		x = -sin(angle);
-		y = cos(angle);
-		this->Move(x * this->moveSpeed * dTime, y * this->moveSpeed * dTime);
-	}*/
 }
 
 void Player::updateVelocity(long dTime)
 {
 	if (this->playerListener->GetPlayerMoveForward() && !this->playerListener->GetPlayerMoveBackward())
 	{
-		float x = 0.0f;
-		float y = 0.0f;
-		float angle = this->GetRotation();
-				
-		x = sin(angle);
-		y = -cos(angle);
+		float x = sin(this->m_Rotation);
+		float y = -cos(this->m_Rotation);
 
-		this->velocity += Apollo::Vector2(0.001f * dTime * x, 0.001f * dTime * y);
+		this->velocity += Apollo::Vector2(
+			this->baseAcceleration * dTime * x,
+			this->baseAcceleration * dTime * y);
 	}
 
 	else if (this->playerListener->GetPlayerMoveBackward() && !this->playerListener->GetPlayerMoveForward())
 	{
-		float x = 0.0f;
-		float y = 0.0f;
-		float angle = this->GetRotation();
-				
-		x = sin(angle);
-		y = -cos(angle);
+		float x = -sin(this->m_Rotation);
+		float y = cos(this->m_Rotation);
 
-		this->velocity += Apollo::Vector2(0.001f * dTime * x, 0.001f * dTime * y);
+		this->velocity += Apollo::Vector2(
+			this->baseAcceleration * dTime * x,
+			this->baseAcceleration * dTime * y);
 	}
 	
-	if (abs(this->velocity.GetMagnitude()) > 0.175)
+	if (abs(this->velocity.GetMagnitude()) > this->maxSpeed)
 	{
-		this->velocity *= (0.175f * this->velocity.GetMagnitude());
+		this->velocity *= (this->maxSpeed / this->velocity.GetMagnitude());
 	}
 }
 
