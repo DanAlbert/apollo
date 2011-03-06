@@ -228,10 +228,12 @@ bool RenderSystem_Direct3D9::setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsig
 		if (FAILED(m_Direct3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
 		{
 			pp.BackBufferFormat = D3DFMT_UNKNOWN;
+			return true;
 		}
 		else
 		{
 			pp.BackBufferFormat = d3ddm.Format;
+			return true;
 		}
 	}
 	else

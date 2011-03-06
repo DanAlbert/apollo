@@ -114,6 +114,7 @@
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAllocator.cpp" />
+    <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="StringUtil.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAllocator.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="Viewport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

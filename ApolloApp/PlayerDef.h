@@ -12,7 +12,8 @@ public:
 	~PlayerDef(void);
 
 	const char*		GetSpritePath(void) const;
-	const double	GetMoveSpeed(void) const;
+	const double	GetMaxSpeed(void) const;
+	const double	GetBaseAcceleration(void) const;
 	const double	GetRotationSpeed(void) const;
 
 	bool LoadFromFile(const char* path);
@@ -20,7 +21,8 @@ public:
 
 private:
 	std::string spritePath;
-	double moveSpeed;
+	double maxSpeed;
+	double baseAcceleration;
 	double rotationSpeed;
 };
 

@@ -23,8 +23,8 @@ bool GameManager::LoadState(const char* path)
 
 Player* GameManager::CreatePlayer(const char* path)
 {
-		m_GameAssets.push_back(new Player(path, m_RenderSystem, listener));
-		return (Player*)m_GameAssets[m_GameAssets.size() - 1];
+	m_GameAssets.push_back(new Player(path, m_RenderSystem, listener, this->m_Viewport));
+	return (Player*)m_GameAssets[m_GameAssets.size() - 1];
 }
 
 void GameManager::Update(void)
