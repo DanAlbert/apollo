@@ -33,6 +33,8 @@
 #define PLAYER_H
 
 #include <SpriteObject.h>
+#include <Vector2.h>
+#include <Viewport.h>
 #include "PlayerDef.h"
 #include "PlayerListener.h"
 
@@ -46,7 +48,8 @@ public:
 	Player(
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
-		PlayerListener* playerListener);
+		PlayerListener* playerListener,
+		Apollo::Viewport* viewport);
 
 	virtual ~Player(void);
 
@@ -55,14 +58,20 @@ public:
 	virtual void Update(long dTime);
 
 private:
+	Apollo::Viewport* viewport;
 	PlayerListener* playerListener;
 
 	std::string resourcePath;
 
-	double moveSpeed;
+	double moveSpeed; // Linear acceleration for the time being. Will be renamed
 	double rotationSpeed;
+	Apollo::Vector2 velocity;
 
 	void loadFromFile(const char* path, Apollo::RenderSystem* renderSystem);
+	void updatePosition(long dTime);
+	void updateRotation(long dTime);
+	void updateVelocity(long dTime);
+	void wrapScreenEdges(void);
 };
 
 #endif // PLAYER_H
