@@ -56,7 +56,7 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::LoadState(TiXmlElement* element, GameObject* parent)
+	void SpriteObject::LoadState(TiXmlElement* element, SceneObject* parent)
 	{
 		TiXmlElement* spriteElem = NULL;
 		
@@ -71,7 +71,7 @@ namespace Apollo
 		spriteElem = element->FirstChildElement("Sprite");
 
 		this->setSpriteState(cFrame, animCount);
-		GameObject::LoadState(element, parent);
+		SceneObject::LoadState(element, parent);
 	}
 
 	void SpriteObject::Update(long dTime)
@@ -81,7 +81,7 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::Draw(long dTime, GameObject* view)
+	void SpriteObject::Draw(long dTime, SceneObject* view)
 	{
 		if (m_Visible)
 		{

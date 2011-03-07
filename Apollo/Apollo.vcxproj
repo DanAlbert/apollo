@@ -106,12 +106,12 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontDef.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ini.cpp" />
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteDef.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
@@ -129,12 +129,12 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontDef.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ini.h" />
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteDef.h" />
     <ClInclude Include="SpriteObject.h" />

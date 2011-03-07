@@ -38,10 +38,6 @@
 #include "PlayerDef.h"
 #include "PlayerListener.h"
 
-#ifndef PI
-#define PI 3.1415926353
-#endif // PI
-
 class Player : public Apollo::SpriteObject
 {
 public:
@@ -54,7 +50,7 @@ public:
 	virtual ~Player(void);
 
 	void SaveState(TiXmlElement*& parentElement);
-	void LoadState(TiXmlElement* element, Apollo::GameObject* parent = NULL);
+	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
 	void Update(long dTime);
 
@@ -66,7 +62,7 @@ private:
 
 	double maxSpeed;
 	double baseAcceleration;
-	double rotationSpeed;
+	double maxAngularSpeed;
 	Apollo::Vector2 velocity;
 
 	void loadFromFile(const char* path, Apollo::RenderSystem* renderSystem);

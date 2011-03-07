@@ -1,5 +1,5 @@
-#ifndef __GAMEOBJECT_H__
-#define __GAMEOBJECT_H__
+#ifndef SCENEOBJECT_H
+#define SCENEOBJECT_H
 
 #include "Apollo.h"
 
@@ -10,22 +10,22 @@
 
 namespace Apollo
 {
-	class APOLLO_API GameObject
+	class APOLLO_API SceneObject
 	{
 	public:
-		GameObject(void);
-		virtual ~GameObject(void);
+		SceneObject(void);
+		virtual ~SceneObject(void);
 
-		GameObject& operator= (const GameObject& rhs);
+		SceneObject& operator= (const SceneObject& rhs);
 
 		virtual void	Release(bool releaseChildren = true);
 
 		// This should be made private, calling classes made friend
 		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
-		virtual void	LoadState(TiXmlElement* element, GameObject* parent = NULL);
+		virtual void	LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		virtual void	Update(long dTime)					= 0;
-		virtual void	Draw(long dTime, GameObject* view)	= 0;
+		virtual void	Draw(long dTime, SceneObject* view)	= 0;
 
 		// Accessors //
 		inline bool			GetActive(void)		const	{	return m_Active;	}
@@ -35,7 +35,7 @@ namespace Apollo
 		inline float		GetRotation(void)	const	{	return m_Rotation;	}
 		inline unsigned int	GetWidth(void)		const	{	return m_Width;		}
 		inline unsigned int	GetHeight(void)		const	{	return m_Height;	}
-		inline GameObject*	GetParent(void)		const	{	return m_Parent;	}
+		inline SceneObject*	GetParent(void)		const	{	return m_Parent;	}
 
 		float GetRelativeXPosition(void);
 		float GetRelativeYPosition(void);
@@ -51,7 +51,7 @@ namespace Apollo
 		void SetRotation(float rotation);
 		void Rotate(float rotation);
 
-		void SetParent(GameObject* parent);
+		void SetParent(SceneObject* parent);
 		void RemoveParent(void);
 
 	protected:
@@ -63,12 +63,12 @@ namespace Apollo
 		unsigned int	m_Width;
 		unsigned int	m_Height;
 
-		GameObject*					m_Parent;
-		std::vector<GameObject*>	m_Children;
+		SceneObject*				m_Parent;
+		std::vector<SceneObject*>	m_Children;
 
-		void addChild(GameObject* child);		// DO NOT CALL DIRECTLY
-		void removeChild(GameObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
+		void addChild(SceneObject* child);		// DO NOT CALL DIRECTLY
+		void removeChild(SceneObject* child);	// ONLY TO BE CALLED BY SetParent() AND RemoveParent()
 	};
 }
 
-#endif // __GAMEOBJECT_H__
+#endif // SCENEOBJECT_H

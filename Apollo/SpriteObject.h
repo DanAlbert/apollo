@@ -4,13 +4,13 @@
 #include "Apollo.h"
 
 #include "Debug.h"
-#include "GameObject.h"
+#include "SceneObject.h"
 #include "RenderSystem.h"
 #include "Sprite.h"
 
 namespace Apollo
 {
-	class APOLLO_API SpriteObject : public GameObject
+	class APOLLO_API SpriteObject : public SceneObject
 	{
 	public:
 		SpriteObject(const char* path, RenderSystem* renderSystem);
@@ -19,10 +19,10 @@ namespace Apollo
 		virtual void Release(void);
 
 		virtual void SaveState(TiXmlElement*& parentElement);
-		virtual void LoadState(TiXmlElement* element, GameObject* parent = NULL);
+		virtual void LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		virtual void Update(long dTime);
-		virtual void Draw(long dTime, GameObject* view);
+		virtual void Draw(long dTime, SceneObject* view);
 
 	protected:
 		Sprite*		m_Sprite;

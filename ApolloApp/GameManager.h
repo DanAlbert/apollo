@@ -21,8 +21,8 @@ public:
 private:
 	PlayerListener* listener;
 
-	bool loadChildObjects(TiXmlElement* element, Apollo::GameObject* parent = NULL) override;
-	bool loadPlayerState(TiXmlElement* element, Apollo::GameObject* parent = NULL);
+	bool loadChildObjects(TiXmlElement* element, Apollo::SceneObject* parent = NULL) override;
+	bool loadPlayerState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 };
 
 #endif // GAMEMANAGER_H

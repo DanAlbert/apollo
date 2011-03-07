@@ -1,8 +1,8 @@
-#include "GameObject.h"
+#include "SceneObject.h"
 
 namespace Apollo
 {
-	GameObject::GameObject(void)
+	SceneObject::SceneObject(void)
 	{
 		m_Active = true;
 		m_Visible = true;
@@ -14,12 +14,12 @@ namespace Apollo
 		m_Parent = NULL;
 	}
 
-	GameObject::~GameObject(void)
+	SceneObject::~SceneObject(void)
 	{
 		Release();
 	}
 
-	GameObject& GameObject::operator =(const GameObject& rhs)
+	SceneObject& SceneObject::operator =(const SceneObject& rhs)
 	{
 		if (this == &rhs)
 		{
@@ -38,7 +38,7 @@ namespace Apollo
 		return *this;
 	}
 
-	void GameObject::Release(bool releaseChildren)
+	void SceneObject::Release(bool releaseChildren)
 	{
 		RemoveParent();
 
@@ -55,7 +55,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::LoadState(TiXmlElement* element, GameObject* parent)
+	void SceneObject::LoadState(TiXmlElement* element, SceneObject* parent)
 	{
 		int active;
 		int visible;
@@ -76,7 +76,7 @@ namespace Apollo
 		this->SetRotation(rotation);
 	}
 
-	float GameObject::GetRelativeXPosition(void)
+	float SceneObject::GetRelativeXPosition(void)
 	{
 		if (m_Parent == NULL)
 		{
@@ -88,7 +88,7 @@ namespace Apollo
 		}
 	}
 
-	float GameObject::GetRelativeYPosition(void)
+	float SceneObject::GetRelativeYPosition(void)
 	{
 		if (m_Parent == NULL)
 		{
@@ -100,7 +100,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::SetActive(bool active)
+	void SceneObject::SetActive(bool active)
 	{
 		m_Active = active;
 
@@ -110,7 +110,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::SetVisible(bool visible)
+	void SceneObject::SetVisible(bool visible)
 	{
 		m_Visible = visible;
 
@@ -120,7 +120,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::SetPosition(float x, float y)
+	void SceneObject::SetPosition(float x, float y)
 	{
 		float dX = x - m_XPosition;
 		float dY = y - m_YPosition;
@@ -134,7 +134,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::SetRelativePosition(float x, float y)
+	void SceneObject::SetRelativePosition(float x, float y)
 	{
 		float dX = x - GetRelativeXPosition();
 		float dY = y - GetRelativeYPosition();
@@ -147,7 +147,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::Move(float x, float y)
+	void SceneObject::Move(float x, float y)
 	{
 		m_XPosition += x;
 		m_YPosition += y;
@@ -158,17 +158,17 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::SetRotation(float rotation)
+	void SceneObject::SetRotation(float rotation)
 	{
 		m_Rotation = rotation;
 	}
 
-	void GameObject::Rotate(float rotation)
+	void SceneObject::Rotate(float rotation)
 	{
 		m_Rotation += rotation;
 	}
 
-	void GameObject::SetParent(GameObject* parent)
+	void SceneObject::SetParent(SceneObject* parent)
 	{
 		if (parent)
 		{
@@ -178,7 +178,7 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::RemoveParent(void)
+	void SceneObject::RemoveParent(void)
 	{
 		if (m_Parent != NULL)
 		{
@@ -187,12 +187,12 @@ namespace Apollo
 		}
 	}
 
-	void GameObject::addChild(GameObject* child)
+	void SceneObject::addChild(SceneObject* child)
 	{
 		m_Children.push_back(child);
 	}
 
-	void GameObject::removeChild(GameObject* child)
+	void SceneObject::removeChild(SceneObject* child)
 	{
 		for (int i = 0; i < m_Children.size(); ++i)
 		{

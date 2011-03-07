@@ -113,7 +113,7 @@ namespace Apollo
 		return (SpriteObject*)m_GameAssets[m_GameAssets.size() - 1];
 	}
 
-	void SceneManager::FreeGameObject(GameObject* object)
+	void SceneManager::FreeGameObject(SceneObject* object)
 	{
 		for (int i = 0; i < m_GameAssets.size(); ++i)
 		{
@@ -155,7 +155,7 @@ namespace Apollo
 		}
 	}
 
-	bool SceneManager::loadChildObjects(TiXmlElement* element, GameObject* parent)
+	bool SceneManager::loadChildObjects(TiXmlElement* element, SceneObject* parent)
 	{
 		bool result = true;
 
@@ -171,7 +171,7 @@ namespace Apollo
 		return result;
 	}
 	
-	bool SceneManager::loadObject(TiXmlElement* element, GameObject* parent)
+	bool SceneManager::loadObject(TiXmlElement* element, SceneObject* parent)
 	{
 		if (!strcmp(element->Value(), "SpriteObject"))
 		{
@@ -206,7 +206,7 @@ namespace Apollo
 		}
 	}
 
-	bool SceneManager::loadSpriteObjectState(TiXmlElement* element, GameObject* parent)
+	bool SceneManager::loadSpriteObjectState(TiXmlElement* element, SceneObject* parent)
 	{
 		TiXmlElement* childElem = NULL;
 		TiXmlElement* spriteElem = NULL;
@@ -228,7 +228,7 @@ namespace Apollo
 		return true;
 	}
 
-	bool SceneManager::loadViewportState(TiXmlElement* element, GameObject* parent)
+	bool SceneManager::loadViewportState(TiXmlElement* element, SceneObject* parent)
 	{
 		m_Viewport->LoadState(element, parent);
 

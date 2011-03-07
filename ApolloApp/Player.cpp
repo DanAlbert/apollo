@@ -51,7 +51,7 @@ void Player::SaveState(TiXmlElement*& parentElement)
 }
 
 
-void Player::LoadState(TiXmlElement* element, Apollo::GameObject* parent)
+void Player::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 {
 	element->QueryDoubleAttribute("velocity.x", &this->velocity.x);
 	element->QueryDoubleAttribute("velocity.y", &this->velocity.y);
@@ -77,7 +77,7 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 
 	this->maxSpeed = def.GetMaxSpeed();
 	this->baseAcceleration = def.GetBaseAcceleration();
-	this->rotationSpeed = def.GetRotationSpeed();
+	this->maxAngularSpeed = def.GetMaxAngularSpeed();
 	SpriteObject::loadFromFile(def.GetSpritePath(), renderSystem);
 }
 
@@ -118,12 +118,12 @@ void Player::updateRotation(long dTime)
 {
 	if (this->playerListener->GetPlayerRotateLeft() && !this->playerListener->GetPlayerRotateRight())
 	{
-		this->Rotate(-this->rotationSpeed * dTime);
+		this->Rotate(-this->maxAngularSpeed * dTime);
 	}
 
 	else if (this->playerListener->GetPlayerRotateRight() && !this->playerListener->GetPlayerRotateLeft())
 	{
-		this->Rotate(this->rotationSpeed * dTime);
+		this->Rotate(this->maxAngularSpeed * dTime);
 	}
 }
 

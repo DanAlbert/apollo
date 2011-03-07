@@ -6,7 +6,7 @@
 #include <tinyxml.h>
 #include <vector>
 
-#include "GameObject.h"
+#include "SceneObject.h"
 #include "SpriteObject.h"
 #include "TextureAllocator.h"
 #include "Viewport.h"
@@ -29,7 +29,7 @@ namespace Apollo
 		virtual bool LoadState(const char* szPath);
 
 		SpriteObject*	CreateSpriteObject(const char* szPath);
-		void			FreeGameObject(GameObject* sprite);
+		void			FreeGameObject(SceneObject* sprite);
 
 		void	Update(void);
 		void	Draw(void);
@@ -39,15 +39,15 @@ namespace Apollo
 	protected:
 		RenderSystem*				m_RenderSystem;
 		Viewport*					m_Viewport;
-		std::vector<GameObject*>	m_GameAssets;
+		std::vector<SceneObject*>	m_GameAssets;
 
 		long m_lastUpdateTime;
 		long m_lastDrawTime;
 
-		virtual bool loadChildObjects(TiXmlElement* element, GameObject* parent = NULL);
-		virtual bool loadObject(TiXmlElement* element, GameObject* parent = NULL);
-		virtual bool loadSpriteObjectState(TiXmlElement* element, GameObject* parent = NULL);
-		virtual bool loadViewportState(TiXmlElement* element, GameObject* parent = NULL);	// Needs to be able to be a child of an object
+		virtual bool loadChildObjects(TiXmlElement* element, SceneObject* parent = NULL);
+		virtual bool loadObject(TiXmlElement* element, SceneObject* parent = NULL);
+		virtual bool loadSpriteObjectState(TiXmlElement* element, SceneObject* parent = NULL);
+		virtual bool loadViewportState(TiXmlElement* element, SceneObject* parent = NULL);	// Needs to be able to be a child of an object
 	};
 }
 

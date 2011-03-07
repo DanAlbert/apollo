@@ -14,7 +14,7 @@ public:
 	const char*		GetSpritePath(void) const;
 	const double	GetMaxSpeed(void) const;
 	const double	GetBaseAcceleration(void) const;
-	const double	GetRotationSpeed(void) const;
+	const double	GetMaxAngularSpeed(void) const;
 
 	bool LoadFromFile(const char* path);
 	void Release(void);
@@ -23,7 +23,7 @@ private:
 	std::string spritePath;
 	double maxSpeed;
 	double baseAcceleration;
-	double rotationSpeed;
+	double maxAngularSpeed;
 };
 
 #endif // PLAYERDEF_H

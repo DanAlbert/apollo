@@ -35,7 +35,7 @@ void GameManager::Update(void)
 
 bool GameManager::loadChildObjects(
 	TiXmlElement* element,
-	Apollo::GameObject* parent)
+	Apollo::SceneObject* parent)
 {
 	bool result = true;
 
@@ -65,7 +65,7 @@ bool GameManager::loadChildObjects(
 
 bool GameManager::loadPlayerState(
 	TiXmlElement* element,
-	Apollo::GameObject* parent)
+	Apollo::SceneObject* parent)
 {
 	TiXmlElement* childElem = NULL;
 	TiXmlElement* spriteElem = NULL;

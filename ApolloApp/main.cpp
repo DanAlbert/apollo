@@ -6,6 +6,10 @@
 #include "GameManager.h"
 #include "PlayerListener.h"
 
+#ifndef PI
+#define PI 3.1415926353
+#endif // PI
+
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -30,7 +34,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MyRegisterClass(hInstance);
 
-	//Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
 	Apollo::RenderSystem* apollo = Apollo::RenderSystem::Create("RenderDirect3D9.dll");
 	Apollo::Font* font = new Apollo::Font("Resources/Fonts/ApolloSystem.xml", apollo);
 	GameManager* scene = new GameManager(apollo);

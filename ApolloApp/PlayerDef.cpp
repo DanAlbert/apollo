@@ -3,7 +3,7 @@
 PlayerDef::PlayerDef(const char* path) :
 	maxSpeed(0.0f),
 	baseAcceleration(0.0f),
-	rotationSpeed(0.0f)
+	maxAngularSpeed(0.0f)
 {
 	if (!LoadFromFile(path))
 	{
@@ -30,9 +30,9 @@ const double PlayerDef::GetBaseAcceleration(void) const
 	return this->baseAcceleration;
 }
 
-const double PlayerDef::GetRotationSpeed(void) const
+const double PlayerDef::GetMaxAngularSpeed(void) const
 {
-	return this->rotationSpeed;
+	return this->maxAngularSpeed;
 }
 
 bool PlayerDef::LoadFromFile(const char* path)
@@ -48,7 +48,7 @@ bool PlayerDef::LoadFromFile(const char* path)
 	TiXmlElement* spritePathElem;
 	TiXmlElement* maxSpeedElem;
 	TiXmlElement* baseAccelerationElem;
-	TiXmlElement* rotationSpeedElem;
+	TiXmlElement* maxAngularSpeedElem;
 
 	// root
 	elem = hDoc.FirstChildElement().Element(); // /Player
@@ -84,14 +84,14 @@ bool PlayerDef::LoadFromFile(const char* path)
 		ErrorMessage("Element \"BaseAcceleration\" does not exist in Player definition.");
 	}
 
-	rotationSpeedElem = elem->FirstChildElement("RotationSpeed");
-	if (rotationSpeedElem)
+	maxAngularSpeedElem = elem->FirstChildElement("MaxAngularSpeed");
+	if (maxAngularSpeedElem)
 	{
-		this->rotationSpeed = atof(rotationSpeedElem->GetText());
+		this->maxAngularSpeed = atof(maxAngularSpeedElem->GetText());
 	}
 	else
 	{
-		ErrorMessage("Element \"RotationSpeed\" does not exist in Player definition.");
+		ErrorMessage("Element \"MaxAngularSpeed\" does not exist in Player definition.");
 	}
 	
 	return true;
