@@ -61,6 +61,28 @@ void Texture_Direct3D9::Draw(float x, float y, float rotation)
 		D3DCOLOR_XRGB(0xff, 0xff, 0xff));
 }
 
+void Texture_Direct3D9::Draw(float x, float y, float rotation, Apollo::Rectangle* sourceRect)
+{
+	D3DXMATRIX transform;
+	D3DXVECTOR3 position(x, y, 0.0f);
+		
+	D3DXVECTOR2 center(m_Width / 2.0f, m_Height / 2.0f);
+	D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, &center, rotation, &D3DXVECTOR2(position));
+	
+	RECT rect;
+	rect.left = sourceRect->x;
+	rect.right = sourceRect->x + sourceRect->width;
+	rect.top = sourceRect->y;
+	rect.bottom = sourceRect->y + sourceRect->height;
+
+	m_SpriteHandler->SetTransform(&transform);
+	m_SpriteHandler->Draw(m_Resource,
+		&rect,
+		NULL,
+		NULL,
+		D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+}
+
 bool Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device)
 {
 	HRESULT hr;
