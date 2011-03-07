@@ -1,3 +1,4 @@
+#include <Font.h>
 #include <RenderSystem.h>
 #include <SpriteObject.h>
 #include <Viewport.h>
@@ -31,7 +32,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	//Apollo::RenderSystem* apollo = new Apollo::RenderSystem("apollo.ini");
 	Apollo::RenderSystem* apollo = Apollo::RenderSystem::Create("RenderDirect3D9.dll");
-
+	Apollo::Font* font = new Apollo::Font("Resources/Fonts/ApolloSystem.xml", apollo);
 	GameManager* scene = new GameManager(apollo);
 
 	if (!scene->LoadState("savedscene.xml"))
@@ -61,6 +62,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 			apollo->StartDrawing();
 			scene->Draw();
+			font->DrawText("Hello, world!", 20, 100);
 			apollo->EndDrawing();
 		}
 

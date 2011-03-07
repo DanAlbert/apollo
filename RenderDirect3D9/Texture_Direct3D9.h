@@ -21,6 +21,7 @@ public:
 	bool Release(void);
 
 	void Draw(float x, float y, float rotation);
+	void Draw(float x, float y, float rotation, Apollo::Rectangle* sourceRect);
 
 	inline unsigned int	GetWidth(void)	const	{	return m_Width;		}
 	inline unsigned int	GetHeight(void)	const	{	return m_Height;	}

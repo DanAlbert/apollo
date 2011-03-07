@@ -101,11 +101,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterDef.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FontDef.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ini.cpp" />
     <ClCompile Include="InputListener.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -120,11 +124,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apollo.h" />
+    <ClInclude Include="CharacterDef.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FontDef.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ini.h" />
     <ClInclude Include="InputListener.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
