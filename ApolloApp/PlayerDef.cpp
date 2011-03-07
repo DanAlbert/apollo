@@ -45,16 +45,54 @@ bool PlayerDef::LoadFromFile(const char* path)
 	TiXmlElement* elem;
 	TiXmlHandle hRoot(0);
 
+	TiXmlElement* spritePathElem;
+	TiXmlElement* maxSpeedElem;
+	TiXmlElement* baseAccelerationElem;
+	TiXmlElement* rotationSpeedElem;
+
 	// root
 	elem = hDoc.FirstChildElement().Element(); // /Player
 	hRoot = TiXmlHandle(elem);
 	
-	this->spritePath = elem->FirstChildElement("Sprite")->GetText();
-	this->maxSpeed = atof(elem->FirstChildElement("MaxSpeed")->GetText());
-	this->baseAcceleration = atof(elem->FirstChildElement("BaseAcceleration")->GetText());
-	this->rotationSpeed = atof(elem->FirstChildElement("RotationSpeed")->GetText());
-	//elem->QueryDoubleAttribute("move-speed", &moveSpeed);
-	//elem->QueryDoubleAttribute("rotation-speed", &rotationSpeed);
+	spritePathElem = elem->FirstChildElement("Sprite");
+	if (spritePathElem)
+	{
+		this->spritePath = spritePathElem->GetText();
+	}
+	else
+	{
+		ErrorMessage("Element \"Sprite\" does not exist in Player definition.");
+	}
+
+	maxSpeedElem = elem->FirstChildElement("MaxSpeed");
+	if (maxSpeedElem)
+	{
+		this->maxSpeed = atof(maxSpeedElem->GetText());
+	}
+	else
+	{
+		ErrorMessage("Element \"MaxSpeed\" does not exist in Player definition.");
+	}
+
+	baseAccelerationElem = elem->FirstChildElement("BaseAcceleration");
+	if (baseAccelerationElem)
+	{
+		this->baseAcceleration = atof(baseAccelerationElem->GetText());
+	}
+	else
+	{
+		ErrorMessage("Element \"BaseAcceleration\" does not exist in Player definition.");
+	}
+
+	rotationSpeedElem = elem->FirstChildElement("RotationSpeed");
+	if (rotationSpeedElem)
+	{
+		this->rotationSpeed = atof(rotationSpeedElem->GetText());
+	}
+	else
+	{
+		ErrorMessage("Element \"RotationSpeed\" does not exist in Player definition.");
+	}
 	
 	return true;
 }
