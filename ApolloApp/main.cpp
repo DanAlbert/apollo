@@ -41,6 +41,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 	
 	long lastTime = 0;
+	long frames = 0;
+	char fpsString[32] = "0 FPS";
 
 	// Main message loop
 	bool done = false;
@@ -58,12 +60,32 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 		else
 		{
+			long cTime = GetTickCount();
+			long dTime = cTime - lastTime;
+			if (dTime > 100)
+			{
+				lastTime = cTime;
+
+				int fps = floor(frames / (dTime / 1000.0f));
+
+				//Log("%d FPS", dTime);
+				sprintf(fpsString, "%d FPS", fps);
+				frames = 0;
+			}
+
 			scene->Update();
 
 			apollo->StartDrawing();
 			scene->Draw();
-			font->DrawText("Hello, world!", 20, 100);
+
+			font->DrawText(
+				fpsString,
+				apollo->GetWidth() - font->TextWidth(fpsString) - 10.0f,
+				10.0f);
+
 			apollo->EndDrawing();
+			
+			frames++;
 		}
 
 		done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;

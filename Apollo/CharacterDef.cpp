@@ -16,12 +16,18 @@ namespace Apollo
 		unsigned int x,
 		unsigned int y,
 		unsigned int width,
-		unsigned int height) :
+		unsigned int height,
+		int xOffset,
+		int yOffset,
+		int xAdvance) :
 			value(value),
 			x(x),
 			y(y),
 			width(width),
-			height(height)
+			height(height),
+			xOffset(xOffset),
+			yOffset(yOffset),
+			xAdvance(xAdvance)
 	{
 	}
 
@@ -52,5 +58,20 @@ namespace Apollo
 	inline const unsigned int CharacterDef::GetHeight(void) const
 	{
 		return this->height;
+	}
+
+	inline const int CharacterDef::GetXOffset(void) const
+	{
+		return this->xOffset;
+	}
+
+	inline const int CharacterDef::GetYOffset(void) const
+	{
+		return this->yOffset;
+	}
+
+	inline const int CharacterDef::GetXAdvance(void) const
+	{
+		return this->xAdvance;
 	}
 }

@@ -13,6 +13,8 @@ namespace Apollo
 		Font(const char* path, RenderSystem* renderSystem);
 		~Font(void);
 
+		unsigned int TextWidth(const char* text) const;
+
 		void DrawText(const char* text, float x, float y) const;
 
 	private:

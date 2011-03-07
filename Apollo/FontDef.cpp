@@ -44,19 +44,28 @@ namespace Apollo
 			int y;
 			int width;
 			int height;
+			int xOffset;
+			int yOffset;
+			int xAdvance;
 
 			value = (char)atoi(elem->GetText());
 			elem->QueryIntAttribute("x", &x);
 			elem->QueryIntAttribute("y", &y);
 			elem->QueryIntAttribute("width", &width);
 			elem->QueryIntAttribute("height", &height);
+			elem->QueryIntAttribute("x-offset", &xOffset);
+			elem->QueryIntAttribute("y-offset", &yOffset);
+			elem->QueryIntAttribute("x-advance", &xAdvance);
 
 			this->characters[value] = CharacterDef(
 				value,
 				x,
 				y,
 				width,
-				height);
+				height,
+				xOffset,
+				yOffset,
+				xAdvance);
 		}
 
 		return true;

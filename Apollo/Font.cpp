@@ -12,13 +12,24 @@ namespace Apollo
 	Font::~Font(void)
 	{
 	}
+	
+	unsigned int Font::TextWidth(const char* text) const
+	{
+		unsigned int width = 0;
+		for (text; *text; text++)
+		{
+			width += fontDef[*text].GetXAdvance();
+		}
+
+		return width;
+	}
 
 	void Font::DrawText(const char* text, float x, float y) const
 	{
 		for (text; *text; text++)
 		{
 			this->drawCharacter(*text, x, y);
-			x += fontDef[*text].GetWidth();
+			x += fontDef[*text].GetXAdvance();
 		}
 	}
 
@@ -35,6 +46,13 @@ namespace Apollo
 			this->fontDef[character].GetWidth(),
 			this->fontDef[character].GetHeight());
 
-		texture->Draw(x, y, 0.0f, &rect);
+		int xOffset = this->fontDef[character].GetXOffset();
+		int yOffset = this->fontDef[character].GetYOffset();
+
+		texture->Draw(
+			x + xOffset,
+			y + yOffset,
+			0.0f,
+			&rect);
 	}
 }

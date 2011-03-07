@@ -14,7 +14,10 @@ namespace Apollo
 			unsigned int x,
 			unsigned int y,
 			unsigned int width,
-			unsigned int height);
+			unsigned int height,
+			int xOffset,
+			int yOffset,
+			int xAdvance);
 		~CharacterDef(void);
 
 		inline const char GetValue(void) const;
@@ -22,6 +25,9 @@ namespace Apollo
 		inline const unsigned int GetY(void) const;
 		inline const unsigned int GetWidth(void) const;
 		inline const unsigned int GetHeight(void) const;
+		inline const int GetXOffset(void) const;
+		inline const int GetYOffset(void) const;
+		inline const int GetXAdvance(void) const;
 
 	private:
 		char value;
@@ -29,6 +35,9 @@ namespace Apollo
 		unsigned int y;
 		unsigned int width;
 		unsigned int height;
+		int xOffset;
+		int yOffset;
+		int xAdvance;
 	};
 }
 
