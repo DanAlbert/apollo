@@ -14,7 +14,7 @@ namespace Apollo
 		Viewport(unsigned int width, unsigned int height);
 		virtual ~Viewport(void);
 
-		virtual void SaveState(TiXmlElement*& parentElement);
+		virtual void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 		virtual void LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		inline virtual void Update(long dTime)					{	return;	}	// Nothing to update

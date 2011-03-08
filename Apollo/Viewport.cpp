@@ -13,26 +13,24 @@ namespace Apollo
 		Release();
 	}
 
-	void Viewport::SaveState(TiXmlElement*& parentElement)
+	void Viewport::SaveState(TiXmlElement*& element, bool elementIsParent)
 	{
-		TiXmlElement* elem = new TiXmlElement("Viewport");
-		parentElement->LinkEndChild(elem);
+		TiXmlElement* elem;
 
-		elem->SetDoubleAttribute("x", m_XPosition);
-		elem->SetDoubleAttribute("y", m_YPosition);
+		if (elementIsParent)
+		{
+			elem = new TiXmlElement("Viewport");
+			element->LinkEndChild(elem);
+		}
+		else
+		{
+			elem = element;
+		}
+		
 		elem->SetAttribute("width", m_Width);
 		elem->SetAttribute("height", m_Height);
 
-		if (m_Children.size() > 0)
-		{
-			TiXmlElement* childElem = new TiXmlElement("Children");
-			elem->LinkEndChild(childElem);
-
-			for (int i = 0; i < m_Children.size(); ++i)
-			{
-				m_Children[i]->SaveState(childElem);
-			}
-		}
+		SceneObject::SaveState(elem, false);
 	}
 
 	void Viewport::LoadState(TiXmlElement* element, SceneObject* parent)

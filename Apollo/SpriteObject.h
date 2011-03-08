@@ -18,7 +18,7 @@ namespace Apollo
 
 		virtual void Release(void);
 
-		virtual void SaveState(TiXmlElement*& parentElement);
+		virtual void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 		virtual void LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		virtual void Update(long dTime);

@@ -49,7 +49,7 @@ public:
 
 	virtual ~Player(void);
 
-	void SaveState(TiXmlElement*& parentElement);
+	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
 	void Update(long dTime);

@@ -21,7 +21,7 @@ namespace Apollo
 		virtual void	Release(bool releaseChildren = true);
 
 		// This should be made private, calling classes made friend
-		virtual void	SaveState(TiXmlElement*& parentElement) = 0;
+		virtual void	SaveState(TiXmlElement*& element, bool elementIsParent = true) = 0;
 		virtual void	LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		virtual void	Update(long dTime)					= 0;

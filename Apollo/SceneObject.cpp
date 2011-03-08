@@ -55,6 +55,39 @@ namespace Apollo
 		}
 	}
 
+	void SceneObject::SaveState(TiXmlElement*& element, bool elementIsParent)
+	{
+		TiXmlElement* elem;
+
+		if (elementIsParent)
+		{
+			Log("[SceneObject] Warning: Saving bare SceneObject.");
+			elem = new TiXmlElement("SceneObject");
+			element->LinkEndChild(elem);
+		}
+		else
+		{
+			elem = element;
+		}
+		
+		elem->SetAttribute("active", m_Active);
+		elem->SetAttribute("visible", m_Visible);
+		elem->SetDoubleAttribute("x", m_XPosition);
+		elem->SetDoubleAttribute("y", m_YPosition);
+		elem->SetDoubleAttribute("rotation", m_Rotation);
+
+		if (m_Children.size() > 0)
+		{
+			TiXmlElement* childElem = new TiXmlElement("Children");
+			elem->LinkEndChild(childElem);
+
+			for (int i = 0; i < m_Children.size(); ++i)
+			{
+				m_Children[i]->SaveState(childElem);
+			}
+		}
+	}
+
 	void SceneObject::LoadState(TiXmlElement* element, SceneObject* parent)
 	{
 		int active;

@@ -26,17 +26,20 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::SaveState(TiXmlElement*& parentElement)
+	void SpriteObject::SaveState(TiXmlElement*& element, bool elementIsParent)
 	{
-		TiXmlElement* elem = new TiXmlElement("SpriteObject");
-		parentElement->LinkEndChild(elem);
+		TiXmlElement* elem;
 
-		elem->SetAttribute("active", m_Active);
-		elem->SetAttribute("visible", m_Visible);
-		elem->SetDoubleAttribute("x", m_XPosition);
-		elem->SetDoubleAttribute("y", m_YPosition);
-		elem->SetDoubleAttribute("rotation", m_Rotation);
-
+		if (elementIsParent)
+		{
+			elem = new TiXmlElement("SpriteObject");
+			element->LinkEndChild(elem);
+		}
+		else
+		{
+			elem = element;
+		}
+		
 		TiXmlElement* spriteElem = new TiXmlElement("Sprite");
 		elem->LinkEndChild(spriteElem);
 
@@ -44,16 +47,7 @@ namespace Apollo
 		spriteElem->SetAttribute("cFrame", m_Sprite->GetCurrentFrame());
 		spriteElem->SetAttribute("animCount", m_Sprite->GetCurrentFrameTime());
 
-		if (m_Children.size() > 0)
-		{
-			TiXmlElement* childElem = new TiXmlElement("Children");
-			elem->LinkEndChild(childElem);
-
-			for (int i = 0; i < m_Children.size(); ++i)
-			{
-				m_Children[i]->SaveState(childElem);
-			}
-		}
+		SceneObject::SaveState(elem, false);
 	}
 
 	void SpriteObject::LoadState(TiXmlElement* element, SceneObject* parent)

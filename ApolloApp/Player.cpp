@@ -16,38 +16,25 @@ Player::~Player(void)
 {
 }
 
-void Player::SaveState(TiXmlElement*& parentElement)
+void Player::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
-	TiXmlElement* elem = new TiXmlElement("Player");
-	parentElement->LinkEndChild(elem);
+	TiXmlElement* elem;
 
+	if (elementIsParent)
+	{
+		elem = new TiXmlElement("Player");
+		element->LinkEndChild(elem);
+	}
+	else
+	{
+		elem = element;
+	}
+	
 	elem->SetAttribute("resource", this->resourcePath.c_str());
-	elem->SetAttribute("active", m_Active);
-	elem->SetAttribute("visible", m_Visible);
-	elem->SetDoubleAttribute("x", m_XPosition);
-	elem->SetDoubleAttribute("y", m_YPosition);
 	elem->SetDoubleAttribute("velocity.x", this->velocity.x);
 	elem->SetDoubleAttribute("velocity.y", this->velocity.y);
-	elem->SetDoubleAttribute("y", m_YPosition);
-	elem->SetDoubleAttribute("rotation", m_Rotation);
 
-	TiXmlElement* spriteElem = new TiXmlElement("Sprite");
-	elem->LinkEndChild(spriteElem);
-
-	spriteElem->SetAttribute("resource", m_Sprite->GetResourcePath());
-	spriteElem->SetAttribute("cFrame", m_Sprite->GetCurrentFrame());
-	spriteElem->SetAttribute("animCount", m_Sprite->GetCurrentFrameTime());
-
-	if (m_Children.size() > 0)
-	{
-		TiXmlElement* childElem = new TiXmlElement("Children");
-		elem->LinkEndChild(childElem);
-
-		for (int i = 0; i < m_Children.size(); ++i)
-		{
-			m_Children[i]->SaveState(childElem);
-		}
-	}
+	SpriteObject::SaveState(elem, false);
 }
 
 
