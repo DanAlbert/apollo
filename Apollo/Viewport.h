@@ -15,7 +15,6 @@ namespace Apollo
 		virtual ~Viewport(void);
 
 		virtual void SaveState(TiXmlElement*& element, bool elementIsParent = true);
-		virtual void LoadState(TiXmlElement* element, SceneObject* parent = NULL);
 
 		inline virtual void Update(long dTime)					{	return;	}	// Nothing to update
 		inline virtual void Draw(long dTime, SceneObject* view)	{	return;	}	// Nothing to draw

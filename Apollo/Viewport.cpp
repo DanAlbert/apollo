@@ -26,24 +26,8 @@ namespace Apollo
 		{
 			elem = element;
 		}
-		
-		elem->SetAttribute("width", m_Width);
-		elem->SetAttribute("height", m_Height);
 
 		SceneObject::SaveState(elem, false);
-	}
-
-	void Viewport::LoadState(TiXmlElement* element, SceneObject* parent)
-	{
-		int width;
-		int height;
-
-		element->QueryIntAttribute("width", &width);
-		element->QueryIntAttribute("height", &height);
-		
-		this->Resize(width, height);
-
-		SceneObject::LoadState(element, parent);
 	}
 
 	bool Viewport::IsOnScreen(SceneObject* object)
