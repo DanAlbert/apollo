@@ -20,8 +20,18 @@ public:
 
 	bool Release(void);
 
-	void Draw(float x, float y, float rotation);
-	void Draw(float x, float y, float rotation, Apollo::Rectangle* sourceRect);
+	void Draw(
+		float x,
+		float y,
+		float rotation,
+		const Apollo::Color color = Apollo::Color::White);
+
+	void Draw(
+		float x,
+		float y,
+		float rotation,
+		Apollo::Rectangle* sourceRect,
+		const Apollo::Color color = Apollo::Color::White);
 
 	inline unsigned int	GetWidth(void)	const	{	return m_Width;		}
 	inline unsigned int	GetHeight(void)	const	{	return m_Height;	}

@@ -2,6 +2,7 @@
 #define FONT_H
 
 #include "Apollo.h"
+#include "Color.h"
 #include "FontDef.h"
 #include "RenderSystem.h"
 
@@ -15,14 +16,14 @@ namespace Apollo
 
 		unsigned int TextWidth(const char* text) const;
 
-		void DrawText(const char* text, float x, float y) const;
+		void DrawText(const char* text, float x, float y, Color color = Color::White) const;
 
 	private:
 		Texture* texture;
 		FontDef fontDef;
 
 		void loadResource(RenderSystem* renderSystem);
-		void drawCharacter(char character, float x, float y) const;
+		void drawCharacter(char character, float x, float y, Color color = Color::White) const;
 	};
 }
 

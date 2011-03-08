@@ -2,6 +2,7 @@
 #define __TEXTURE_H__
 
 #include "Apollo.h"
+#include "Color.h"
 #include "Rectangle.h"
 #include "RenderSystem.h"
 
@@ -15,8 +16,18 @@ namespace Apollo
 
 		virtual bool Release(void) = 0;
 
-		virtual void Draw(float x, float y, float rotation) = 0;
-		virtual void Draw(float x, float y, float rotation, Rectangle* sourceRect) = 0;
+		virtual void Draw(
+			float x,
+			float y,
+			float rotation,
+			const Color color = Color::White) = 0;
+
+		virtual void Draw(
+			float x,
+			float y,
+			float rotation,
+			Rectangle* sourceRect,
+			const Color color = Color::White) = 0;
 
 		virtual inline unsigned int	GetWidth(void)	const	{	return m_Width;		}
 		virtual inline unsigned int	GetHeight(void)	const	{	return m_Height;	}

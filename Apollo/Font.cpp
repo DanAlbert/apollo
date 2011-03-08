@@ -24,11 +24,11 @@ namespace Apollo
 		return width;
 	}
 
-	void Font::DrawText(const char* text, float x, float y) const
+	void Font::DrawText(const char* text, float x, float y, Color color) const
 	{
 		for (text; *text; text++)
 		{
-			this->drawCharacter(*text, x, y);
+			this->drawCharacter(*text, x, y, color);
 			x += fontDef[*text].GetXAdvance();
 		}
 	}
@@ -38,7 +38,7 @@ namespace Apollo
 		this->texture = renderSystem->LoadTexture(this->fontDef.GetResourcePath());
 	}
 
-	void Font::drawCharacter(char character, float x, float y) const
+	void Font::drawCharacter(char character, float x, float y, Color color) const
 	{
 		Rectangle rect(
 			this->fontDef[character].GetX(),
@@ -53,6 +53,7 @@ namespace Apollo
 			x + xOffset,
 			y + yOffset,
 			0.0f,
-			&rect);
+			&rect,
+			color);
 	}
 }

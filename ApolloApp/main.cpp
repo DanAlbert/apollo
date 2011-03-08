@@ -84,7 +84,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			font->DrawText(
 				fpsString,
 				apollo->GetWidth() - font->TextWidth(fpsString) - 10.0f,
-				10.0f);
+				10.0f,
+				Apollo::Color::White);
 
 			apollo->EndDrawing();
 			

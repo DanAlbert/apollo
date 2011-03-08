@@ -45,23 +45,32 @@ bool Texture_Direct3D9::Release(void)
 	return true;
 }
 
-void Texture_Direct3D9::Draw(float x, float y, float rotation)
+void Texture_Direct3D9::Draw(
+	float x,
+	float y,
+	float rotation,
+	const Apollo::Color color)
 {
 	D3DXMATRIX transform;
 	D3DXVECTOR3 position(x, y, 0.0f);
 		
 	D3DXVECTOR2 center(m_Width / 2.0f, m_Height / 2.0f);
 	D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, &center, rotation, &D3DXVECTOR2(position));
-		
+
 	m_SpriteHandler->SetTransform(&transform);
 	m_SpriteHandler->Draw(m_Resource,
 		NULL,
 		NULL,
 		NULL,
-		D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+		D3DCOLOR_XRGB(color.r, color.g, color.b));
 }
 
-void Texture_Direct3D9::Draw(float x, float y, float rotation, Apollo::Rectangle* sourceRect)
+void Texture_Direct3D9::Draw(
+		float x,
+		float y,
+		float rotation,
+		Apollo::Rectangle* sourceRect,
+		const Apollo::Color color)
 {
 	D3DXMATRIX transform;
 	D3DXVECTOR3 position(x, y, 0.0f);
@@ -70,6 +79,7 @@ void Texture_Direct3D9::Draw(float x, float y, float rotation, Apollo::Rectangle
 	D3DXMatrixTransformation2D(&transform, NULL, 0.0, NULL, &center, rotation, &D3DXVECTOR2(position));
 	
 	RECT rect;
+	
 	rect.left = sourceRect->x;
 	rect.right = sourceRect->x + sourceRect->width;
 	rect.top = sourceRect->y;
@@ -80,7 +90,7 @@ void Texture_Direct3D9::Draw(float x, float y, float rotation, Apollo::Rectangle
 		&rect,
 		NULL,
 		NULL,
-		D3DCOLOR_XRGB(0xff, 0xff, 0xff));
+		D3DCOLOR_XRGB(color.r, color.g, color.b));
 }
 
 bool Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device)

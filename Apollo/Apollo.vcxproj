@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterDef.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="Apollo.h" />
     <ClInclude Include="CharacterDef.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Font.h" />
