@@ -6,8 +6,7 @@ Player::Player(
 	PlayerListener* playerListener,
 	Apollo::Viewport* viewport) :
 		playerListener(playerListener),
-		viewport(viewport),
-		velocity()
+		GameObject(viewport)
 {
 	this->loadFromFile(path, renderSystem);
 }
@@ -31,29 +30,25 @@ void Player::SaveState(TiXmlElement*& element, bool elementIsParent)
 	}
 	
 	elem->SetAttribute("resource", this->resourcePath.c_str());
-	elem->SetDoubleAttribute("velocity.x", this->velocity.x);
-	elem->SetDoubleAttribute("velocity.y", this->velocity.y);
 
-	SpriteObject::SaveState(elem, false);
+	GameObject::SaveState(elem, false);
 }
 
 
 void Player::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 {
-	element->QueryDoubleAttribute("velocity.x", &this->velocity.x);
-	element->QueryDoubleAttribute("velocity.y", &this->velocity.y);
-	Apollo::SpriteObject::LoadState(element, parent);
+	GameObject::LoadState(element, parent);
 }
 
 void Player::Update(long dTime)
 {
 	if (this->m_Active)
 	{
-		this->updateRotation(dTime);
+		this->updateAngularVelocity(dTime);
 		this->updateVelocity(dTime);
-		this->updatePosition(dTime);
-		this->wrapScreenEdges();
 	}
+	
+	GameObject::Update(dTime);
 }
 
 void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
@@ -66,11 +61,6 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 	this->baseAcceleration = def.GetBaseAcceleration();
 	this->maxAngularSpeed = def.GetMaxAngularSpeed();
 	SpriteObject::loadFromFile(def.GetSpritePath(), renderSystem);
-}
-
-void Player::updatePosition(long dTime)
-{
-	this->Move(this->velocity.x * dTime, this->velocity.y * dTime);
 }
 
 void Player::updateVelocity(long dTime)
@@ -101,36 +91,20 @@ void Player::updateVelocity(long dTime)
 	}
 }
 
-void Player::updateRotation(long dTime)
+void Player::updateAngularVelocity(long dTime)
 {
 	if (this->playerListener->GetPlayerRotateLeft() && !this->playerListener->GetPlayerRotateRight())
 	{
-		this->Rotate(-this->maxAngularSpeed * dTime);
+		this->angularVelocity = -this->maxAngularSpeed;
 	}
 
 	else if (this->playerListener->GetPlayerRotateRight() && !this->playerListener->GetPlayerRotateLeft())
 	{
-		this->Rotate(this->maxAngularSpeed * dTime);
-	}
-}
-
-void Player::wrapScreenEdges(void)
-{
-	if ((this->m_XPosition + this->m_Width) < this->viewport->GetXPosition())
-	{
-		this->m_XPosition = this->viewport->GetXPosition() + this->viewport->GetWidth();
-	}
-	else if (this->m_XPosition > (this->viewport->GetXPosition() + this->viewport->GetWidth()))
-	{
-		this->m_XPosition = this->viewport->GetXPosition() - this->m_Width;
+		this->angularVelocity = this->maxAngularSpeed;
 	}
 
-	if ((this->m_YPosition + this->m_Height) < this->viewport->GetYPosition())
+	else
 	{
-		this->m_YPosition = this->viewport->GetYPosition() + this->viewport->GetHeight();
-	}
-	else if (this->m_YPosition > (this->viewport->GetYPosition() + this->viewport->GetHeight()))
-	{
-		this->m_YPosition = this->viewport->GetYPosition() - this->m_Height;
+		this->angularVelocity = 0.0f;
 	}
 }

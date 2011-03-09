@@ -19,9 +19,6 @@ public:
 	~TextureAllocator_Direct3D9(void);
 
 	Apollo::Texture* GetResource(const char* szPath);
-
-protected:
-	//stdext::hash_map<std::string, Apollo::Texture*> m_Resources;
 };
 
 #endif // TEXTUREALLOCATOR_DIRECT3D9_H

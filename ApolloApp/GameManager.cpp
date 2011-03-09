@@ -27,6 +27,12 @@ Player* GameManager::CreatePlayer(const char* path)
 	return (Player*)m_GameAssets[m_GameAssets.size() - 1];
 }
 
+Asteroid* GameManager::CreateAsteroid(const char* path)
+{
+	m_GameAssets.push_back(new Asteroid(path, m_RenderSystem, this->m_Viewport));
+	return (Asteroid*)m_GameAssets[m_GameAssets.size() - 1];
+}
+
 void GameManager::Update(void)
 {
 	this->listener->Update();
@@ -47,6 +53,15 @@ bool GameManager::loadChildObjects(
 			if (!loadPlayerState(childElem, parent))
 			{
 				Log("[GameManager] Player failed to load correctly.");
+				result = false;
+			}
+		}
+		
+		else if (!strcmp(childElem->Value(), "Asteroid"))
+		{
+			if (!loadAsteroidState(childElem, parent))
+			{
+				Log("[GameManager] Asteroid failed to load correctly.");
 				result = false;
 			}
 		}
@@ -84,4 +99,34 @@ bool GameManager::loadPlayerState(
 	}
 
 	return true;
+}
+
+bool GameManager::loadAsteroidState(
+	TiXmlElement* element,
+	Apollo::SceneObject* parent)
+{
+	TiXmlElement* childElem = NULL;
+	TiXmlElement* spriteElem = NULL;
+	Asteroid* asteroid;
+	const char* resourcePath;
+
+	resourcePath = element->Attribute("resource");
+
+	if (resourcePath)
+	{
+		asteroid = this->CreateAsteroid(resourcePath);
+		asteroid->LoadState(element, parent);
+	
+		childElem = element->FirstChildElement("Children");
+		if (childElem)
+		{
+			return loadChildObjects(childElem, asteroid);
+		}
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

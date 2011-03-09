@@ -10,13 +10,16 @@
 #define PI 3.1415926353
 #endif // PI
 
+#define NUM_ASTEROIDS 8
+
 const char szAppTitle[] = "Apollo 2D Rendering Engine";
 
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 
 // Testing functions
-void createScene(Apollo::RenderSystem* renderSystem, GameManager* gameManager);
+void createScene(GameManager* gameManager);
+void generateAsteroidField(GameManager* gameManager, int nAsteroids);
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -40,7 +43,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	if (!scene->LoadState("savedscene.xml"))
 	{
-		createScene(apollo, scene);
+		createScene(scene);
 	}
 	
 	long lastTime = 0;
@@ -143,19 +146,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void createScene(Apollo::RenderSystem* renderSystem, GameManager* gameManager)
+void createScene(GameManager* gameManager)
 {
 	gameManager->GetViewport()->SetPosition(0.0f, 0.0f);
 
-	Apollo::SpriteObject* spr = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
-	Apollo::SpriteObject* child = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
+	//Apollo::SpriteObject* spr = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
+	//Apollo::SpriteObject* child = gameManager->CreateSpriteObject("Resources/Sprites/Water.xml");
 
 	Player* ship = gameManager->CreatePlayer("Resources/Players/Player.xml");
+	
+	generateAsteroidField(gameManager, NUM_ASTEROIDS);
 
-	child->SetParent(spr);
-	child->SetRelativePosition(64.0f, 0.0f);
-
-	ship->SetPosition((renderSystem->GetWidth() / 2.0f) - (ship->GetWidth() / 2.0f),
-		(renderSystem->GetHeight() / 2.0f) - (ship->GetHeight() / 2.0f));
+	ship->SetPosition((gameManager->GetViewport()->GetWidth() / 2.0f) - (ship->GetWidth() / 2.0f),
+		(gameManager->GetViewport()->GetHeight() / 2.0f) - (ship->GetHeight() / 2.0f));
 	ship->Rotate((float)PI);
+}
+
+void generateAsteroidField(GameManager* gameManager, int nAsteroids)
+{
+	for (int i = 0; i < nAsteroids; i++)
+	{
+		Asteroid* asteroid = gameManager->CreateAsteroid("Resources/Sprites/LargeAsteroid.xml");
+		
+		asteroid->SetPosition(
+			rand() % gameManager->GetViewport()->GetWidth(),
+			rand() % gameManager->GetViewport()->GetHeight());
+	}
 }

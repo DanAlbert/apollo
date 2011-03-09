@@ -1,8 +1,8 @@
 /**
- * @file Player.h
+ * @file GameObject.h
  * @author Dan Albert
- * @date Created 23/02/2011
- * @date Last updated 23/02/2011
+ * @date Created 09/03/2011
+ * @date Last updated 09/03/2011
  * @version 1.0
  *
  * @section LICENSE
@@ -26,46 +26,42 @@
  * 
  * @section DESCRIPTION
  * 
- * Defines a sprite object that responds to player input.
+ * Defines a sprite object with basic kinematic properties that wraps at screen edges.
  * 
  */
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
+#include <SpriteObject.h>
 #include <Vector2.h>
 #include <Viewport.h>
-#include "GameObject.h"
-#include "PlayerDef.h"
-#include "PlayerListener.h"
 
-class Player : public GameObject
+class GameObject : public Apollo::SpriteObject
 {
 public:
-	Player(
+	GameObject(
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
-		PlayerListener* playerListener,
 		Apollo::Viewport* viewport);
 
-	virtual ~Player(void);
+	virtual ~GameObject(void);
 
 	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
 	void Update(long dTime);
 
-private:
-	PlayerListener* playerListener;
+protected:
+	Apollo::Viewport* viewport;
+	
+	Apollo::Vector2 velocity;
+	double angularVelocity;
 
-	std::string resourcePath;
+	GameObject(Apollo::Viewport* viewport);
 
-	double maxSpeed;
-	double baseAcceleration;
-	double maxAngularSpeed;
-
-	void loadFromFile(const char* path, Apollo::RenderSystem* renderSystem);
-	void updateAngularVelocity(long dTime);
-	void updateVelocity(long dTime);
+	void updatePosition(long dTime);
+	void updateRotation(long dTime);
+	void wrapScreenEdges(void);
 };
 
-#endif // PLAYER_H
+#endif // GAMEOBJECT_H

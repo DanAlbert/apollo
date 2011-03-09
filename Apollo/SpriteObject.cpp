@@ -81,7 +81,6 @@ namespace Apollo
 		{
 			if (m_Sprite)
 			{
-				// I don't rmember if I did this right... If it doesn't work, this is probabaly the issue.
 				m_Sprite->Draw(
 					m_XPosition - view->GetXPosition(),
 					m_YPosition - view->GetYPosition(),
