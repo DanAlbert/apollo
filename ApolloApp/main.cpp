@@ -73,8 +73,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				lastTime = cTime;
 
 				int fps = floor(frames / (dTime / 1000.0f));
-
-				//Log("%d FPS", dTime);
+				
 				sprintf(fpsString, "%d FPS", fps);
 				frames = 0;
 			}

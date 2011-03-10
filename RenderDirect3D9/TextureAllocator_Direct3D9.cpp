@@ -16,7 +16,7 @@ Apollo::Texture* TextureAllocator_Direct3D9::GetResource(const char* szPath)
 	{
 		m_Resources[szPath] = new Texture_Direct3D9(
 			szPath,
-			dynamic_cast<RenderSystem_Direct3D9*>(m_RenderSystem));
+			static_cast<RenderSystem_Direct3D9*>(m_RenderSystem));
 	}
 		
 	return m_Resources[szPath];
