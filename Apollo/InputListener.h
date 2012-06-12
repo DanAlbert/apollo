@@ -1,5 +1,40 @@
-#ifndef __INPUTLISTENER_H__
-#define __INPUTLISTENER_H__
+/**
+ * @file InputListener.h
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
+ *
+ * @section LICENSE
+ * 
+ * Apollo 2D Rendering Engine
+ * Copyright (C) 2012 Dan Albert
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * @section DESCRIPTION
+ * 
+ * Defines a basic OIS input listener which ignores all input.
+ * 
+ * Since any interpretation of input is dependent on the intended use of the
+ * engine by the client application, any additional functionality would be
+ * impossible to predict. As such, client applications must extend this class
+ * to provide the necessary functionality.
+ * 
+ */
+#ifndef INPUTLISTENER_H
+#define INPUTLISTENER_H
 
 #include "Apollo.h"
 
@@ -38,4 +73,4 @@ namespace Apollo
 	};
 }
 
-#endif // __INPUTLISTENER_H__
+#endif // INPUTLISTENER_H

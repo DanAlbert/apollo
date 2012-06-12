@@ -1,13 +1,74 @@
-////////////////////////////////////////////////////////////////////////////////
-// Filename: Debug.cpp
-// Author:   Dan Albert
-// Date:     November 25, 2007
-
+/**
+ * @file Debug.cpp
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
+ *
+ * @section LICENSE
+ * 
+ * Apollo 2D Rendering Engine
+ * Copyright (C) 2012 Dan Albert
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * @section DESCRIPTION
+ * 
+ * Debug, error handling and logging facilities.
+ * 
+ */
 #include "debug.h"
 
 #include <stdlib.h>
 
 const char LOG_FILE[] = "apollo.log";
+
+inline const char* ErrorStr(const int err)
+{
+	std::string msg;
+
+	switch (err)
+	{
+	case ERR_NONE:
+		return "No error";
+	case ERR_APOLLO_WINDOW_CREATE:
+		return "Could not create window";
+	case ERR_APOLLO_RENDERSYSTEM_NOD3D:
+		return "Could not initialize Direct3D";
+	case ERR_APOLLO_RENDERSYSTEM_NODEV:
+		return "Could not create the Direct3D device";
+	case ERR_APOLLO_RENDERSYSTEM_NOSPRITE:
+		return "Could not create the Direct3D sprite handler";
+	case ERR_APOLLO_RENDERSYSTEM_BACKBUFFER:
+		return "Could not retrieve the Direct3D backbuffer";
+	case ERR_APOLLO_RENDERSYSTEM_PIXELFORMAT:
+		return "Could not find a supported pixel format for the requested screen resolution";
+	case ERR_APOLLO_RENDERSYSTEM_LOADLIB:
+		return "Failed to load RenderSystem library";
+	case ERR_APOLLO_RENDERSYSTEM_LOADPROC:
+		return "Failed to load CreateRenderSystem()";
+	case ERR_APOLLO_INPUTLISTENER_NOKEYBD:
+		return "No keyboard detected";
+	case ERR_APOLLO_INPUTLISTENER_NOMOUSE:
+		return "No mouse detected";
+	case ERR_APOLLO_CONFIGURATION_LOAD:
+		return "Could not load configuration file";
+	default:
+		msg = "Unknown error: " + err;
+		return msg.c_str();
+	}
+}
 
 // MessageBox() wrappers
 inline void ErrorMessage(const char* szText)
@@ -16,11 +77,18 @@ inline void ErrorMessage(const char* szText)
 	MessageBox(NULL, szText, "Error!", MB_OK);
 }
 
-inline void ErrorQuit(const char* szText, int iErrNo)
+inline void ErrorQuit(const int err)
 {
-	Log("%s (0x%02X)", szText, iErrNo);
-	MessageBox(NULL, szText, "Error!", MB_OK);
-	exit(iErrNo);
+	Log("%s (0x%02X)", ErrorStr(err), err);
+	MessageBox(NULL, ErrorStr(err), "Error!", MB_OK);
+	exit(EXIT_FAILURE);
+}
+
+inline void ErrorQuit(const Apollo::ApolloError& ex)
+{
+	Log("%s (0x%02X)", ex.getErrStr(), ex.getErrNo());
+	MessageBox(NULL, ex.getErrStr(), "Error!", MB_OK);
+	exit(EXIT_FAILURE);
 }
 
 inline void Log(const char* szFormat, ...)

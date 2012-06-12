@@ -59,15 +59,14 @@
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)_d.dll</OutputFile>
-      <Version>0.2.0.0</Version>
+      <Version>0.2.53</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -83,14 +82,13 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;APOLLO_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Version>0.2.0.0</Version>
+      <Version>0.2.53</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -101,6 +99,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ApolloError.cpp" />
     <ClCompile Include="CharacterDef.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Configuration.cpp" />
@@ -109,6 +108,7 @@
     <ClCompile Include="FontDef.cpp" />
     <ClCompile Include="Ini.cpp" />
     <ClCompile Include="InputListener.cpp" />
+    <ClCompile Include="IOError.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apollo.h" />
+    <ClInclude Include="ApolloError.h" />
     <ClInclude Include="CharacterDef.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Configuration.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="FontDef.h" />
     <ClInclude Include="Ini.h" />
     <ClInclude Include="InputListener.h" />
+    <ClInclude Include="IOError.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SceneManager.h" />
@@ -146,6 +148,9 @@
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Viewport.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VERSION.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,3 +1,42 @@
+/**
+ * @file RenderSystem.cpp
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
+ *
+ * @section LICENSE
+ * 
+ * Apollo 2D Rendering Engine
+ * Copyright (C) 2012 Dan Albert
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * @section DESCRIPTION
+ * 
+ * Defines an interface for a rendering API.
+ * 
+ * An implementing render system should be implemented in a plugin.
+ * 
+ * A render system is an interface to a rendering API such as Direct3D9 or
+ * OpenGL. Specific render systems are implemented as pluigins. An implementing
+ * class is responsible for initializing the render target (in most cases, a
+ * window), initializing rendering components (Direct3D, OpenGL or software
+ * renderer), as well as initialization and management of graphics resources
+ * such as textures.
+ * 
+ */
 #include "RenderSystem.h"
 
 #include "Texture.h"
@@ -36,14 +75,14 @@ namespace Apollo
 			CreateRenderSystem ctor= (CreateRenderSystem)GetProcAddress(library, "CreateRenderSystem");
 			if (!ctor)
 			{
-				ErrorQuit("Failed to load CreateRenderSystem().", ERR_APOLLO_RENDERSYSTEM_LOADPROC);
+				ErrorQuit(ERR_APOLLO_RENDERSYSTEM_LOADPROC);
 			}
 		
 			return ctor("apollo.ini", "Apollo 2D Rendering Engine");
 		}
 		else
 		{
-			ErrorQuit("Failed to load RenderSystem library.", ERR_APOLLO_RENDERSYSTEM_LOADLIB);
+			ErrorQuit(ERR_APOLLO_RENDERSYSTEM_LOADLIB);
 		}
 		return NULL;
 	}

@@ -1,5 +1,35 @@
-#ifndef __INI_H__
-#define __INI_H__
+/**
+ * @file Ini.h
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
+ *
+ * @section LICENSE
+ * 
+ * Apollo 2D Rendering Engine
+ * Copyright (C) 2012 Dan Albert
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * @section DESCRIPTION
+ * 
+ * Basic INI (key-value) file parser.
+ * 
+ */
+#ifndef INI_H
+#define INI_H
 
 #include <fstream>
 #include <hash_map>
@@ -9,6 +39,8 @@
 #include "Debug.h"
 #include "StringUtil.h"
 
+#include "IOError.h"
+
 namespace Apollo
 {
 	typedef stdext::hash_map<std::string, stdext::hash_map<std::string, std::string> > IniDictionary;
@@ -16,10 +48,8 @@ namespace Apollo
 	class Ini
 	{
 	public:
-		Ini(std::string szPath);
+		Ini(std::string szPath) throw(IOError);
 		virtual ~Ini(void);
-
-		virtual bool Open(std::string szPath);
 
 		virtual const char*	GetString(const char* szSection, const char* szKey);
 		virtual bool GetBool(const char* szSection, const char* szKey);
@@ -35,7 +65,9 @@ namespace Apollo
 	protected:
 		std::fstream	m_fStream;
 		IniDictionary	m_IniData;
+
+		virtual bool open(std::string szPath);
 	};
 }
 
-#endif // __INI_H__
+#endif // INI_H

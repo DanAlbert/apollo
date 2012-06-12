@@ -1,9 +1,8 @@
 /**
  * @file GameObject.h
- * @author Dan Albert
- * @date Created 09/03/2011
- * @date Last updated 09/03/2011
- * @version 1.0
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
  *
  * @section LICENSE
  * 
@@ -26,7 +25,8 @@
  * 
  * @section DESCRIPTION
  * 
- * Defines a sprite object with basic kinematic properties that wraps at screen edges.
+ * Defines a sprite object with basic kinematic properties that wraps at screen
+ * edges.
  * 
  */
 #ifndef GAMEOBJECT_H

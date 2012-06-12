@@ -1,9 +1,8 @@
 /**
  * @file Player.h
- * @author Dan Albert
- * @date Created 23/02/2011
- * @date Last updated 23/02/2011
- * @version 1.0
+ * @author Dan Albert <dan@gingerhq.net>
+ * @date Last updated 06/11/2012
+ * @version 0.2.53
  *
  * @section LICENSE
  * 
@@ -26,7 +25,7 @@
  * 
  * @section DESCRIPTION
  * 
- * Defines a sprite object that responds to player input.
+ * Defines a game object that responds to player input.
  * 
  */
 #ifndef PLAYER_H
