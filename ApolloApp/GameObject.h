@@ -1,8 +1,7 @@
 /**
  * @file GameObject.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -32,9 +31,9 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <SpriteObject.h>
-#include <Vector2.h>
-#include <Viewport.h>
+#include <Apollo/SpriteObject.h>
+#include <Apollo/Vector2.h>
+#include <Apollo/Viewport.h>
 
 class GameObject : public Apollo::SpriteObject
 {

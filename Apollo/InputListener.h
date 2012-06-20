@@ -1,8 +1,7 @@
 /**
  * @file InputListener.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -51,7 +50,7 @@ namespace Apollo
 	{
 	public:
 		InputListener(Window* window);
-		virtual ~InputListener(void);
+		virtual ~InputListener(void) throw();
 
 		bool Initialize(Window* window);
 		

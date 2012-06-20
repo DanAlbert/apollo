@@ -1,13 +1,12 @@
 /**
  * @file GameObject.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
  * Apollo 2D Rendering Engine
- * Copyright (C) 2011 Dan Albert
+ * Copyright (C) 2012 Dan Albert
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -32,7 +31,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject(Apollo::Viewport* viewport) :
-	viewport(viewport)
+	viewport(viewport),
+	angularVelocity(0.0f)
 {
 }
 
@@ -40,10 +40,11 @@ GameObject::GameObject(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
 	Apollo::Viewport* viewport) :
+		Apollo::SpriteObject(path, renderSystem),
 		viewport(viewport),
-		velocity()
+		velocity(),
+		angularVelocity(0.0f)
 {
-	this->loadFromFile(path, renderSystem);
 }
 
 GameObject::~GameObject(void)

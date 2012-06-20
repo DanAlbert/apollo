@@ -1,8 +1,7 @@
 /**
  * @file SpriteDef.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -30,18 +29,16 @@
  */
 #include "SpriteDef.h"
 
+#include "Debug.h"
+
 namespace Apollo
 {
-	SpriteDef::SpriteDef(const char* szPath) :
+	SpriteDef::SpriteDef(const char* szPath) throw(IOError) :
 		m_Frames(NULL),
 		m_nFrames(0),
 		m_frameTime(0)
 	{
-		if (!LoadFromFile(szPath))
-		{
-			Release();
-			return;
-		}
+		this->LoadFromFile(szPath);
 	}
 
 	SpriteDef::~SpriteDef(void)
@@ -66,13 +63,15 @@ namespace Apollo
 
 	// TODO: Overload this method. The other method should accept a
 	// TiXmlElement* to <Sprite>
-	bool SpriteDef::LoadFromFile(const char* szPath)
+	bool SpriteDef::LoadFromFile(const char* szPath) throw(IOError)
 	{
 		Release();
 
 		TiXmlDocument doc(szPath);
 		if (!doc.LoadFile(TIXML_ENCODING_UTF8))
-			return false;
+		{
+			throw IOError(ERR_APOLLO_SPRITEDEF_LOAD);
+		}
 
 		TiXmlHandle hDoc(&doc);
 		TiXmlElement* elem;

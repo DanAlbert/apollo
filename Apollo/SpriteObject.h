@@ -1,8 +1,7 @@
 /**
  * @file SpriteObject.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -43,8 +42,8 @@ namespace Apollo
 	class APOLLO_API SpriteObject : public SceneObject
 	{
 	public:
-		SpriteObject(const char* path, RenderSystem* renderSystem);
-		virtual ~SpriteObject(void);
+		SpriteObject(const char* path, RenderSystem* renderSystem) throw(IOError);
+		virtual ~SpriteObject(void) throw();
 
 		virtual void Release(void);
 

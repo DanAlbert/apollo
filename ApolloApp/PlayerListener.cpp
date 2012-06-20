@@ -1,8 +1,7 @@
 /**
  * @file PlayerListener.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -30,15 +29,17 @@
  */
 #include "PlayerListener.h"
 
-PlayerListener::PlayerListener(Apollo::Window* window) : InputListener(window)
+PlayerListener::PlayerListener(Apollo::Window* window) :
+	InputListener(window),
+	playerMoveForward(false),
+	playerMoveBackward(false),
+	playerRotateLeft(false),
+	playerRotateRight(false),
+	playerShoot(false)
 {
-	playerMoveForward = false;
-	playerMoveBackward = false;
-	playerRotateLeft = false;
-	playerRotateRight = false;
 }
 
-PlayerListener::~PlayerListener(void)
+PlayerListener::~PlayerListener(void) throw()
 {
 }
 
@@ -47,16 +48,19 @@ bool PlayerListener::keyPressed(const OIS::KeyEvent& e)
 	switch (e.key)
 	{
 	case OIS::KeyCode::KC_UP:
-		playerMoveForward = true;
+		this->playerMoveForward = true;
 		break;
 	case OIS::KeyCode::KC_DOWN:
-		playerMoveBackward = true;
+		this->playerMoveBackward = true;
 		break;
 	case OIS::KeyCode::KC_LEFT:
-		playerRotateLeft = true;
+		this->playerRotateLeft = true;
 		break;
 	case OIS::KeyCode::KC_RIGHT:
-		playerRotateRight = true;
+		this->playerRotateRight = true;
+		break;
+	case OIS::KeyCode::KC_SPACE:
+		this->playerShoot = true;
 		break;
 	default:
 		break;
@@ -70,16 +74,19 @@ bool PlayerListener::keyReleased(const OIS::KeyEvent& e)
 	switch (e.key)
 	{
 	case OIS::KeyCode::KC_UP:
-		playerMoveForward = false;
+		this->playerMoveForward = false;
 		break;
 	case::OIS::KeyCode::KC_DOWN:
-		playerMoveBackward = false;
+		this->playerMoveBackward = false;
 		break;
 	case OIS::KeyCode::KC_LEFT:
-		playerRotateLeft = false;
+		this->playerRotateLeft = false;
 		break;
 	case OIS::KeyCode::KC_RIGHT:
-		playerRotateRight = false;
+		this->playerRotateRight = false;
+		break;
+	case OIS::KeyCode::KC_SPACE:
+		this->playerShoot = false;
 		break;
 	default:
 		break;

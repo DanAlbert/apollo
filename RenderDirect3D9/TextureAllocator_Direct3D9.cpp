@@ -1,8 +1,7 @@
 /**
  * @file TextureAllocator_Direct3D9.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -40,13 +39,15 @@ TextureAllocator_Direct3D9::~TextureAllocator_Direct3D9(void)
 	Release();
 }
 
-Apollo::Texture* TextureAllocator_Direct3D9::GetResource(const char* szPath)
+Apollo::Texture* TextureAllocator_Direct3D9::GetResource(const char* szPath) throw(Apollo::IOError)
 {
 	if (m_Resources.find(szPath) == m_Resources.end())
 	{
-		m_Resources[szPath] = new Texture_Direct3D9(
+		Apollo::Texture* texture = new Texture_Direct3D9(
 			szPath,
 			static_cast<RenderSystem_Direct3D9*>(m_RenderSystem));
+
+		m_Resources[szPath] = texture;
 	}
 		
 	return m_Resources[szPath];

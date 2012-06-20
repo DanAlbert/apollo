@@ -1,8 +1,7 @@
 /**
  * @file Debug.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -63,6 +62,11 @@
 #define ERR_APOLLO_INPUTLISTENER_NOMOUSE	0x10030002
 
 #define ERR_APOLLO_CONFIGURATION_LOAD		0x10040001
+
+#define ERR_APOLLO_SPRITEDEF_LOAD			0x10050001
+
+#define ERR_APOLLO_TEXTURE_LOAD_INFO		0x10060001
+#define ERR_APOLLO_TEXTURE_LOAD_FILE		0x10060002
 
 extern const char LOG_FILE[];
 

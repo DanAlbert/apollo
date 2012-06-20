@@ -1,8 +1,7 @@
 /**
  * @file Apollo.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -34,15 +33,19 @@
 
 #if defined WIN32 || defined __CYGWIN__
 	#define _CRT_SECURE_NO_WARNINGS
-
-	#pragma warning(disable:4018)
-	#pragma warning(disable:4244)
-	#pragma warning(disable:4251)
-	#pragma warning(disable:4275)
-	#pragma warning(disable:4482)
-	#pragma warning(disable:4503)
-	#pragma warning(disable:4800)
-
+	
+	// Disable some MSVC warnings
+	#if defined WIN32
+		#pragma warning(disable:4018)
+		#pragma warning(disable:4244)
+		#pragma warning(disable:4251)
+		#pragma warning(disable:4275)
+		#pragma warning(disable:4290) // Exception spec ignored warnings
+		#pragma warning(disable:4482)
+		#pragma warning(disable:4503)
+		#pragma warning(disable:4800)
+	#endif // WIN32
+	
 	#define WIN32_LEAN_AND_MEAN
 
 	#ifndef WINVER

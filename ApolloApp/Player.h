@@ -1,8 +1,7 @@
 /**
  * @file Player.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -31,11 +30,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <Vector2.h>
-#include <Viewport.h>
+#include <Apollo/Vector2.h>
+#include <Apollo/Viewport.h>
 #include "GameObject.h"
 #include "PlayerDef.h"
 #include "PlayerListener.h"
+
+extern class GameManager; // Need a forward declaration to avoid cyclic includes
 
 class Player : public GameObject
 {
@@ -44,7 +45,7 @@ public:
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
 		PlayerListener* playerListener,
-		Apollo::Viewport* viewport);
+		GameManager* gameManager);
 
 	virtual ~Player(void);
 
@@ -55,16 +56,21 @@ public:
 
 private:
 	PlayerListener* playerListener;
+	GameManager* gameManager;
 
 	std::string resourcePath;
 
 	double maxSpeed;
 	double baseAcceleration;
 	double maxAngularSpeed;
+	long shotInterval;
+
+	double lastShot;
 
 	void loadFromFile(const char* path, Apollo::RenderSystem* renderSystem);
 	void updateAngularVelocity(long dTime);
 	void updateVelocity(long dTime);
+	void updateAttack(long dTime);
 };
 
 #endif // PLAYER_H

@@ -1,8 +1,7 @@
 /**
  * @file SpriteDef.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -35,19 +34,21 @@
 
 #include <tinyxml.h>
 
+#include "IOError.h"
+
 namespace Apollo
 {
 	class APOLLO_API SpriteDef
 	{
 	public:
-		SpriteDef(const char* szPath);
+		SpriteDef(const char* szPath) throw(IOError);
 		~SpriteDef(void);
 
 		inline const char*	GetFrame(int i) const;
 		inline const int	GetNFrames(void) const;
 		inline const int	GetFrameTime(void) const;
 
-		bool LoadFromFile(const char* szPath);
+		bool LoadFromFile(const char* szPath) throw(IOError);
 		void Release(void);
 
 	protected:

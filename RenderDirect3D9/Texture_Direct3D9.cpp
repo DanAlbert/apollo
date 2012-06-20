@@ -1,8 +1,7 @@
 /**
  * @file Texture_Direct3D9.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -30,20 +29,18 @@
  */
 #include "Texture_Direct3D9.h"
 
-Texture_Direct3D9::Texture_Direct3D9(const char* path, RenderSystem_Direct3D9* renderSystem) :
+#include <Debug.h>
+
+Texture_Direct3D9::Texture_Direct3D9(const char* path, RenderSystem_Direct3D9* renderSystem) throw(Apollo::IOError) :
 	m_SpriteHandler(renderSystem->GetSpriteHandler()),
 	m_Resource(NULL),
 	m_ResourcePath(NULL)
 {
 	m_SpriteHandler = renderSystem->GetSpriteHandler();
 
-	if (!loadFromFile(path, renderSystem->GetDevice()))
-	{
-		Release();
-		return;
-	}
+	this->loadFromFile(path, renderSystem->GetDevice());
 
-	m_ResourcePath = (char*)malloc(sizeof(char) * (strlen(path) + 1));
+	m_ResourcePath = new char[strlen(path) + 1];
 	if (!m_ResourcePath)
 	{
 		Log("[Texture_Direct3D9] Error allocating memory for resource path (%s). Object may not be able to reload.", path);
@@ -123,7 +120,7 @@ void Texture_Direct3D9::Draw(
 		D3DCOLOR_XRGB(color.r, color.g, color.b));
 }
 
-bool Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device)
+void Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device) throw(Apollo::IOError)
 {
 	HRESULT hr;
 	D3DXIMAGE_INFO info;
@@ -132,7 +129,7 @@ bool Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device)
 	if (hr != D3D_OK)
 	{
 		Log("[Texture_Direct3D9] Error loading image info from %s.", path);
-		return false;
+		throw Apollo::IOError(ERR_APOLLO_TEXTURE_LOAD_INFO);
 	}
 
 	m_Width = info.Width;
@@ -155,8 +152,6 @@ bool Texture_Direct3D9::loadFromFile(const char* path, IDirect3DDevice9* device)
 	if (hr != D3D_OK)
 	{
 		Log("[Texture_Direct3D9] Error loading texture from %s.", path);
-		return false;
+		throw Apollo::IOError(ERR_APOLLO_TEXTURE_LOAD_FILE);
 	}
-
-	return true;
 }

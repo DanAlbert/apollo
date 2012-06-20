@@ -1,8 +1,7 @@
 /**
  * @file GameManager.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -34,9 +33,10 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include <SceneManager.h>
+#include <Apollo/SceneManager.h>
 
 #include "Asteroid.h"
+#include "Laser.h"
 #include "Player.h"
 
 class GameManager : public Apollo::SceneManager
@@ -44,12 +44,13 @@ class GameManager : public Apollo::SceneManager
 public:
 	GameManager(Apollo::RenderSystem* renderSystem);
 	~GameManager(void);
-		
+
 	bool SaveState(const char* path);
 	bool LoadState(const char* path);
 
 	Player*	CreatePlayer(const char* path);
 	Asteroid* CreateAsteroid(const char* path);
+	Laser* CreateLaser();
 
 	void Update(void);
 
@@ -59,6 +60,7 @@ private:
 	bool loadChildObjects(TiXmlElement* element, Apollo::SceneObject* parent = NULL) override;
 	bool loadPlayerState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	bool loadAsteroidState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
+	bool loadLaserState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 };
 
 #endif // GAMEMANAGER_H

@@ -1,8 +1,7 @@
 /**
  * @file GameManager.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -56,14 +55,30 @@ bool GameManager::LoadState(const char* path)
 
 Player* GameManager::CreatePlayer(const char* path)
 {
-	m_GameAssets.push_back(new Player(path, m_RenderSystem, listener, this->m_Viewport));
-	return (Player*)m_GameAssets[m_GameAssets.size() - 1];
+	Player* player = new Player(path, this->m_RenderSystem, listener, this);
+	m_GameAssets.push_back(player);
+	return player;
 }
 
 Asteroid* GameManager::CreateAsteroid(const char* path)
 {
-	m_GameAssets.push_back(new Asteroid(path, m_RenderSystem, this->m_Viewport));
-	return (Asteroid*)m_GameAssets[m_GameAssets.size() - 1];
+	Asteroid* asteroid = new Asteroid(path, this->m_RenderSystem, this->m_Viewport);
+	m_GameAssets.push_back(asteroid);
+	return asteroid;
+}
+
+Laser* GameManager::CreateLaser(void)
+{
+	try
+	{
+		Laser* laser = new Laser(this->m_RenderSystem, this->m_Viewport);
+		m_GameAssets.push_back(laser);
+		return laser;
+	}
+	catch (const Apollo::IOError& e)
+	{
+		return NULL;
+	}
 }
 
 void GameManager::Update(void)
@@ -95,6 +110,15 @@ bool GameManager::loadChildObjects(
 			if (!loadAsteroidState(childElem, parent))
 			{
 				Log("[GameManager] Asteroid failed to load correctly.");
+				result = false;
+			}
+		}
+
+		else if (!strcmp(childElem->Value(), "Laser"))
+		{
+			if (!loadLaserState(childElem, parent))
+			{
+				Log("[GameManager] Laser failed to load correctly.");
 				result = false;
 			}
 		}
@@ -162,4 +186,25 @@ bool GameManager::loadAsteroidState(
 	{
 		return false;
 	}
+}
+
+bool GameManager::loadLaserState(
+	TiXmlElement* element,
+	Apollo::SceneObject* parent)
+{
+	TiXmlElement* childElem = NULL;
+	TiXmlElement* spriteElem = NULL;
+	Laser* laser;
+	const char* resourcePath;
+
+	laser = this->CreateLaser();
+	laser->LoadState(element, parent);
+	
+	childElem = element->FirstChildElement("Children");
+	if (childElem)
+	{
+		return loadChildObjects(childElem, laser);
+	}
+
+	return true;
 }

@@ -66,7 +66,7 @@
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)_d.dll</OutputFile>
-      <Version>0.2.53</Version>
+      <Version>0.2.54</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +88,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Version>0.2.53</Version>
+      <Version>0.2.54</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

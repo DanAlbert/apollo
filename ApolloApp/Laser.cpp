@@ -1,7 +1,7 @@
 /**
- * @file Asteroid.cpp
+ * @file Laser.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -24,33 +24,34 @@
  * 
  * @section DESCRIPTION
  * 
- * Defines an asteroid game object.
+ * Defines a laser object.
  * 
  */
-#include "Asteroid.h"
+#include "Laser.h"
 
-Asteroid::Asteroid(
-	const char* path,
+const char Laser::SPRITE_PATH[] = "Resources/Sprites/Laser.xml";
+const double Laser::MAX_SPEED = 0.2f;
+
+Laser::Laser(
 	Apollo::RenderSystem* renderSystem,
 	Apollo::Viewport* viewport) :
 		GameObject(viewport)
 {
-	SpriteObject::loadFromFile(path, renderSystem);
-	this->velocity = Apollo::Vector2(((rand() % 100) - 50) / 1000.0f, ((rand() % 100) - 50) / 1000.0f);
-	this->angularVelocity = ((rand() % 100) - 50) / 10000.0f;
+	SpriteObject::loadFromFile(Laser::SPRITE_PATH, renderSystem);
+	this->velocity = Apollo::Vector2(0.1f, 0.0f);
 }
 
-Asteroid::~Asteroid(void)
+Laser::~Laser(void)
 {
 }
 
-void Asteroid::SaveState(TiXmlElement*& element, bool elementIsParent)
+void Laser::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
 	TiXmlElement* elem;
 
 	if (elementIsParent)
 	{
-		elem = new TiXmlElement("Asteroid");
+		elem = new TiXmlElement("Laser");
 		element->LinkEndChild(elem);
 	}
 	else
@@ -64,16 +65,19 @@ void Asteroid::SaveState(TiXmlElement*& element, bool elementIsParent)
 }
 
 
-void Asteroid::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
+void Laser::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 {
 	GameObject::LoadState(element, parent);
 }
 
-void Asteroid::Update(long dTime)
+void Laser::Update(long dTime)
 {
 	if (this->m_Active)
 	{
-		// Asteroid stuff
+		float x = sin(this->m_Rotation) * Laser::MAX_SPEED;
+		float y = -cos(this->m_Rotation) * Laser::MAX_SPEED;
+
+		this->velocity = Apollo::Vector2(x, y);
 	}
 
 	GameObject::Update(dTime);

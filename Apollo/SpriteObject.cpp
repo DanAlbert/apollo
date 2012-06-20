@@ -1,8 +1,7 @@
 /**
  * @file SpriteObject.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -33,16 +32,24 @@
 namespace Apollo
 {
 	// Private constructor for derived classes
-	SpriteObject::SpriteObject(void)
+	SpriteObject::SpriteObject(void) :
+		m_Sprite(NULL)
 	{
 	}
 
-	SpriteObject::SpriteObject(const char* path, RenderSystem* renderSystem)
+	SpriteObject::SpriteObject(const char* path, RenderSystem* renderSystem) throw(IOError)
 	{
-		loadFromFile(path, renderSystem);
+		try
+		{
+			loadFromFile(path, renderSystem);
+		}
+		catch (const IOError& e)
+		{
+			ErrorQuit(e);
+		}
 	}
 
-	SpriteObject::~SpriteObject(void)
+	SpriteObject::~SpriteObject(void) throw()
 	{
 		Release();
 	}
@@ -120,7 +127,7 @@ namespace Apollo
 		}
 	}
 
-	void SpriteObject::loadFromFile(const char* path, RenderSystem* renderSystem)
+	void SpriteObject::loadFromFile(const char* path, RenderSystem* renderSystem) throw(IOError)
 	{
 		this->m_Sprite = new Sprite(path, renderSystem);
 

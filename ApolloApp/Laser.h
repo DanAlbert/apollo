@@ -1,5 +1,5 @@
 /**
- * @file TextureAllocator_Direct3D9.h
+ * @file Laser.h
  * @author Dan Albert <dan@gingerhq.net>
  * @date Last updated 06/18/2012
  *
@@ -24,30 +24,31 @@
  * 
  * @section DESCRIPTION
  * 
- * Implements a Direct3D9 texture allocator.
+ * Defines a laser object.
  * 
  */
-#ifndef TEXTUREALLOCATOR_DIRECT3D9_H
-#define TEXTUREALLOCATOR_DIRECT3D9_H
+#ifndef LASER_H
+#define LASER_H
 
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "GameObject.h"
 
-#include <hash_map>
-
-#include <Debug.h>
-#include <TextureAllocator.h>
-
-#include "RenderSystem_Direct3D9.h"
-#include "Texture_Direct3D9.h"
-
-class TextureAllocator_Direct3D9 : public Apollo::TextureAllocator
+class Laser : public GameObject
 {
 public:
-	TextureAllocator_Direct3D9(RenderSystem_Direct3D9* renderSystem);
-	~TextureAllocator_Direct3D9(void);
+	Laser(
+		Apollo::RenderSystem* renderSystem,
+		Apollo::Viewport* viewport);
 
-	Apollo::Texture* GetResource(const char* szPath) throw(Apollo::IOError);
+	virtual ~Laser(void);
+
+	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
+	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
+	
+	void Update(long dTime);
+
+private:
+	static const char SPRITE_PATH[];
+	static const double MAX_SPEED;
 };
 
-#endif // TEXTUREALLOCATOR_DIRECT3D9_H
+#endif // LASER_H

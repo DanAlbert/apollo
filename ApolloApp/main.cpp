@@ -1,8 +1,7 @@
 /**
  * @file main.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -28,10 +27,10 @@
  * Defines the entry point for the sample application.
  * 
  */
-#include <Font.h>
-#include <RenderSystem.h>
-#include <SpriteObject.h>
-#include <Viewport.h>
+#include <Apollo/Font.h>
+#include <Apollo/RenderSystem.h>
+#include <Apollo/SpriteObject.h>
+#include <Apollo/Viewport.h>
 
 #include "GameManager.h"
 #include "PlayerListener.h"

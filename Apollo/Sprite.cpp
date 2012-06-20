@@ -1,8 +1,7 @@
 /**
  * @file Sprite.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -34,14 +33,11 @@
 
 namespace Apollo
 {
-	Sprite::Sprite(const char* path, RenderSystem* renderSystem) :
+	Sprite::Sprite(const char* path, RenderSystem* renderSystem) throw(IOError) :
 		m_Textures(NULL),
 		m_ResourcePath(NULL)
 	{
-		if (!Load(path, renderSystem))
-		{
-			Release();
-		}
+		this->Load(path, renderSystem);
 	}
 
 	Sprite::Sprite(const Sprite& s)
@@ -105,7 +101,7 @@ namespace Apollo
 		return *this;
 	}
 
-	bool Sprite::Load(const char* path, RenderSystem* renderSystem)
+	bool Sprite::Load(const char* path, RenderSystem* renderSystem) throw(IOError)
 	{
 		Release();	// Free any existing resources
 

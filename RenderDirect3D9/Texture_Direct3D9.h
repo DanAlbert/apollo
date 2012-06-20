@@ -1,8 +1,7 @@
 /**
  * @file Texture_Direct3D9.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -42,7 +41,7 @@
 class Texture_Direct3D9 : public Apollo::Texture
 {
 public:
-	Texture_Direct3D9(const char* path, RenderSystem_Direct3D9* renderSystem);
+	Texture_Direct3D9(const char* path, RenderSystem_Direct3D9* renderSystem) throw(Apollo::IOError);
 	Texture_Direct3D9(const Texture_Direct3D9& t);
 	~Texture_Direct3D9(void);
 
@@ -75,7 +74,7 @@ protected:
 	unsigned int		m_Width;
 	unsigned int		m_Height;
 
-	bool loadFromFile(const char* path, IDirect3DDevice9* device);
+	void loadFromFile(const char* path, IDirect3DDevice9* device) throw(Apollo::IOError);
 };
 
 #endif // TEXTURE_DIRECT3D9_H

@@ -1,8 +1,7 @@
 /**
  * @file PlayerDef.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -65,6 +64,11 @@ const double PlayerDef::GetMaxAngularSpeed(void) const
 	return this->maxAngularSpeed;
 }
 
+const long PlayerDef::GetShotInterval(void) const
+{
+	return this->shotInterval;
+}
+
 bool PlayerDef::LoadFromFile(const char* path)
 {
 	TiXmlDocument doc(path);
@@ -122,6 +126,16 @@ bool PlayerDef::LoadFromFile(const char* path)
 	else
 	{
 		ErrorMessage("Element \"MaxAngularSpeed\" does not exist in Player definition.");
+	}
+
+	maxAngularSpeedElem = elem->FirstChildElement("ShotInterval");
+	if (maxAngularSpeedElem)
+	{
+		this->shotInterval = atol(maxAngularSpeedElem->GetText());
+	}
+	else
+	{
+		ErrorMessage("Element \"ShotInterval\" does not exist in Player definition.");
 	}
 	
 	return true;

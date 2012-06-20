@@ -1,8 +1,7 @@
 /**
  * @file Player.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -30,13 +29,17 @@
  */
 #include "Player.h"
 
+#include "GameManager.h"
+
 Player::Player(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
 	PlayerListener* playerListener,
-	Apollo::Viewport* viewport) :
+	GameManager* gameManager) :
 		playerListener(playerListener),
-		GameObject(viewport)
+		GameObject(gameManager->GetViewport()),
+		gameManager(gameManager),
+		lastShot(0)
 {
 	this->loadFromFile(path, renderSystem);
 }
@@ -76,6 +79,7 @@ void Player::Update(long dTime)
 	{
 		this->updateAngularVelocity(dTime);
 		this->updateVelocity(dTime);
+		this->updateAttack(dTime);
 	}
 	
 	GameObject::Update(dTime);
@@ -90,6 +94,8 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 	this->maxSpeed = def.GetMaxSpeed();
 	this->baseAcceleration = def.GetBaseAcceleration();
 	this->maxAngularSpeed = def.GetMaxAngularSpeed();
+	this->shotInterval = def.GetShotInterval();
+
 	SpriteObject::loadFromFile(def.GetSpritePath(), renderSystem);
 }
 
@@ -136,5 +142,18 @@ void Player::updateAngularVelocity(long dTime)
 	else
 	{
 		this->angularVelocity = 0.0f;
+	}
+}
+
+void Player::updateAttack(long dTime)
+{
+	this->lastShot += dTime;
+	
+	if (this->playerListener->GetPlayerShoot() && (this->lastShot > this->shotInterval))
+	{
+		this->lastShot = 0;
+		Laser* laser = this->gameManager->CreateLaser();
+		laser->SetPosition(this->GetRelativeXPosition(), this->GetRelativeYPosition());
+		laser->SetRotation(this->GetRotation());
 	}
 }

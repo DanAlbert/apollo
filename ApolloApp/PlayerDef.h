@@ -1,8 +1,7 @@
 /**
  * @file PlayerDef.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -31,7 +30,7 @@
 #ifndef PLAYERDEF_H
 #define PLAYERDEF_H
 
-#include <Debug.h>
+#include <Apollo/Debug.h>
 #include <string>
 #include <tinyxml.h>
 
@@ -45,6 +44,7 @@ public:
 	const double	GetMaxSpeed(void) const;
 	const double	GetBaseAcceleration(void) const;
 	const double	GetMaxAngularSpeed(void) const;
+	const long		GetShotInterval(void) const;
 
 	bool LoadFromFile(const char* path);
 	void Release(void);
@@ -54,6 +54,7 @@ private:
 	double maxSpeed;
 	double baseAcceleration;
 	double maxAngularSpeed;
+	long shotInterval;
 };
 
 #endif // PLAYERDEF_H

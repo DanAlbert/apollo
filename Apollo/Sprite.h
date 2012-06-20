@@ -1,8 +1,7 @@
 /**
  * @file Sprite.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -51,13 +50,13 @@ namespace Apollo
 	class APOLLO_API Sprite
 	{
 	public:
-		Sprite(const char* path, RenderSystem* renderSystem);
+		Sprite(const char* path, RenderSystem* renderSystem) throw(IOError);
 		Sprite(const Sprite& s);	// Do not use until asset management is in place
-		virtual ~Sprite(void);
+		virtual ~Sprite(void) throw();
 
 		Sprite& operator= (const Sprite& rhs);	// Do not use until asset management is in place
 
-		virtual bool Load(const char* path, RenderSystem* renderSystem);
+		virtual bool Load(const char* path, RenderSystem* renderSystem) throw(IOError);
 		virtual void Release(void);
 
 		virtual void Draw(float x, float y, long deltaTime);

@@ -1,8 +1,7 @@
 /**
  * @file TextureAllocator.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -55,7 +54,7 @@ namespace Apollo
 
 		void Release(void);
 
-		virtual Texture* GetResource(const char* szPath) = 0;
+		virtual Texture* GetResource(const char* szPath) throw(IOError) = 0;
 
 	protected:
 		stdext::hash_map<std::string, Texture*> m_Resources;

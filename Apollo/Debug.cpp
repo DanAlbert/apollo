@@ -1,8 +1,7 @@
 /**
  * @file Debug.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -31,12 +30,15 @@
 #include "debug.h"
 
 #include <stdlib.h>
+#include <string>
+#include <sstream>
 
 const char LOG_FILE[] = "apollo.log";
 
 inline const char* ErrorStr(const int err)
 {
-	std::string msg;
+	static std::string msg; // Static so messages for unknown errors will be preserved
+	std::stringstream ss;
 
 	switch (err)
 	{
@@ -64,8 +66,15 @@ inline const char* ErrorStr(const int err)
 		return "No mouse detected";
 	case ERR_APOLLO_CONFIGURATION_LOAD:
 		return "Could not load configuration file";
+	case ERR_APOLLO_SPRITEDEF_LOAD:
+		return "Could not load sprite definition file";
+	case ERR_APOLLO_TEXTURE_LOAD_INFO:
+		return "Could not load image info";
+	case ERR_APOLLO_TEXTURE_LOAD_FILE:
+		return "Could not load image info";
 	default:
-		msg = "Unknown error: " + err;
+		ss << std::hex << "0x" << err;
+		msg = "Unknown error: " + ss.str();
 		return msg.c_str();
 	}
 }

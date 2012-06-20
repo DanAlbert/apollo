@@ -1,8 +1,7 @@
 /**
  * @file PlayerListener.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/11/2012
- * @version 0.2.53
+ * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -31,27 +30,48 @@
 #ifndef PLAYERLISTENER_H
 #define PLAYERLISTENER_H
 
-#include <InputListener.h>
+#include <Apollo/InputListener.h>
 
 class PlayerListener : public Apollo::InputListener
 {
 public:
 	PlayerListener(Apollo::Window* window);
-	virtual ~PlayerListener(void);
+	virtual ~PlayerListener(void) throw();
 
 	bool keyPressed(const OIS::KeyEvent& e);
 	bool keyReleased(const OIS::KeyEvent& e);
 
-	bool GetPlayerMoveForward(void)		const	{	return playerMoveForward;	}
-	bool GetPlayerMoveBackward(void)	const	{	return playerMoveBackward;	}
-	bool GetPlayerRotateLeft(void)		const	{	return playerRotateLeft;	}
-	bool GetPlayerRotateRight(void)		const	{	return playerRotateRight;	}
+	inline bool GetPlayerMoveForward(void) const throw()
+	{
+		return this->playerMoveForward;
+	}
+
+	inline bool GetPlayerMoveBackward(void) const throw()
+	{
+		return this->playerMoveBackward;
+	}
+
+	inline bool GetPlayerRotateLeft(void) const throw()
+	{
+		return this->playerRotateLeft;
+	}
+
+	inline bool GetPlayerRotateRight(void) const throw()
+	{
+		return this->playerRotateRight;
+	}
+
+	inline bool GetPlayerShoot(void) const throw()
+	{
+		return this->playerShoot;
+	}
 
 protected:
 	bool playerMoveForward;
 	bool playerMoveBackward;
 	bool playerRotateLeft;
 	bool playerRotateRight;
+	bool playerShoot;
 };
 
 #endif // PLAYERLISTENER_H
