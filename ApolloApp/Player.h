@@ -1,7 +1,6 @@
 /**
  * @file Player.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -45,7 +44,7 @@ public:
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
 		PlayerListener* playerListener,
-		GameManager* gameManager);
+		GameManager* gameManager) throw(Apollo::IOError);
 
 	virtual ~Player(void);
 

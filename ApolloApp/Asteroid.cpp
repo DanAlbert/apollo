@@ -1,7 +1,6 @@
 /**
  * @file Asteroid.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -33,9 +32,9 @@ Asteroid::Asteroid(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
 	Apollo::Viewport* viewport) :
-		GameObject(viewport)
+		GameObject(renderSystem, viewport)
 {
-	SpriteObject::loadFromFile(path, renderSystem);
+	GameObject::loadFromFile(path);
 	this->velocity = Apollo::Vector2(((rand() % 100) - 50) / 1000.0f, ((rand() % 100) - 50) / 1000.0f);
 	this->angularVelocity = ((rand() % 100) - 50) / 10000.0f;
 }
@@ -57,8 +56,6 @@ void Asteroid::SaveState(TiXmlElement*& element, bool elementIsParent)
 	{
 		elem = element;
 	}
-
-	elem->SetAttribute("resource", this->m_Sprite->GetResourcePath());
 	
 	GameObject::SaveState(elem, false);
 }

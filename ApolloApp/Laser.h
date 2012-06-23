@@ -1,7 +1,6 @@
 /**
  * @file Laser.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -47,7 +46,7 @@ public:
 	void Update(long dTime);
 
 private:
-	static const char SPRITE_PATH[];
+	static const char ENTITY_PATH[];
 	static const double MAX_SPEED;
 };
 

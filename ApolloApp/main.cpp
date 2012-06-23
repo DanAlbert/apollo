@@ -1,7 +1,6 @@
 /**
  * @file main.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -70,9 +69,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Apollo::Font* font = new Apollo::Font("Resources/Fonts/ApolloSystem.xml", apollo);
 	GameManager* scene = new GameManager(apollo);
 
-	if (!scene->LoadState("savedscene.xml"))
+	try
 	{
-		createScene(scene);
+		if (!scene->LoadState("savedscene.xml"))
+		{
+			createScene(scene);
+		}
+	}
+	catch (const Apollo::IOError& e)
+	{
+		ErrorQuit(e);
 	}
 	
 	long lastTime = 0;
@@ -111,7 +117,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 			apollo->StartDrawing();
 			scene->Draw();
-
+			
 			font->DrawText(
 				fpsString,
 				apollo->GetWidth() - font->TextWidth(fpsString) - 10.0f,

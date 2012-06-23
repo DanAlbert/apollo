@@ -1,7 +1,6 @@
 /**
  * @file RenderSystem.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -41,8 +40,10 @@
 
 #include "Apollo.h"
 
+#include "Color.h"
 #include "Configuration.h"
 #include "Debug.h"
+#include "Vector2.h"
 #include "Window.h"
 
 namespace Apollo
@@ -75,6 +76,8 @@ namespace Apollo
 
 		virtual void StartDrawing(void) = 0;
 		virtual void EndDrawing(void) = 0;
+
+		virtual void DrawLine(const Vector2& a, const Vector2& b, const Color& color = Color::White) = 0;
 
 		// Accessors //
 		inline Window*	GetWindow(void)	{	return m_Window;	}

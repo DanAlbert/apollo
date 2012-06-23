@@ -1,7 +1,6 @@
 /**
  * @file RenderSystem_Direct3D9.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -73,6 +72,8 @@ public:
 
 	void StartDrawing(void);
 	void EndDrawing(void);
+
+	void DrawLine(const Apollo::Vector2& a, const Apollo::Vector2& b, const Apollo::Color& color = Apollo::Color::White);
 
 	inline unsigned int	GetWidth(void) const
 	{

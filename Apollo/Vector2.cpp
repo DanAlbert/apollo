@@ -1,7 +1,6 @@
 /**
  * @file Vector2.cpp
  * @author Dan Albert
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -142,6 +141,28 @@ namespace Apollo
 	{
 		this->x /= rhs;
 		this->y /= rhs;
+	}
+
+	double Vector2::Cross(const Vector2& v) const
+	{
+		return (this->x * v.y) - (this->y * v.x);
+	}
+
+	double Vector2::Dot(const Vector2& v) const
+	{
+		return (this->x * v.x) + (this->y * v.y);
+	}
+
+	double Vector2::ScalarProjection(const Vector2& onto) const
+	{
+		return this->Dot(onto) / onto.GetMagnitude();
+	}
+
+	Vector2 Vector2::Normal(const Vector2& v) const
+	{
+		double x = -(v.y - this->y);
+		double y = (v.x - this->x);
+		return Vector2(x, y);
 	}
 
 	const double Vector2::GetMagnitude(void) const

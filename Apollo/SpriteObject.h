@@ -1,7 +1,6 @@
 /**
  * @file SpriteObject.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -54,11 +53,12 @@ namespace Apollo
 		virtual void Draw(long dTime, SceneObject* view);
 
 	protected:
-		Sprite*		m_Sprite;
+		RenderSystem* renderSystem;
+		Sprite* m_Sprite;
 
-		SpriteObject(void);
+		SpriteObject(RenderSystem* renderSystem);
 
-		virtual void loadFromFile(const char* path, RenderSystem* renderSystem);
+		virtual void loadFromFile(const char* path);
 
 		virtual void setSpriteState(int cFrame, int cFrameTime = 0);
 	};

@@ -1,7 +1,6 @@
 /**
  * @file Laser.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 
@@ -29,15 +28,15 @@
  */
 #include "Laser.h"
 
-const char Laser::SPRITE_PATH[] = "Resources/Sprites/Laser.xml";
+const char Laser::ENTITY_PATH[] = "Resources/Entities/Laser.xml";
 const double Laser::MAX_SPEED = 0.2f;
 
 Laser::Laser(
 	Apollo::RenderSystem* renderSystem,
 	Apollo::Viewport* viewport) :
-		GameObject(viewport)
+		GameObject(renderSystem, viewport)
 {
-	SpriteObject::loadFromFile(Laser::SPRITE_PATH, renderSystem);
+	GameObject::loadFromFile(Laser::ENTITY_PATH);
 	this->velocity = Apollo::Vector2(0.1f, 0.0f);
 }
 

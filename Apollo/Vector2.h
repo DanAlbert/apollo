@@ -1,7 +1,6 @@
 /**
  * @file Vector2.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -62,6 +61,11 @@ namespace Apollo
 		void operator-= (const Vector2& rhs);
 		void operator*= (const double rhs);
 		void operator/= (const double rhs);
+
+		double Cross(const Vector2& v) const;
+		double Dot(const Vector2& v) const;
+		double ScalarProjection(const Vector2& onto) const;
+		Vector2 Normal(const Vector2& v) const;
 
 		const double GetMagnitude(void) const;
 	};

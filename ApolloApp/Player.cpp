@@ -35,9 +35,9 @@ Player::Player(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
 	PlayerListener* playerListener,
-	GameManager* gameManager) :
+	GameManager* gameManager) throw(Apollo::IOError):
 		playerListener(playerListener),
-		GameObject(gameManager->GetViewport()),
+		GameObject(renderSystem, gameManager->GetViewport()),
 		gameManager(gameManager),
 		lastShot(0)
 {
@@ -62,7 +62,10 @@ void Player::SaveState(TiXmlElement*& element, bool elementIsParent)
 		elem = element;
 	}
 	
-	elem->SetAttribute("resource", this->resourcePath.c_str());
+	if (!this->resourcePath.empty() && (elem->Attribute("resource") == NULL))
+	{
+		elem->SetAttribute("resource", this->resourcePath.c_str());
+	}
 
 	GameObject::SaveState(elem, false);
 }
@@ -85,7 +88,7 @@ void Player::Update(long dTime)
 	GameObject::Update(dTime);
 }
 
-void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
+void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem) throw(Apollo::IOError)
 {
 	PlayerDef def(path);
 
@@ -96,7 +99,7 @@ void Player::loadFromFile(const char* path, Apollo::RenderSystem* renderSystem)
 	this->maxAngularSpeed = def.GetMaxAngularSpeed();
 	this->shotInterval = def.GetShotInterval();
 
-	SpriteObject::loadFromFile(def.GetSpritePath(), renderSystem);
+	GameObject::loadFromFile(def.GetEntityPath());
 }
 
 void Player::updateVelocity(long dTime)

@@ -66,7 +66,7 @@
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)_d.dll</OutputFile>
-      <Version>0.2.54</Version>
+      <Version>0.2.55</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +88,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>tinyxml.lib;OIS.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Version>0.2.54</Version>
+      <Version>0.2.55</Version>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release;$(OIS_PATH)\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -109,6 +109,7 @@
     <ClCompile Include="Ini.cpp" />
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="IOError.cpp" />
+    <ClCompile Include="OutOfBoundsError.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Ini.h" />
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="IOError.h" />
+    <ClInclude Include="OutOfBoundsError.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SceneManager.h" />

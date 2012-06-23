@@ -1,7 +1,6 @@
 /**
  * @file SceneManager.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 

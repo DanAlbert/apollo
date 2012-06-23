@@ -1,7 +1,6 @@
 /**
  * @file Debug.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -44,6 +43,8 @@ inline const char* ErrorStr(const int err)
 	{
 	case ERR_NONE:
 		return "No error";
+	case ERR_SYSTEM_OUTOFBOUNDS:
+		return "Index out of bounds";
 	case ERR_APOLLO_WINDOW_CREATE:
 		return "Could not create window";
 	case ERR_APOLLO_RENDERSYSTEM_NOD3D:
@@ -72,6 +73,18 @@ inline const char* ErrorStr(const int err)
 		return "Could not load image info";
 	case ERR_APOLLO_TEXTURE_LOAD_FILE:
 		return "Could not load image info";
+	case ERR_APOLLOAPP_ENTITYDEF_LOAD:
+		return "Could not load entity definition file";
+	case ERR_APOLLOAPP_ENTITYDEF_MISSINGELEM:
+		return "Entity missing element";
+	case ERR_APOLLOAPP_ENTITYDEF_MISSINGATTR:
+		return "Entity missing attribute";
+	case ERR_APOLLOAPP_PLAYERDEF_LOAD:
+		return "Could not load Player definition file";
+	case ERR_APOLLOAPP_PLAYERDEF_MISSINGATTR:
+		return "Player missing attribute";
+	case ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM:
+		return "Player missing element";
 	default:
 		ss << std::hex << "0x" << err;
 		msg = "Unknown error: " + ss.str();

@@ -1,7 +1,6 @@
 /**
  * @file Texture_Direct3D9.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/18/2012
  *
  * @section LICENSE
  * 

@@ -1,7 +1,6 @@
 /**
  * @file GameManager.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -31,6 +30,9 @@
  * 
  */
 #include "GameManager.h"
+
+#include "Physics/BoundingBox.h"
+#include "Physics/PolygonCollision.h"
 
 GameManager::GameManager(Apollo::RenderSystem* renderSystem) :
 	SceneManager(renderSystem),
@@ -69,22 +71,16 @@ Asteroid* GameManager::CreateAsteroid(const char* path)
 
 Laser* GameManager::CreateLaser(void)
 {
-	try
-	{
-		Laser* laser = new Laser(this->m_RenderSystem, this->m_Viewport);
-		m_GameAssets.push_back(laser);
-		return laser;
-	}
-	catch (const Apollo::IOError& e)
-	{
-		return NULL;
-	}
+	Laser* laser = new Laser(this->m_RenderSystem, this->m_Viewport);
+	m_GameAssets.push_back(laser);
+	return laser;
 }
 
 void GameManager::Update(void)
 {
 	this->listener->Update();
 	SceneManager::Update();
+	this->checkCollisions();
 }
 
 bool GameManager::loadChildObjects(
@@ -207,4 +203,27 @@ bool GameManager::loadLaserState(
 	}
 
 	return true;
+}
+
+void GameManager::checkCollisions(void) throw()
+{
+	for (int i = 0; i < this->m_GameAssets.size(); i++)
+	{
+		GameObject* a = static_cast<GameObject*>(m_GameAssets[i]);
+		for (int j = 0; j < this->m_GameAssets.size(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+
+			GameObject* b = static_cast<GameObject*>(m_GameAssets[j]);
+
+			if (a->CollidesWith(*b))
+			{
+				a->HandleCollision(*b);
+				b->HandleCollision(*a);
+			}
+		}
+	}
 }

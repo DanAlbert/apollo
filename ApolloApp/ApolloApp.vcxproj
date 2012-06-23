@@ -71,7 +71,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>tinyxml.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release</AdditionalLibraryDirectories>
-      <Version>0.2.54</Version>
+      <Version>0.2.55</Version>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -96,16 +96,20 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>tinyxml.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release</AdditionalLibraryDirectories>
-      <Version>0.2.54</Version>
+      <Version>0.2.55</Version>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="EntityDef.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physics\BoundingBox.cpp" />
+    <ClCompile Include="Physics\Geometry.cpp" />
+    <ClCompile Include="Physics\PolygonCollision.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDef.cpp" />
     <ClCompile Include="PlayerListener.cpp" />
@@ -115,6 +119,10 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="EntityDef.h" />
+    <ClInclude Include="Physics\BoundingBox.h" />
+    <ClInclude Include="Physics\Geometry.h" />
+    <ClInclude Include="Physics\PolygonCollision.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDef.h" />
     <ClInclude Include="PlayerListener.h" />

@@ -1,7 +1,6 @@
 /**
  * @file StringUtil.cpp
  * @author Dan Albert
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 

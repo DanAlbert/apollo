@@ -1,7 +1,6 @@
 /**
  * @file RenderSystem_Direct3D9.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -242,6 +241,23 @@ void RenderSystem_Direct3D9::EndDrawing(void)
 
 	// flip
 	m_Device->Present(NULL, NULL, NULL, NULL);
+}
+
+void RenderSystem_Direct3D9::DrawLine(const Apollo::Vector2& a, const Apollo::Vector2& b, const Apollo::Color& color)
+{
+	LPD3DXLINE line;
+	D3DXCreateLine(this->m_Device, &line);
+
+	D3DXVECTOR2 verticies[] =
+	{
+		D3DXVECTOR2(a.x, a.y),
+		D3DXVECTOR2(b.x, b.y)
+	};
+
+	line->Begin();
+	line->Draw(verticies, 2, D3DCOLOR_XRGB(color.r, color.g, color.b));
+	line->End();
+	line->Release();
 }
 
 bool RenderSystem_Direct3D9::setupDisplayFormat(D3DPRESENT_PARAMETERS& pp, unsigned int bitDepth)

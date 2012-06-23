@@ -1,7 +1,6 @@
 /**
  * @file GameManager.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -61,6 +60,8 @@ private:
 	bool loadPlayerState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	bool loadAsteroidState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	bool loadLaserState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
+
+	void checkCollisions(void) throw();
 };
 
 #endif // GAMEMANAGER_H

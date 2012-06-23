@@ -1,7 +1,6 @@
 /**
  * @file PlayerDef.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -29,24 +28,21 @@
  */
 #include "PlayerDef.h"
 
-PlayerDef::PlayerDef(const char* path) :
+PlayerDef::PlayerDef(const char* path) throw(Apollo::IOError):
 	maxSpeed(0.0f),
 	baseAcceleration(0.0f),
 	maxAngularSpeed(0.0f)
 {
-	if (!LoadFromFile(path))
-	{
-		Log("[PlayerDef] Error loading Player info from %s.", path);
-	}
+	this->loadFromFile(path);
 }
 
 PlayerDef::~PlayerDef(void)
 {
 }
 
-const char* PlayerDef::GetSpritePath(void) const
+const char* PlayerDef::GetEntityPath(void) const
 {
-	return this->spritePath.c_str();
+	return this->entityPath.c_str();
 }
 
 const double PlayerDef::GetMaxSpeed(void) const
@@ -69,17 +65,20 @@ const long PlayerDef::GetShotInterval(void) const
 	return this->shotInterval;
 }
 
-bool PlayerDef::LoadFromFile(const char* path)
+void PlayerDef::loadFromFile(const char* path)
 {
 	TiXmlDocument doc(path);
 	if (!doc.LoadFile(TIXML_ENCODING_UTF8))
-		return false;
+	{
+		Log("[PlayerDef] Error loading Player info from %s.", path);
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_LOAD);
+	}
 
 	TiXmlHandle hDoc(&doc);
 	TiXmlElement* elem;
 	TiXmlHandle hRoot(0);
 
-	TiXmlElement* spritePathElem;
+	TiXmlElement* entityElem;
 	TiXmlElement* maxSpeedElem;
 	TiXmlElement* baseAccelerationElem;
 	TiXmlElement* maxAngularSpeedElem;
@@ -88,14 +87,15 @@ bool PlayerDef::LoadFromFile(const char* path)
 	elem = hDoc.FirstChildElement().Element(); // /Player
 	hRoot = TiXmlHandle(elem);
 	
-	spritePathElem = elem->FirstChildElement("Sprite");
-	if (spritePathElem)
+	entityElem = elem->FirstChildElement("Entity");
+	if (entityElem)
 	{
-		this->spritePath = spritePathElem->GetText();
+		this->entityPath = entityElem->GetText();
 	}
 	else
 	{
-		ErrorMessage("Element \"Sprite\" does not exist in Player definition.");
+		Log("[PlayerDef] Element \"Entity\" does not exist in Player definition.");
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM);
 	}
 
 	maxSpeedElem = elem->FirstChildElement("MaxSpeed");
@@ -105,7 +105,8 @@ bool PlayerDef::LoadFromFile(const char* path)
 	}
 	else
 	{
-		ErrorMessage("Element \"MaxSpeed\" does not exist in Player definition.");
+		Log("[PlayerDef] Element \"MaxSpeed\" does not exist in Player definition.");
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM);
 	}
 
 	baseAccelerationElem = elem->FirstChildElement("BaseAcceleration");
@@ -115,7 +116,8 @@ bool PlayerDef::LoadFromFile(const char* path)
 	}
 	else
 	{
-		ErrorMessage("Element \"BaseAcceleration\" does not exist in Player definition.");
+		Log("[PlayerDef] Element \"BaseAcceleration\" does not exist in Player definition.");
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM);
 	}
 
 	maxAngularSpeedElem = elem->FirstChildElement("MaxAngularSpeed");
@@ -125,7 +127,8 @@ bool PlayerDef::LoadFromFile(const char* path)
 	}
 	else
 	{
-		ErrorMessage("Element \"MaxAngularSpeed\" does not exist in Player definition.");
+		Log("[PlayerDef] Element \"MaxAngularSpeed\" does not exist in Player definition.");
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM);
 	}
 
 	maxAngularSpeedElem = elem->FirstChildElement("ShotInterval");
@@ -135,8 +138,7 @@ bool PlayerDef::LoadFromFile(const char* path)
 	}
 	else
 	{
-		ErrorMessage("Element \"ShotInterval\" does not exist in Player definition.");
+		Log("[PlayerDef] Element \"ShotInterval\" does not exist in Player definition.");
+		throw Apollo::IOError(ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM);
 	}
-	
-	return true;
 }

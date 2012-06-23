@@ -1,7 +1,6 @@
 /**
  * @file GameObject.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -35,6 +34,8 @@
 #include <Apollo/Vector2.h>
 #include <Apollo/Viewport.h>
 
+#include "Physics/Geometry.h"
+
 class GameObject : public Apollo::SpriteObject
 {
 public:
@@ -45,21 +46,43 @@ public:
 
 	virtual ~GameObject(void);
 
+	inline const Geometry& GetGeometry(void) const throw()
+	{
+		Transformation t;
+		t.rotation = this->GetRotation();
+		t.scale = Scale(1.0f, 1.0f);
+		t.translation = Translation(this->GetXPosition(), this->GetYPosition());
+		this->geometry->SetTransform(t);
+		return *this->geometry;
+	}
+
 	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
 	void Update(long dTime);
 
+	bool CollidesWith(const GameObject& other) const throw();
+	void HandleCollision(const GameObject& other) throw();
+
 protected:
+	std::string resourcePath;
 	Apollo::Viewport* viewport;
+
+	Geometry* geometry;
 	
 	Apollo::Vector2 velocity;
 	double angularVelocity;
 
-	GameObject(Apollo::Viewport* viewport);
+	GameObject(Apollo::RenderSystem* renderSystem, Apollo::Viewport* viewport);
+
+	void loadFromFile(const char* path) throw(Apollo::IOError);
 
 	void updatePosition(long dTime);
 	void updateRotation(long dTime);
+	
+	void drawBoundingBox(void) const;
+	void drawBorders(void) const;
+
 	void wrapScreenEdges(void);
 };
 

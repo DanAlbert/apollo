@@ -1,7 +1,6 @@
 /**
  * @file PlayerDef.h
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -30,31 +29,34 @@
 #ifndef PLAYERDEF_H
 #define PLAYERDEF_H
 
-#include <Apollo/Debug.h>
 #include <string>
 #include <tinyxml.h>
+
+#include <Apollo/Debug.h>
+#include <Apollo/IOError.h>
 
 class PlayerDef
 {
 public:
-	PlayerDef(const char* path);
+	PlayerDef(const char* path) throw(Apollo::IOError);
 	~PlayerDef(void);
 
-	const char*		GetSpritePath(void) const;
+	const char*		GetEntityPath(void) const;
 	const double	GetMaxSpeed(void) const;
 	const double	GetBaseAcceleration(void) const;
 	const double	GetMaxAngularSpeed(void) const;
 	const long		GetShotInterval(void) const;
 
-	bool LoadFromFile(const char* path);
 	void Release(void);
 
 private:
-	std::string spritePath;
+	std::string entityPath;
 	double maxSpeed;
 	double baseAcceleration;
 	double maxAngularSpeed;
 	long shotInterval;
+	
+	void loadFromFile(const char* path) throw(Apollo::IOError);
 };
 
 #endif // PLAYERDEF_H

@@ -1,7 +1,6 @@
 /**
  * @file GameObject.cpp
  * @author Dan Albert <dan@gingerhq.net>
- * @date Last updated 06/19/2012
  *
  * @section LICENSE
  * 
@@ -30,7 +29,10 @@
  */
 #include "GameObject.h"
 
-GameObject::GameObject(Apollo::Viewport* viewport) :
+#include "EntityDef.h"
+
+GameObject::GameObject(Apollo::RenderSystem* renderSystem, Apollo::Viewport* viewport) :
+	SpriteObject(renderSystem),
 	viewport(viewport),
 	angularVelocity(0.0f)
 {
@@ -40,11 +42,12 @@ GameObject::GameObject(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
 	Apollo::Viewport* viewport) :
-		Apollo::SpriteObject(path, renderSystem),
+		Apollo::SpriteObject(renderSystem),
 		viewport(viewport),
 		velocity(),
 		angularVelocity(0.0f)
 {
+	this->loadFromFile(path);
 }
 
 GameObject::~GameObject(void)
@@ -63,6 +66,11 @@ void GameObject::SaveState(TiXmlElement*& element, bool elementIsParent)
 	else
 	{
 		elem = element;
+	}
+	
+	if (!this->resourcePath.empty() && (elem->Attribute("resource") == NULL))
+	{
+		elem->SetAttribute("resource", this->resourcePath.c_str());
 	}
 	
 	elem->SetDoubleAttribute("velocity.x", this->velocity.x);
@@ -93,6 +101,25 @@ void GameObject::Update(long dTime)
 	Apollo::SpriteObject::Update(dTime);
 }
 
+bool GameObject::CollidesWith(const GameObject& other) const throw()
+{
+	return this->GetGeometry().CollidesWith(other.GetGeometry());
+}
+
+void GameObject::HandleCollision(const GameObject& other) throw()
+{
+}
+
+void GameObject::loadFromFile(const char* path) throw(Apollo::IOError)
+{
+	EntityDef def(path);
+
+	this->geometry = new Geometry(def.GetVertexList());
+	SpriteObject::loadFromFile(def.GetSpritePath());
+	
+	this->resourcePath = path;
+}
+
 void GameObject::updatePosition(long dTime)
 {
 	this->Move(this->velocity.x * dTime, this->velocity.y * dTime);
@@ -101,6 +128,35 @@ void GameObject::updatePosition(long dTime)
 void GameObject::updateRotation(long dTime)
 {
 	this->Rotate(this->angularVelocity * dTime);
+}
+
+void GameObject::drawBoundingBox(void) const
+{
+	BoundingBox bb = this->GetGeometry().GetBoundingBox();
+	for (int i = 0; i < 4; i++)
+	{
+		this->renderSystem->DrawLine(
+			Transform(bb.points[i], bb.transform),
+			Transform(bb.points[(i + 1) % 4], bb.transform));
+	}
+}
+
+void GameObject::drawBorders(void) const
+{
+	Geometry geo = this->GetGeometry();
+	for (int i = 0; i < geo.GetNumVerticies(); i++)
+	{
+		Vertex a = geo[i];
+		Vertex b = geo[(i + 1) % geo.GetNumVerticies()];
+		a -= Translation(this->GetWidth() / 2, this->GetHeight() / 2);
+		b -= Translation(this->GetWidth() / 2, this->GetHeight() / 2);
+		a = Transform(a, geo.GetTransform());
+		b = Transform(b, geo.GetTransform());
+		a += Translation(this->GetWidth() / 2, this->GetHeight() / 2);
+		b += Translation(this->GetWidth() / 2, this->GetHeight() / 2);
+		
+		this->renderSystem->DrawLine(a, b);
+	}
 }
 
 void GameObject::wrapScreenEdges(void)
