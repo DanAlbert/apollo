@@ -48,6 +48,22 @@ Player::~Player(void)
 {
 }
 
+bool Player::InCollisionGroup(const char* group) const throw()
+{
+	if (strcmp(group, "player") == 0)
+	{
+		return true;
+	}
+	else if (strcmp(group, "ship") == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return GameObject::InCollisionGroup(group);
+	}
+}
+
 void Player::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
 	TiXmlElement* elem;
@@ -160,3 +176,9 @@ void Player::updateAttack(long dTime)
 		laser->SetRotation(this->GetRotation());
 	}
 }
+
+bool Player::HandleCollision(const GameObject& other) throw()
+{
+	return GameObject::HandleCollision(other);
+}
+

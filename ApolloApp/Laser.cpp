@@ -44,6 +44,22 @@ Laser::~Laser(void)
 {
 }
 
+bool Laser::InCollisionGroup(const char* group) const throw()
+{
+	if (strcmp(group, "laser") == 0)
+	{
+		return true;
+	}
+	else if (strcmp(group, "weapon") == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return GameObject::InCollisionGroup(group);
+	}
+}
+
 void Laser::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
 	TiXmlElement* elem;
@@ -80,4 +96,16 @@ void Laser::Update(long dTime)
 	}
 
 	GameObject::Update(dTime);
+}
+
+bool Laser::HandleCollision(const GameObject& other) throw()
+{
+	if (other.InCollisionGroup("asteroid") ||
+		other.InCollisionGroup("laser"))
+	{
+		GameObject::HandleCollision(other);
+		return true;
+	}
+
+	return GameObject::HandleCollision(other);
 }

@@ -48,7 +48,7 @@ public:
 		return this->spritePath.c_str();
 	}
 
-	const VertexList& GetVertexList(void) const throw()
+	inline const VertexList& GetVertexList(void) const throw()
 	{
 		return this->vertexList;
 	}

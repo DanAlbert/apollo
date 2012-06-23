@@ -54,6 +54,11 @@ GameObject::~GameObject(void)
 {
 }
 
+bool GameObject::InCollisionGroup(const char* group) const throw()
+{
+	return false;
+}
+
 void GameObject::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
 	TiXmlElement* elem;
@@ -101,13 +106,19 @@ void GameObject::Update(long dTime)
 	Apollo::SpriteObject::Update(dTime);
 }
 
+void GameObject::Draw(long dTime, Apollo::SceneObject* view)
+{
+	SpriteObject::Draw(dTime, view);
+}
+
 bool GameObject::CollidesWith(const GameObject& other) const throw()
 {
 	return this->GetGeometry().CollidesWith(other.GetGeometry());
 }
 
-void GameObject::HandleCollision(const GameObject& other) throw()
+bool GameObject::HandleCollision(const GameObject& other) throw()
 {
+	return false;
 }
 
 void GameObject::loadFromFile(const char* path) throw(Apollo::IOError)

@@ -71,7 +71,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>tinyxml.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release</AdditionalLibraryDirectories>
-      <Version>0.2.55</Version>
+      <Version>0.2.56</Version>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>tinyxml.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(TINYXML_PATH)\Release</AdditionalLibraryDirectories>
-      <Version>0.2.55</Version>
+      <Version>0.2.56</Version>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>

@@ -200,7 +200,7 @@ void generateAsteroidField(GameManager* gameManager, int nAsteroids)
 {
 	for (int i = 0; i < nAsteroids; i++)
 	{
-		Asteroid* asteroid = gameManager->CreateAsteroid("Resources/Sprites/LargeAsteroid.xml");
+		Asteroid* asteroid = gameManager->CreateAsteroid("Resources/Entities/LargeAsteroid.xml");
 		
 		asteroid->SetPosition(
 			rand() % gameManager->GetViewport()->GetWidth(),

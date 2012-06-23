@@ -43,6 +43,22 @@ Asteroid::~Asteroid(void)
 {
 }
 
+bool Asteroid::InCollisionGroup(const char* group) const throw()
+{
+	if (strcmp(group, "asteroid") == 0)
+	{
+		return true;
+	}
+	else if (strcmp(group, "large asteroid") == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return GameObject::InCollisionGroup(group);
+	}
+}
+
 void Asteroid::SaveState(TiXmlElement*& element, bool elementIsParent)
 {
 	TiXmlElement* elem;
@@ -74,4 +90,15 @@ void Asteroid::Update(long dTime)
 	}
 
 	GameObject::Update(dTime);
+}
+
+bool Asteroid::HandleCollision(const GameObject& other) throw()
+{
+	if (other.InCollisionGroup("weapon"))
+	{
+		GameObject::HandleCollision(other);
+		return true;
+	}
+
+	return GameObject::HandleCollision(other);
 }

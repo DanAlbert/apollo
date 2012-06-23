@@ -48,10 +48,14 @@ public:
 
 	virtual ~Player(void);
 
+	bool InCollisionGroup(const char* group) const throw();
+
 	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
 	void Update(long dTime);
+	
+	bool HandleCollision(const GameObject& other) throw();
 
 private:
 	PlayerListener* playerListener;

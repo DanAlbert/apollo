@@ -207,23 +207,31 @@ bool GameManager::loadLaserState(
 
 void GameManager::checkCollisions(void) throw()
 {
+	std::vector<GameObject*> killList;
 	for (int i = 0; i < this->m_GameAssets.size(); i++)
 	{
 		GameObject* a = static_cast<GameObject*>(m_GameAssets[i]);
-		for (int j = 0; j < this->m_GameAssets.size(); j++)
+		for (int j = i + 1; j < this->m_GameAssets.size(); j++)
 		{
-			if (i == j)
-			{
-				continue;
-			}
-
 			GameObject* b = static_cast<GameObject*>(m_GameAssets[j]);
 
 			if (a->CollidesWith(*b))
 			{
-				a->HandleCollision(*b);
-				b->HandleCollision(*a);
+				if (a->HandleCollision(*b))
+				{
+					killList.push_back(a);
+				}
+
+				if (b->HandleCollision(*a))
+				{
+					killList.push_back(b);
+				}
 			}
 		}
+	}
+
+	for (int i = 0; i < killList.size(); i++)
+	{
+		this->FreeGameObject(killList[i]);
 	}
 }

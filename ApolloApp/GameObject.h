@@ -56,13 +56,16 @@ public:
 		return *this->geometry;
 	}
 
+	virtual bool InCollisionGroup(const char* group) const throw();
+
 	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
 	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
 	
-	void Update(long dTime);
+	virtual void Update(long dTime);
+	virtual void Draw(long dTime, Apollo::SceneObject* view);
 
 	bool CollidesWith(const GameObject& other) const throw();
-	void HandleCollision(const GameObject& other) throw();
+	virtual bool HandleCollision(const GameObject& other) throw();
 
 protected:
 	std::string resourcePath;

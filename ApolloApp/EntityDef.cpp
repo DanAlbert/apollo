@@ -57,7 +57,7 @@ void EntityDef::LoadFromFile(const char* path) throw(Apollo::IOError)
 	// root
 	elem = hDoc.FirstChildElement().Element(); // /Entity
 	hRoot = TiXmlHandle(elem);
-	
+
 	spriteElem = elem->FirstChildElement("Sprite");
 	if (spriteElem)
 	{
