@@ -109,6 +109,7 @@ void GameObject::Update(long dTime)
 void GameObject::Draw(long dTime, Apollo::SceneObject* view)
 {
 	SpriteObject::Draw(dTime, view);
+	this->drawBorders();
 }
 
 bool GameObject::CollidesWith(const GameObject& other) const throw()

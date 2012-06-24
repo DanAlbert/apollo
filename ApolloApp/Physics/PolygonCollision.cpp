@@ -92,8 +92,8 @@ bool PolygonCollision(const Geometry& a, const Geometry& b)
 		double minB;
 		double maxB;
 
-		Vertex u = const_cast<Geometry&>(a)[i];
-		Vertex v = const_cast<Geometry&>(a)[(i + 1) % a.GetNumVerticies()];
+		Vertex u = const_cast<Geometry&>(b)[i];
+		Vertex v = const_cast<Geometry&>(b)[(i + 1) % b.GetNumVerticies()];
 
 		u -= Translation(b.GetWidth() / 2, b.GetHeight() / 2);
 		v -= Translation(b.GetWidth() / 2, b.GetHeight() / 2);
