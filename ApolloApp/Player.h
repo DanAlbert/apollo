@@ -55,7 +55,7 @@ public:
 	
 	void Update(long dTime);
 	
-	bool HandleCollision(const GameObject& other) throw();
+	void HandleCollision(const GameObject& other) throw();
 
 private:
 	PlayerListener* playerListener;

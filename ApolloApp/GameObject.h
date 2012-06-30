@@ -64,7 +64,7 @@ public:
 	virtual void Draw(long dTime, Apollo::SceneObject* view);
 
 	bool CollidesWith(const GameObject& other) const throw();
-	virtual bool HandleCollision(const GameObject& other) throw();
+	virtual void HandleCollision(const GameObject& other) throw();
 
 protected:
 	std::string resourcePath;

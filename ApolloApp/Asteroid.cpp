@@ -92,12 +92,12 @@ void Asteroid::Update(long dTime)
 	GameObject::Update(dTime);
 }
 
-bool Asteroid::HandleCollision(const GameObject& other) throw()
+void Asteroid::HandleCollision(const GameObject& other) throw()
 {
 	if (other.InCollisionGroup("weapon"))
 	{
 		GameObject::HandleCollision(other);
-		return true;
+		this->MarkForCollection();
 	}
 
 	return GameObject::HandleCollision(other);

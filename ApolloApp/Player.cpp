@@ -177,8 +177,8 @@ void Player::updateAttack(long dTime)
 	}
 }
 
-bool Player::HandleCollision(const GameObject& other) throw()
+void Player::HandleCollision(const GameObject& other) throw()
 {
-	return GameObject::HandleCollision(other);
+	GameObject::HandleCollision(other);
 }
 

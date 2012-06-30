@@ -70,12 +70,19 @@ namespace Apollo
 		inline unsigned int	GetHeight(void)		const	{	return m_Height;	}
 		inline SceneObject*	GetParent(void)		const	{	return m_Parent;	}
 
+		inline bool IsReadyForCollection(void) const throw()
+		{
+			return this->collect;
+		}
+
 		float GetRelativeXPosition(void);
 		float GetRelativeYPosition(void);
 
 		// Modifiers //
 		void SetActive(bool active);
 		void SetVisible(bool visible);
+
+		void MarkForCollection(void) throw();
 		
 		void SetPosition(float x, float y);
 		void SetRelativePosition(float x, float y);
@@ -89,6 +96,7 @@ namespace Apollo
 
 	protected:
 		bool			active;
+		bool			collect;
 		bool			visible;
 		float			m_XPosition;
 		float			m_YPosition;

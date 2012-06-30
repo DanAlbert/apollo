@@ -38,6 +38,7 @@ namespace Apollo
 	SceneObject::SceneObject(void)
 	{
 		active = true;
+		collect = false;
 		visible = true;
 		m_XPosition = 0.0f;
 		m_YPosition = 0.0f;
@@ -184,6 +185,11 @@ namespace Apollo
 		{
 			m_Children[i]->SetVisible(visible);
 		}
+	}
+
+	void SceneObject::MarkForCollection(void) throw()
+	{
+		this->collect = true;
 	}
 
 	void SceneObject::SetPosition(float x, float y)

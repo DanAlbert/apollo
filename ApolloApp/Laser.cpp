@@ -98,14 +98,14 @@ void Laser::Update(long dTime)
 	GameObject::Update(dTime);
 }
 
-bool Laser::HandleCollision(const GameObject& other) throw()
+void Laser::HandleCollision(const GameObject& other) throw()
 {
 	if (other.InCollisionGroup("asteroid") ||
 		other.InCollisionGroup("laser"))
 	{
 		GameObject::HandleCollision(other);
-		return true;
+		this->MarkForCollection();
 	}
 
-	return GameObject::HandleCollision(other);
+	GameObject::HandleCollision(other);
 }

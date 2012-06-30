@@ -169,6 +169,14 @@ namespace Apollo
 		{
 			m_GameAssets[i]->Update(dTime);
 		}
+
+		for (int i = 0; i < m_GameAssets.size(); ++i)
+		{
+			if (m_GameAssets[i]->IsReadyForCollection())
+			{
+				this->FreeGameObject(m_GameAssets[i]);
+			}
+		}
 	}
 
 	void SceneManager::Draw(void)

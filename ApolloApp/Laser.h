@@ -47,7 +47,7 @@ public:
 	
 	void Update(long dTime);
 
-	bool HandleCollision(const GameObject& other) throw();
+	void HandleCollision(const GameObject& other) throw();
 
 private:
 	static const char ENTITY_PATH[];
