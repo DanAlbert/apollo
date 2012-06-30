@@ -29,12 +29,16 @@
  */
 #ifndef STRINGUTIL_H
 #define STRINGUTIL_H
+#include "Apollo.h"
 
+#include <algorithm>
 #include <string>
 
 void Chomp(std::string& str);
 void TrimSpaces(std::string& str);
 void TrimLeadingSpaces(std::string& str);
 void TrimTrailingSpaces(std::string& str);
+std::string APOLLO_API ToLower(const std::string& str);
+std::string APOLLO_API ToUpper(const std::string& str);
 
 #endif // STRINGUTIL_H

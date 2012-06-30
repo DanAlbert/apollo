@@ -29,11 +29,13 @@
  */
 #include "GameObject.h"
 
+#include "GameManager.h"
 #include "EntityDef.h"
 
-GameObject::GameObject(Apollo::RenderSystem* renderSystem, Apollo::Viewport* viewport) :
+GameObject::GameObject(Apollo::RenderSystem* renderSystem, GameManager* gameManager) :
 	SpriteObject(renderSystem),
-	viewport(viewport),
+	gameManager(gameManager),
+	viewport(gameManager->GetViewport()),
 	angularVelocity(0.0f)
 {
 }
@@ -41,9 +43,10 @@ GameObject::GameObject(Apollo::RenderSystem* renderSystem, Apollo::Viewport* vie
 GameObject::GameObject(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
-	Apollo::Viewport* viewport) :
+	GameManager* gameManager) :
 		Apollo::SpriteObject(renderSystem),
-		viewport(viewport),
+		gameManager(gameManager),
+		viewport(gameManager->GetViewport()),
 		velocity(),
 		angularVelocity(0.0f)
 {

@@ -28,12 +28,78 @@
  */
 #include "Asteroid.h"
 
+#include "GameManager.h"
+
+const char* Asteroid::paths[Size::Invalid] =
+{
+	"Resources/Entities/SmallAsteroid.xml",
+	"Resources/Entities/MediumAsteroid.xml",
+	"Resources/Entities/LargeAsteroid.xml"
+};
+
+Asteroid::Asteroid(
+	const Size size,
+	Apollo::RenderSystem* renderSystem,
+	GameManager* gameManager)
+	throw(Apollo::InvalidArgumentError) :
+		GameObject(renderSystem, gameManager),
+		size(size)
+{
+	if (size == Invalid)
+	{
+		throw Apollo::InvalidArgumentError(ERR_APOLLOAPP_ASTEROID_INVALIDSIZE);
+	}
+
+	GameObject::loadFromFile(this->paths[size]);
+	this->velocity = Apollo::Vector2(((rand() % 100) - 50) / 1000.0f, ((rand() % 100) - 50) / 1000.0f);
+	this->angularVelocity = ((rand() % 100) - 50) / 10000.0f;
+}
+
+Asteroid::Asteroid(
+	const Size size,
+	Apollo::RenderSystem* renderSystem,
+	GameManager* gameManager,
+	double x,
+	double y)
+	throw(Apollo::InvalidArgumentError) :
+		GameObject(renderSystem, gameManager),
+		size(size)
+{
+	if (size == Invalid)
+	{
+		throw Apollo::InvalidArgumentError(ERR_APOLLOAPP_ASTEROID_INVALIDSIZE);
+	}
+
+	GameObject::loadFromFile(this->paths[size]);
+	this->velocity = Apollo::Vector2(((rand() % 100) - 50) / 1000.0f, ((rand() % 100) - 50) / 1000.0f);
+	this->angularVelocity = ((rand() % 100) - 50) / 10000.0f;
+	this->SetPosition(x, y);
+}
+
 Asteroid::Asteroid(
 	const char* path,
 	Apollo::RenderSystem* renderSystem,
-	Apollo::Viewport* viewport) :
-		GameObject(renderSystem, viewport)
+	GameManager* gameManager)
+	throw(Apollo::InvalidArgumentError) :
+		GameObject(renderSystem, gameManager)
 {
+	if (strcmp(path, this->paths[Size::Large]) == 0)
+	{
+		this->size = Size::Large;
+	}
+	else if (strcmp(path, this->paths[Size::Medium]) == 0)
+	{
+		this->size = Size::Medium;
+	}
+	else if (strcmp(path, this->paths[Size::Small]) == 0)
+	{
+		this->size = Size::Small;
+	}
+	else
+	{
+		throw Apollo::InvalidArgumentError(ERR_APOLLOAPP_ASTEROID_INVALIDSIZE);
+	}
+
 	GameObject::loadFromFile(path);
 	this->velocity = Apollo::Vector2(((rand() % 100) - 50) / 1000.0f, ((rand() % 100) - 50) / 1000.0f);
 	this->angularVelocity = ((rand() % 100) - 50) / 10000.0f;
@@ -98,7 +164,46 @@ void Asteroid::HandleCollision(const GameObject& other) throw()
 	{
 		GameObject::HandleCollision(other);
 		this->MarkForCollection();
+		switch (this->size)
+		{
+		case Size::Large:
+			this->gameManager->CreateAsteroid(Size::Medium, this->GetXPosition(), this->GetYPosition());
+			this->gameManager->CreateAsteroid(Size::Medium, this->GetXPosition(), this->GetYPosition());
+			break;
+		case Size::Medium:
+			this->gameManager->CreateAsteroid(Size::Small, this->GetXPosition(), this->GetYPosition());
+			this->gameManager->CreateAsteroid(Size::Small, this->GetXPosition(), this->GetYPosition());
+			break;
+		case Size::Small:
+		default:
+			break;
+		}
+		
 	}
 
 	return GameObject::HandleCollision(other);
+}
+
+const Asteroid::Size Asteroid::stringToSize(const char* str) throw()
+{
+	if (str == NULL)
+	{
+		return Size::Invalid;
+	}
+	else if (ToLower(str) == "small")
+	{
+		return Size::Small;
+	}
+	else if (ToLower(str) == "medium")
+	{
+		return Size::Medium;
+	}
+	else if (ToLower(str) == "large")
+	{
+		return Size::Large;
+	}
+	else
+	{
+		return Size::Invalid;
+	}
 }

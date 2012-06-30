@@ -37,8 +37,7 @@ Player::Player(
 	PlayerListener* playerListener,
 	GameManager* gameManager) throw(Apollo::IOError):
 		playerListener(playerListener),
-		GameObject(renderSystem, gameManager->GetViewport()),
-		gameManager(gameManager),
+		GameObject(renderSystem, gameManager),
 		lastShot(0)
 {
 	this->loadFromFile(path, renderSystem);

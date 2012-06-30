@@ -29,15 +29,37 @@
 #ifndef ASTEROID_H
 #define ASTEROID_H
 
+#include <Apollo/InvalidArgumentError.h>
+
 #include "GameObject.h"
 
 class Asteroid : public GameObject
 {
 public:
+	enum Size
+	{
+		Small,
+		Medium,
+		Large,
+		Invalid
+	};
+	
+	Asteroid(
+		const Size size,
+		Apollo::RenderSystem* renderSystem,
+		GameManager* gameManager) throw(Apollo::InvalidArgumentError);
+	
+	Asteroid(
+		const Size size,
+		Apollo::RenderSystem* renderSystem,
+		GameManager* gameManager,
+		double x,
+		double y) throw(Apollo::InvalidArgumentError);
+	
 	Asteroid(
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
-		Apollo::Viewport* viewport);
+		GameManager* gameManager) throw(Apollo::InvalidArgumentError);
 
 	virtual ~Asteroid(void);
 
@@ -49,6 +71,12 @@ public:
 	void Update(long dTime);
 
 	void HandleCollision(const GameObject& other) throw();
+
+	static const Size stringToSize(const char* str) throw();
+
+private:
+	Size size;
+	static const char* paths[Size::Invalid];
 };
 
 #endif // ASTEROID_H

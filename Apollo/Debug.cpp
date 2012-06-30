@@ -85,6 +85,10 @@ inline const char* ErrorStr(const int err)
 		return "Player missing attribute";
 	case ERR_APOLLOAPP_PLAYERDEF_MISSINGELEM:
 		return "Player missing element";
+	case ERR_APOLLOAPP_ASTEROID_INVALIDSIZE:
+		return "Invalid Asteroid size";
+	case ERR_APOLLOAPP_ASTEROID_MISSINGATTR:
+		return "Asteroid missing attribute";
 	default:
 		ss << std::hex << "0x" << err;
 		msg = "Unknown error: " + ss.str();

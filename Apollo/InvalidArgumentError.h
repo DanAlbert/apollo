@@ -1,5 +1,5 @@
 /**
- * @file Laser.h
+ * @file OutOfBoundError.h
  * @author Dan Albert <dan@gingerhq.net>
  *
  * @section LICENSE
@@ -23,35 +23,23 @@
  * 
  * @section DESCRIPTION
  * 
- * Defines a laser object.
+ * Defines an exception class that should be thrown when an invalid argument is
+ * passed to a function.
  * 
  */
-#ifndef LASER_H
-#define LASER_H
+#ifndef INVALIDARGUMENTERROR_H
+#define INVALIDARGUMENTERROR_H
 
-#include "GameObject.h"
+#include "Apollo.h"
+#include "ApolloError.h"
 
-class Laser : public GameObject
+namespace Apollo
 {
-public:
-	Laser(
-		Apollo::RenderSystem* renderSystem,
-		GameManager* gameManager);
+	class APOLLO_API InvalidArgumentError : public ApolloError
+	{
+	public:
+		explicit InvalidArgumentError(const int err) throw();
+	};
+}
 
-	virtual ~Laser(void);
-
-	bool InCollisionGroup(const char* group) const throw();
-
-	void SaveState(TiXmlElement*& element, bool elementIsParent = true);
-	void LoadState(TiXmlElement* element, Apollo::SceneObject* parent = NULL);
-	
-	void Update(long dTime);
-
-	void HandleCollision(const GameObject& other) throw();
-
-private:
-	static const char ENTITY_PATH[];
-	static const double MAX_SPEED;
-};
-
-#endif // LASER_H
+#endif // INVALIDARGUMENTERROR_H

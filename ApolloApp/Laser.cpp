@@ -33,8 +33,8 @@ const double Laser::MAX_SPEED = 0.2f;
 
 Laser::Laser(
 	Apollo::RenderSystem* renderSystem,
-	Apollo::Viewport* viewport) :
-		GameObject(renderSystem, viewport)
+	GameManager* gameManager) :
+		GameObject(renderSystem, gameManager)
 {
 	GameObject::loadFromFile(Laser::ENTITY_PATH);
 	this->velocity = Apollo::Vector2(0.1f, 0.0f);

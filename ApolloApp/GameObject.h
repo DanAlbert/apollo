@@ -35,13 +35,15 @@
 #include <Apollo/Vector2.h>
 #include <Apollo/Viewport.h>
 
+class GameManager;
+
 class GameObject : public Apollo::SpriteObject
 {
 public:
 	GameObject(
 		const char* path,
 		Apollo::RenderSystem* renderSystem,
-		Apollo::Viewport* viewport);
+		GameManager* gameManager);
 
 	virtual ~GameObject(void);
 
@@ -68,6 +70,7 @@ public:
 
 protected:
 	std::string resourcePath;
+	GameManager* gameManager;
 	Apollo::Viewport* viewport;
 
 	Apollo::Geometry* geometry;
@@ -75,7 +78,7 @@ protected:
 	Apollo::Vector2 velocity;
 	double angularVelocity;
 
-	GameObject(Apollo::RenderSystem* renderSystem, Apollo::Viewport* viewport);
+	GameObject(Apollo::RenderSystem* renderSystem, GameManager* gameManager);
 
 	void loadFromFile(const char* path) throw(Apollo::IOError);
 

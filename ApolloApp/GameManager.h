@@ -49,6 +49,8 @@ public:
 
 	Player*	CreatePlayer(const char* path);
 	Asteroid* CreateAsteroid(const char* path);
+	Asteroid* CreateAsteroid(const Asteroid::Size size);
+	Asteroid* CreateAsteroid(const Asteroid::Size size, double x, double y);
 	Laser* CreateLaser();
 
 	void Update(void);

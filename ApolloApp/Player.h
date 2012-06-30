@@ -59,7 +59,6 @@ public:
 
 private:
 	PlayerListener* playerListener;
-	GameManager* gameManager;
 
 	std::string resourcePath;
 

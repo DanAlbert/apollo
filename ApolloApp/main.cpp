@@ -64,78 +64,77 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 #endif
 
 	MyRegisterClass(hInstance);
-
-	Apollo::RenderSystem* apollo = Apollo::RenderSystem::Create("RenderDirect3D9.dll");
-	Apollo::Font* font = new Apollo::Font("Resources/Fonts/ApolloSystem.xml", apollo);
-	GameManager* scene = new GameManager(apollo);
-
+	
 	try
 	{
+		Apollo::RenderSystem* apollo = Apollo::RenderSystem::Create("RenderDirect3D9.dll");
+		Apollo::Font* font = new Apollo::Font("Resources/Fonts/ApolloSystem.xml", apollo);
+		GameManager* scene = new GameManager(apollo);
+
 		if (!scene->LoadState("savedscene.xml"))
 		{
 			createScene(scene);
 		}
+	
+		long lastTime = 0;
+		long frames = 0;
+		char fpsString[32] = "0 FPS";
+		// Main message loop
+		bool done = false;
+		while (!done)
+		{
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+			{
+				if (msg.message == WM_QUIT)
+				{
+					done = true;
+				}
+
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			else
+			{
+				long cTime = GetTickCount();
+				long dTime = cTime - lastTime;
+				if (dTime > 100)
+				{
+					lastTime = cTime;
+
+					int fps = floor(frames / (dTime / 1000.0f));
+				
+					sprintf(fpsString, "%d FPS", fps);
+					frames = 0;
+				}
+
+				scene->Update();
+
+				apollo->StartDrawing();
+				scene->Draw();
+			
+				font->DrawText(
+					fpsString,
+					apollo->GetWidth() - font->TextWidth(fpsString) - 10.0f,
+					10.0f,
+					Apollo::Color::White);
+
+				apollo->EndDrawing();
+			
+				frames++;
+			}
+
+			done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;
+		}
+
+		scene->SaveState("savedscene.xml");
+
+		delete scene;
+		delete apollo;
 	}
-	catch (const Apollo::IOError& e)
+	catch (const Apollo::ApolloError& e)
 	{
 		ErrorQuit(e);
 	}
-	
-	long lastTime = 0;
-	long frames = 0;
-	char fpsString[32] = "0 FPS";
-
-	// Main message loop
-	bool done = false;
-	while (!done)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-			{
-				done = true;
-			}
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			long cTime = GetTickCount();
-			long dTime = cTime - lastTime;
-			if (dTime > 100)
-			{
-				lastTime = cTime;
-
-				int fps = floor(frames / (dTime / 1000.0f));
-				
-				sprintf(fpsString, "%d FPS", fps);
-				frames = 0;
-			}
-
-			scene->Update();
-
-			apollo->StartDrawing();
-			scene->Draw();
-			
-			font->DrawText(
-				fpsString,
-				apollo->GetWidth() - font->TextWidth(fpsString) - 10.0f,
-				10.0f,
-				Apollo::Color::White);
-
-			apollo->EndDrawing();
-			
-			frames++;
-		}
-
-		done = GetAsyncKeyState(VK_ESCAPE) & 0x8000 ? true : false;
-	}
-
-	scene->SaveState("savedscene.xml");
-
-	delete scene;
-	delete apollo;
 	
 	UnregisterClass(szAppTitle, hInstance);
 
@@ -200,7 +199,7 @@ void generateAsteroidField(GameManager* gameManager, int nAsteroids)
 {
 	for (int i = 0; i < nAsteroids; i++)
 	{
-		Asteroid* asteroid = gameManager->CreateAsteroid("Resources/Entities/LargeAsteroid.xml");
+		Asteroid* asteroid = gameManager->CreateAsteroid(Asteroid::Large);
 		
 		asteroid->SetPosition(
 			rand() % gameManager->GetViewport()->GetWidth(),

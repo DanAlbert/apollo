@@ -61,14 +61,28 @@ Player* GameManager::CreatePlayer(const char* path)
 
 Asteroid* GameManager::CreateAsteroid(const char* path)
 {
-	Asteroid* asteroid = new Asteroid(path, this->m_RenderSystem, this->m_Viewport);
+	Asteroid* asteroid = new Asteroid(path, this->m_RenderSystem, this);
+	m_GameAssets.push_back(asteroid);
+	return asteroid;
+}
+
+Asteroid* GameManager::CreateAsteroid(const Asteroid::Size size)
+{
+	Asteroid* asteroid = new Asteroid(size, this->m_RenderSystem, this);
+	m_GameAssets.push_back(asteroid);
+	return asteroid;
+}
+
+Asteroid* GameManager::CreateAsteroid(const Asteroid::Size size, double x, double y)
+{
+	Asteroid* asteroid = new Asteroid(size, this->m_RenderSystem, this, x, y);
 	m_GameAssets.push_back(asteroid);
 	return asteroid;
 }
 
 Laser* GameManager::CreateLaser(void)
 {
-	Laser* laser = new Laser(this->m_RenderSystem, this->m_Viewport);
+	Laser* laser = new Laser(this->m_RenderSystem, this);
 	m_GameAssets.push_back(laser);
 	return laser;
 }
@@ -177,7 +191,7 @@ bool GameManager::loadAsteroidState(
 	}
 	else
 	{
-		return false;
+		throw Apollo::IOError(ERR_APOLLOAPP_ASTEROID_MISSINGATTR);
 	}
 }
 

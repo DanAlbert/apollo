@@ -72,3 +72,36 @@ void TrimTrailingSpaces(std::string& str)
 		str = str.substr(0, str.length() - 1);
 	}
 }
+
+std::string ToLower(const std::string& str)
+{
+	char* tmpstr = new char[str.size() + 1];
+	for (int i = 0; i < str.size(); i++)
+	{
+		tmpstr[i] = tolower(str[i]);
+	}
+	tmpstr[str.size()] = '\0';
+
+	std::string newstr = tmpstr;
+
+	delete[] tmpstr;
+
+	return newstr;
+}
+
+
+std::string ToUpper(const std::string& str)
+{
+	char* tmpstr = new char[str.size() + 1];
+	for (int i = 0; i < str.size(); i++)
+	{
+		tmpstr[i] = toupper(str[i]);
+	}
+	tmpstr[str.size() + 1] = '\0';
+
+	std::string newstr = tmpstr;
+
+	delete[] tmpstr;
+
+	return newstr;
+}
