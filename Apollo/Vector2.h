@@ -33,8 +33,12 @@
 
 #include "Apollo.h"
 
+#include <vector>
+
 namespace Apollo
 {
+	struct Transformation;
+
 	class APOLLO_API Vector2
 	{
 	public:
@@ -49,14 +53,14 @@ namespace Apollo
 		Vector2& operator= (const Vector2& rhs);
 		bool operator== (const Vector2& rhs);
 		bool operator!= (const Vector2& rhs);
-		Vector2& operator+ (void) const;
-		Vector2& operator- (void) const;
-		Vector2& operator+ (const Vector2& rhs) const;
-		Vector2& operator- (const Vector2& rhs) const;
-		Vector2& operator* (const double rhs) const;
-		Vector2& operator/ (const double rhs) const;
-		friend Vector2& operator* (const double lhs, const Vector2& rhs);
-		friend Vector2& operator/ (const double lhs, const Vector2& rhs);
+		Vector2 operator+ (void) const;
+		Vector2 operator- (void) const;
+		Vector2 operator+ (const Vector2& rhs) const;
+		Vector2 operator- (const Vector2& rhs) const;
+		Vector2 operator* (const double rhs) const;
+		Vector2 operator/ (const double rhs) const;
+		friend Vector2 operator* (const double lhs, const Vector2& rhs);
+		friend Vector2 operator/ (const double lhs, const Vector2& rhs);
 		void operator+= (const Vector2& rhs);
 		void operator-= (const Vector2& rhs);
 		void operator*= (const double rhs);
@@ -67,7 +71,41 @@ namespace Apollo
 		double ScalarProjection(const Vector2& onto) const;
 		Vector2 Normal(const Vector2& v) const;
 
+		Vector2 Transform(const Transformation& transform, const Vector2& center = Vector2(0.0f, 0.0f)) throw();
+		Vector2 Transform(
+			const Vector2& translation,
+			const Vector2& scale,
+			const double rotation,
+			const Vector2& center = Vector2(0.0f, 0.0f)) throw();
+
 		const double GetMagnitude(void) const;
+	};
+
+	/// Vertex type definition
+	typedef Vector2 Vertex;
+
+	/// Vertex list type definition
+	typedef std::vector<Vertex> VertexList;
+
+	/// Translation vector type definition
+	typedef Vector2 Translation;
+
+	/// Scale vector type definition
+	typedef Vector2 Scale;
+
+	/// Angle type definition
+	typedef double Rotation;
+
+	struct Transformation
+	{
+		Translation translation;
+		Rotation rotation;
+		Scale scale;
+	};
+
+	struct TransformationMatrix
+	{
+		Vector2 rows[2];
 	};
 }
 

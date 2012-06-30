@@ -96,7 +96,7 @@ void GameObject::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 
 void GameObject::Update(long dTime)
 {
-	if (this->m_Active)
+	if (this->active)
 	{
 		this->updateRotation(dTime);
 		this->updatePosition(dTime);
@@ -109,7 +109,8 @@ void GameObject::Update(long dTime)
 void GameObject::Draw(long dTime, Apollo::SceneObject* view)
 {
 	SpriteObject::Draw(dTime, view);
-	this->drawBorders();
+	//this->drawBoundingBox();
+	//this->drawBorders();
 }
 
 bool GameObject::CollidesWith(const GameObject& other) const throw()
@@ -126,7 +127,7 @@ void GameObject::loadFromFile(const char* path) throw(Apollo::IOError)
 {
 	EntityDef def(path);
 
-	this->geometry = new Geometry(def.GetVertexList());
+	this->geometry = new Apollo::Geometry(def.GetVertexList());
 	SpriteObject::loadFromFile(def.GetSpritePath());
 	
 	this->resourcePath = path;
@@ -144,28 +145,22 @@ void GameObject::updateRotation(long dTime)
 
 void GameObject::drawBoundingBox(void) const
 {
-	BoundingBox bb = this->GetGeometry().GetBoundingBox();
+	Apollo::BoundingBox bb = this->GetGeometry().GetBoundingBox();
 	for (int i = 0; i < 4; i++)
 	{
 		this->renderSystem->DrawLine(
-			Transform(bb.points[i], bb.transform),
-			Transform(bb.points[(i + 1) % 4], bb.transform));
+			bb.points[i],
+			bb.points[(i + 1) % 4]);
 	}
 }
 
 void GameObject::drawBorders(void) const
 {
-	Geometry geo = this->GetGeometry();
+	Apollo::Geometry geo = this->GetGeometry().Transformed();
 	for (int i = 0; i < geo.GetNumVerticies(); i++)
 	{
-		Vertex a = geo[i];
-		Vertex b = geo[(i + 1) % geo.GetNumVerticies()];
-		a -= Translation(this->GetWidth() / 2, this->GetHeight() / 2);
-		b -= Translation(this->GetWidth() / 2, this->GetHeight() / 2);
-		a = Transform(a, geo.GetTransform());
-		b = Transform(b, geo.GetTransform());
-		a += Translation(this->GetWidth() / 2, this->GetHeight() / 2);
-		b += Translation(this->GetWidth() / 2, this->GetHeight() / 2);
+		Apollo::Vertex a = geo[i];
+		Apollo::Vertex b = geo[(i + 1) % geo.GetNumVerticies()];
 		
 		this->renderSystem->DrawLine(a, b);
 	}

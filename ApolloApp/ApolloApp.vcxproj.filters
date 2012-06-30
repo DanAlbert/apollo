@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Header Files\Physics">
-      <UniqueIdentifier>{6de1c142-97ee-42ef-98a4-2f5f7cf4cc12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Physics">
-      <UniqueIdentifier>{40fcd761-c34a-472e-9f0e-955a7ad60030}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,15 +39,6 @@
     <ClCompile Include="Laser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\BoundingBox.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Geometry.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\PolygonCollision.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="EntityDef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,15 +64,6 @@
     </ClInclude>
     <ClInclude Include="Laser.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\BoundingBox.h">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Geometry.h">
-      <Filter>Header Files\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\PolygonCollision.h">
-      <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="EntityDef.h">
       <Filter>Header Files</Filter>

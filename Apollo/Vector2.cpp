@@ -34,6 +34,8 @@
 
 namespace Apollo
 {
+	TransformationMatrix GetTransformationMatrix(const Transformation& t);
+
 	Vector2::Vector2(void) :
 		x(0.0f),
 		y(0.0f)
@@ -79,42 +81,42 @@ namespace Apollo
 		return ((this->x != rhs.x) || (this->y != rhs.y));
 	}
 
-	Vector2& Vector2::operator+ (void) const
+	Vector2 Vector2::operator+ (void) const
 	{
 		return Vector2(*this);
 	}
 
-	Vector2& Vector2::operator- (void) const
+	Vector2 Vector2::operator- (void) const
 	{
 		return Vector2(*this * -1);
 	}
 
-	Vector2& Vector2::operator+ (const Vector2& rhs) const
+	Vector2 Vector2::operator+ (const Vector2& rhs) const
 	{
 		return Vector2(this->x + rhs.x, this->y + rhs.y);
 	}
 	
-	Vector2& Vector2::operator- (const Vector2& rhs) const
+	Vector2 Vector2::operator- (const Vector2& rhs) const
 	{
 		return Vector2(this->x - rhs.x, this->y - rhs.y);
 	}
 	
-	Vector2& Vector2::operator* (const double rhs) const
+	Vector2 Vector2::operator* (const double rhs) const
 	{
 		return Vector2(this->x * rhs, this->y * rhs);
 	}
 	
-	Vector2& Vector2::operator/ (const double rhs) const
+	Vector2 Vector2::operator/ (const double rhs) const
 	{
 		return Vector2(this->x / rhs, this->y / rhs);
 	}
 	
-	Vector2& operator* (const double lhs, const Vector2& rhs)
+	Vector2 operator* (const double lhs, const Vector2& rhs)
 	{
 		return Vector2(rhs.x * lhs, rhs.y * lhs);
 	}
 	
-	Vector2& operator/ (const double lhs, const Vector2& rhs)
+	Vector2 operator/ (const double lhs, const Vector2& rhs)
 	{
 		return Vector2(rhs.x / lhs, rhs.y / lhs);
 	}
@@ -168,5 +170,48 @@ namespace Apollo
 	const double Vector2::GetMagnitude(void) const
 	{
 		return sqrt((this->x * this->x) + (this->y * this->y));
+	}
+
+	Vector2 Vector2::Transform(const Transformation& transform, const Vector2& center) throw()
+	{
+		TransformationMatrix tm = GetTransformationMatrix(transform);
+		Vector2 v = *this - center;
+		Vector2 tv;
+
+		// Rotate and scale
+		tv.x = tm.rows[0].Dot(v);
+		tv.y = tm.rows[1].Dot(v);
+
+		// translate
+		tv += transform.translation + center;
+
+		return tv;
+	}
+
+	TransformationMatrix GetTransformationMatrix(const Transformation& t)
+	{
+		Apollo::TransformationMatrix tm; // Transformation matrix
+		Apollo::TransformationMatrix ts; // Scaling matrix
+		Apollo::TransformationMatrix tr; // Rotation matrix
+
+		// Scale
+		ts.rows[0].x = t.scale.x;
+		ts.rows[0].y = 0;
+		ts.rows[1].x = 0;
+		ts.rows[1].y = t.scale.y;
+
+		// Rotate
+		tr.rows[0].x = cos(t.rotation);
+		tr.rows[0].y = -sin(t.rotation);
+		tr.rows[1].x = sin(t.rotation);
+		tr.rows[1].y = cos(t.rotation);
+
+		// Multiply the matricies
+		tm.rows[0].x = (ts.rows[0].x * tr.rows[0].x) + (ts.rows[0].y * tr.rows[1].x);
+		tm.rows[0].y = (ts.rows[0].x * tr.rows[0].y) + (ts.rows[0].y * tr.rows[1].y);
+		tm.rows[1].x = (ts.rows[1].x * tr.rows[0].x) + (ts.rows[1].y * tr.rows[1].x);
+		tm.rows[1].y = (ts.rows[1].x * tr.rows[0].y) + (ts.rows[1].y * tr.rows[1].y);
+
+		return tm;
 	}
 }

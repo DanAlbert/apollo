@@ -109,14 +109,14 @@ namespace Apollo
 
 	void SpriteObject::Update(long dTime)
 	{
-		if (m_Active)
+		if (active)
 		{
 		}
 	}
 
 	void SpriteObject::Draw(long dTime, SceneObject* view)
 	{
-		if (m_Visible)
+		if (visible)
 		{
 			if (m_Sprite)
 			{

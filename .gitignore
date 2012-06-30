@@ -19,3 +19,6 @@ Apollo/Debug
 *.png
 *.db
 *.ini
+*.opensdf
+*.tlog
+*.obj

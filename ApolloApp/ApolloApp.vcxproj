@@ -107,9 +107,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Physics\BoundingBox.cpp" />
-    <ClCompile Include="Physics\Geometry.cpp" />
-    <ClCompile Include="Physics\PolygonCollision.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerDef.cpp" />
     <ClCompile Include="PlayerListener.cpp" />
@@ -120,9 +117,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="EntityDef.h" />
-    <ClInclude Include="Physics\BoundingBox.h" />
-    <ClInclude Include="Physics\Geometry.h" />
-    <ClInclude Include="Physics\PolygonCollision.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerDef.h" />
     <ClInclude Include="PlayerListener.h" />

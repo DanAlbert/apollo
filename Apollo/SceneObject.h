@@ -61,8 +61,8 @@ namespace Apollo
 		virtual void	Draw(long dTime, SceneObject* view)	= 0;
 
 		// Accessors //
-		inline bool			GetActive(void)		const	{	return m_Active;	}
-		inline bool			GetVivible(void)	const	{	return m_Visible;	}
+		inline bool			GetActive(void)		const	{	return active;	}
+		inline bool			GetVivible(void)	const	{	return visible;	}
 		inline float		GetXPosition(void)	const	{	return m_XPosition;	}
 		inline float		GetYPosition(void)	const	{	return m_YPosition;	}
 		inline float		GetRotation(void)	const	{	return m_Rotation;	}
@@ -88,8 +88,8 @@ namespace Apollo
 		void RemoveParent(void);
 
 	protected:
-		bool			m_Active;
-		bool			m_Visible;
+		bool			active;
+		bool			visible;
 		float			m_XPosition;
 		float			m_YPosition;
 		float			m_Rotation;

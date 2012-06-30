@@ -94,7 +94,7 @@ void Player::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 
 void Player::Update(long dTime)
 {
-	if (this->m_Active)
+	if (this->active)
 	{
 		this->updateAngularVelocity(dTime);
 		this->updateVelocity(dTime);

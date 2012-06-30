@@ -30,11 +30,10 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include <Apollo/Geometry.h>
 #include <Apollo/SpriteObject.h>
 #include <Apollo/Vector2.h>
 #include <Apollo/Viewport.h>
-
-#include "Physics/Geometry.h"
 
 class GameObject : public Apollo::SpriteObject
 {
@@ -46,12 +45,12 @@ public:
 
 	virtual ~GameObject(void);
 
-	inline const Geometry& GetGeometry(void) const throw()
+	inline const Apollo::Geometry& GetGeometry(void) const throw()
 	{
-		Transformation t;
+		Apollo::Transformation t;
 		t.rotation = this->GetRotation();
-		t.scale = Scale(1.0f, 1.0f);
-		t.translation = Translation(this->GetXPosition(), this->GetYPosition());
+		t.scale = Apollo::Scale(1.0f, 1.0f);
+		t.translation = Apollo::Translation(this->GetXPosition(), this->GetYPosition());
 		this->geometry->SetTransform(t);
 		return *this->geometry;
 	}
@@ -71,7 +70,7 @@ protected:
 	std::string resourcePath;
 	Apollo::Viewport* viewport;
 
-	Geometry* geometry;
+	Apollo::Geometry* geometry;
 	
 	Apollo::Vector2 velocity;
 	double angularVelocity;

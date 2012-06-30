@@ -31,9 +31,6 @@
  */
 #include "GameManager.h"
 
-#include "Physics/BoundingBox.h"
-#include "Physics/PolygonCollision.h"
-
 GameManager::GameManager(Apollo::RenderSystem* renderSystem) :
 	SceneManager(renderSystem),
 	listener(new PlayerListener(renderSystem->GetWindow()))
@@ -191,7 +188,6 @@ bool GameManager::loadLaserState(
 	TiXmlElement* childElem = NULL;
 	TiXmlElement* spriteElem = NULL;
 	Laser* laser;
-	const char* resourcePath;
 
 	laser = this->CreateLaser();
 	laser->LoadState(element, parent);

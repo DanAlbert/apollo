@@ -37,8 +37,8 @@ namespace Apollo
 {
 	SceneObject::SceneObject(void)
 	{
-		m_Active = true;
-		m_Visible = true;
+		active = true;
+		visible = true;
 		m_XPosition = 0.0f;
 		m_YPosition = 0.0f;
 		m_Rotation = 0.0f;
@@ -61,8 +61,8 @@ namespace Apollo
 
 		Release();
 
-		m_Active = rhs.m_Active;
-		m_Visible = rhs.m_Visible;
+		active = rhs.active;
+		visible = rhs.visible;
 		m_XPosition = rhs.m_XPosition;
 		m_YPosition = rhs.m_YPosition;
 		m_Parent = rhs.m_Parent;
@@ -103,8 +103,8 @@ namespace Apollo
 			elem = element;
 		}
 		
-		elem->SetAttribute("active", m_Active);
-		elem->SetAttribute("visible", m_Visible);
+		elem->SetAttribute("active", active);
+		elem->SetAttribute("visible", visible);
 		elem->SetDoubleAttribute("x", m_XPosition);
 		elem->SetDoubleAttribute("y", m_YPosition);
 		elem->SetDoubleAttribute("rotation", m_Rotation);
@@ -168,21 +168,21 @@ namespace Apollo
 
 	void SceneObject::SetActive(bool active)
 	{
-		m_Active = active;
+		active = active;
 
 		for (int i = 0; i < m_Children.size(); ++i)
 		{
-			m_Children[i]->SetActive(m_Active);
+			m_Children[i]->SetActive(active);
 		}
 	}
 
 	void SceneObject::SetVisible(bool visible)
 	{
-		m_Visible = visible;
+		visible = visible;
 
 		for (int i = 0; i < m_Children.size(); ++i)
 		{
-			m_Children[i]->SetVisible(m_Visible);
+			m_Children[i]->SetVisible(visible);
 		}
 	}
 

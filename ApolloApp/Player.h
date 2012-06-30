@@ -35,7 +35,7 @@
 #include "PlayerDef.h"
 #include "PlayerListener.h"
 
-extern class GameManager; // Need a forward declaration to avoid cyclic includes
+class GameManager; // Need a forward declaration to avoid cyclic includes
 
 class Player : public GameObject
 {

@@ -34,8 +34,7 @@
 
 #include <Apollo/Debug.h>
 #include <Apollo/IOError.h>
-
-#include "Physics/Geometry.h"
+#include <Apollo/Geometry.h>
 
 class EntityDef
 {
@@ -48,7 +47,7 @@ public:
 		return this->spritePath.c_str();
 	}
 
-	inline const VertexList& GetVertexList(void) const throw()
+	inline const Apollo::VertexList& GetVertexList(void) const throw()
 	{
 		return this->vertexList;
 	}
@@ -56,7 +55,7 @@ public:
 	void LoadFromFile(const char* path) throw(Apollo::IOError);
 
 private:
-	VertexList vertexList;
+	Apollo::VertexList vertexList;
 	std::string spritePath;
 
 	void loadGeometry(const TiXmlElement* elem) throw(Apollo::IOError);

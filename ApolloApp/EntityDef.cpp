@@ -98,6 +98,6 @@ void EntityDef::loadGeometry(const TiXmlElement* elem) throw(Apollo::IOError)
 			throw Apollo::IOError(ERR_APOLLOAPP_ENTITYDEF_MISSINGATTR);
 		}
 
-		this->vertexList.push_back(Vertex(x, y));
+		this->vertexList.push_back(Apollo::Vertex(x, y));
 	}
 }

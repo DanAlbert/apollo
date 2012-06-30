@@ -87,7 +87,7 @@ void Laser::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 
 void Laser::Update(long dTime)
 {
-	if (this->m_Active)
+	if (this->active)
 	{
 		float x = sin(this->m_Rotation) * Laser::MAX_SPEED;
 		float y = -cos(this->m_Rotation) * Laser::MAX_SPEED;

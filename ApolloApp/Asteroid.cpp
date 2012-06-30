@@ -84,7 +84,7 @@ void Asteroid::LoadState(TiXmlElement* element, Apollo::SceneObject* parent)
 
 void Asteroid::Update(long dTime)
 {
-	if (this->m_Active)
+	if (this->active)
 	{
 		// Asteroid stuff
 	}
